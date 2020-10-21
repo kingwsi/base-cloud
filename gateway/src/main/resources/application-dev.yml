@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true # 服务名称小写
+      routes:
+

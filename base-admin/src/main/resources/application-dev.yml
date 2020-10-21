@@ -1,0 +1,42 @@
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://localhost:3306/base?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true
+    username: root
+    password: root
+#  datasource:
+#    type: com.zaxxer.hikari.HikariDataSource
+#    url: jdbc:h2:file:~/target/h2db/db/test;DB_CLOSE_DELAY=-1
+#    username: root
+#    password: root
+#    platform: H2
+#  h2:
+#    console:
+#      path: /h2-console
+#      settings:
+#        web-allow-others: true
+#      enabled: true
+  liquibase:
+    change-log: classpath:liquibase/master.yml
+    enabled: true
+    drop-first: false
+server:
+  port: 8094
+#mybatis配置
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    # 开启sql日志
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: flag  #全局逻辑删除字段值 3.3.0开始支持，详情看下面。
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  configuration:
+    # 开启sql日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
