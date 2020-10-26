@@ -1,8 +1,5 @@
 package ${package.Entity};
 
-<#if superEntityClass??>
-import BaseEntityVO;
-</#if>
 <#if swagger2>
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -29,13 +26,7 @@ import lombok.EqualsAndHashCode;
 <#if swagger2>
 @ApiModel(value="${entity}VO", description="${table.comment!}")
 </#if>
-<#if superEntityClass??>
-public class ${entity}VO extends ${superEntityClass}VO<#if activeRecord><${entity}></#if> {
-<#elseif activeRecord>
-public class ${entity}VO extends Model<${entity}> {
-<#else>
 public class ${entity}VO implements Serializable {
-</#if>
 
 <#if entitySerialVersionUID>
     private static final long serialVersionUID = 1L;

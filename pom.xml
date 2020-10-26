@@ -46,6 +46,7 @@
         <fastjson.version>1.2.68</fastjson.version>
         <aliyun-sdk-oss.version>3.8.0</aliyun-sdk-oss.version>
         <base-service.version>0.0.1-SNAPSHOT</base-service.version>
+        <freemark.version>2.3.30</freemark.version>
     </properties>
 
     <!--版本管理-->
