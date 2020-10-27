@@ -1,8 +1,8 @@
 package com.example.admin.common.handler;
 
 import com.example.common.utils.TokenUtils;
-import com.example.service.entity.resource.Resource;
-import com.example.service.service.AccessControlService;
+import com.example.common.entity.resource.Resource;
+import com.example.service.AccessControlService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;

@@ -3,7 +3,7 @@ package com.example.admin.common.helper.tableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
-import com.example.service.common.enumerate.FilterRule;
+import com.example.common.enumerate.FilterRule;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;

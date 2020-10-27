@@ -1,7 +1,7 @@
 package com.example.admin.api;
 
 import com.example.admin.common.bean.ResponseData;
-import com.example.service.service.OssService;
+import com.example.service.OssService;
 import io.swagger.annotations.Api;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;

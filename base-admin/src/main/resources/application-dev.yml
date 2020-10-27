@@ -40,3 +40,5 @@ mybatis-plus:
   configuration:
     # 开启sql日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+debug: on

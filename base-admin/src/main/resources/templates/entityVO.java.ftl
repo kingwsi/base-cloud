@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiModelProperty;
 <#if entityLombokModel>
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 </#if>
 
 /**
@@ -18,11 +20,6 @@ import lombok.EqualsAndHashCode;
  * @since ${date}
  */
 @Data
-    <#if superEntityClass??>
-@EqualsAndHashCode(callSuper = true)
-    <#else>
-@EqualsAndHashCode(callSuper = false)
-    </#if>
 <#if swagger2>
 @ApiModel(value="${entity}VO", description="${table.comment!}")
 </#if>

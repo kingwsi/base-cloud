@@ -1,7 +1,7 @@
 package com.example.admin.common.handler;
 
 import com.example.common.utils.TokenUtils;
-import com.example.service.entity.common.BaseEntity;
+import com.example.common.entity.common.BaseEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;

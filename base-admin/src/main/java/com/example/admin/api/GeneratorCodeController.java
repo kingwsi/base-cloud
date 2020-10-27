@@ -2,7 +2,7 @@ package com.example.admin.api;
 
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.example.admin.common.bean.ResponseData;
-import com.example.service.service.CodeGeneratorService;
+import com.example.service.CodeGeneratorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;

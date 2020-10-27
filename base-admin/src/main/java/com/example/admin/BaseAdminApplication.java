@@ -17,7 +17,7 @@ import java.net.InetAddress;
 
 @SpringBootApplication(scanBasePackages = {"com.example"})
 @EnableSwagger2
-@MapperScan(basePackages = "com.example.service")
+@MapperScan(basePackages = "com.example.mapper")
 @EnableFeignClients
 @Slf4j
 public class BaseAdminApplication implements ApplicationListener<WebServerInitializedEvent> {

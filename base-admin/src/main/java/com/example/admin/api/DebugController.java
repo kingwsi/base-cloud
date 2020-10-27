@@ -2,7 +2,7 @@ package com.example.admin.api;
 
 import com.example.common.bean.AuthUser;
 import com.example.common.utils.TokenUtils;
-import com.example.service.service.RoleService;
+import com.example.service.RoleService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.codec.ServerSentEvent;
@@ -28,12 +28,6 @@ import java.util.concurrent.ThreadLocalRandom;
 @RequestMapping("/api/debug")
 @Slf4j
 public class DebugController {
-
-    private final RoleService roleService;
-
-    public DebugController(RoleService roleService) {
-        this.roleService = roleService;
-    }
 
     @GetMapping("/header")
     public String sessionTest(HttpServletRequest request) {

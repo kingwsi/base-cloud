@@ -1,8 +1,8 @@
 package com.example.admin.api;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.service.entity.role.RoleVO;
-import com.example.service.service.RoleService;
+import com.example.common.entity.role.RoleVO;
+import com.example.service.RoleService;
 import com.example.admin.common.bean.ResponseData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

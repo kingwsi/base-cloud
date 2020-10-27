@@ -1,14 +1,14 @@
 package com.example.rest.api;
 
+import com.example.service.CustomerService;
 import com.example.common.bean.AuthUser;
 import com.example.common.bean.ResponseData;
-import com.example.service.service.CustomerService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * description: CustomerCOntroller <br>
+ * description: CustomerController <br>
  * date: 2020/10/20 14:19 <br>
  * author: ws <br>
  * version: 1.0 <br>

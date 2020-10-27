@@ -2,9 +2,9 @@ package com.example.admin.api;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.admin.common.bean.ResponseData;
-import com.example.service.entity.resource.ResourceQuery;
-import com.example.service.entity.resource.ResourceVO;
-import com.example.service.service.ResourceService;
+import com.example.common.entity.resource.ResourceQuery;
+import com.example.common.entity.resource.ResourceVO;
+import com.example.service.ResourceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.util.StringUtils;

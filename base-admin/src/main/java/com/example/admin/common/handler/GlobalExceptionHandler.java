@@ -1,7 +1,7 @@
 package com.example.admin.common.handler;
 
 import com.example.admin.common.bean.ResponseData;
-import com.example.service.common.exception.CustomException;
+import com.example.common.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
