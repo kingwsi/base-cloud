@@ -40,7 +40,7 @@
         <liquibase.version>4.0.0</liquibase.version>
         <pagehelper.version>1.2.12</pagehelper.version>
         <org.projectlombok.version>1.18.4</org.projectlombok.version>
-        <org.mapstruct.version>1.3.1.Final</org.mapstruct.version>
+        <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
         <com.baomidou.version>3.3.1</com.baomidou.version>
         <h2database.version>1.4.200</h2database.version>
         <fastjson.version>1.2.68</fastjson.version>

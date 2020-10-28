@@ -10,6 +10,7 @@ import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -18,6 +19,7 @@ import java.net.InetAddress;
 @SpringBootApplication(scanBasePackages = {"com.example"})
 @EnableSwagger2
 @MapperScan(basePackages = "com.example.mapper")
+@ComponentScan(value = {"com.example.common"})
 @EnableFeignClients
 @Slf4j
 public class BaseAdminApplication implements ApplicationListener<WebServerInitializedEvent> {
