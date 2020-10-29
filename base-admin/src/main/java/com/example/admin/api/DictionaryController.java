@@ -2,7 +2,7 @@ package com.example.admin.api;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.admin.common.bean.ResponseData;
+import com.example.common.bean.ResponseData;
 import com.example.common.entity.dictionary.DictionaryVO;
 import com.example.service.DictionaryService;
 import io.swagger.annotations.Api;

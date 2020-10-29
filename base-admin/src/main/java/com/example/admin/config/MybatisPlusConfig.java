@@ -1,4 +1,4 @@
-package com.example.admin.common.config;
+package com.example.admin.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;

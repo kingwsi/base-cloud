@@ -1,4 +1,4 @@
-package com.example.admin.common.handler;
+package com.example.admin.handler;
 
 //@Slf4j
 //@Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})

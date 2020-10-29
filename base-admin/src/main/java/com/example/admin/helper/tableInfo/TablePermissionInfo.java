@@ -1,4 +1,4 @@
-package com.example.admin.common.helper.tableInfo;
+package com.example.admin.helper.tableInfo;
 
 import lombok.Data;
 import lombok.Getter;

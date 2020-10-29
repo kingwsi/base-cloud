@@ -1,4 +1,4 @@
-package com.example.admin.common.handler;
+package com.example.admin.handler;
 
 import com.example.common.utils.TokenUtils;
 import com.example.common.entity.resource.Resource;

@@ -3,7 +3,7 @@ package com.example.admin.api;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.common.entity.role.RoleVO;
 import com.example.service.RoleService;
-import com.example.admin.common.bean.ResponseData;
+import com.example.common.bean.ResponseData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;

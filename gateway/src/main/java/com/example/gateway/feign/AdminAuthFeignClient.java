@@ -1,4 +1,4 @@
-package com.example.gateway.utils;
+package com.example.gateway.feign;
 
 import com.example.common.bean.AuthUser;
 import com.example.gateway.config.ResponseData;

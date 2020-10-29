@@ -5,15 +5,14 @@ import com.example.common.bean.AuthUser;
 import com.example.common.utils.AntPathMatcherExt;
 import com.example.common.utils.TokenUtils;
 import com.example.gateway.config.ResponseData;
-import com.example.gateway.utils.AdminAuthFeignClient;
+import com.example.gateway.feign.AdminAuthFeignClient;
 import com.example.gateway.utils.BaseUtils;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.example.gateway.utils.PermissionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
@@ -25,19 +24,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
 @Slf4j
 @Component
 public class AdminGatewayFilter implements GatewayFilter, Ordered {
-
-    private AntPathMatcherExt antPathMatcher = new AntPathMatcherExt();
-
-    @Autowired
-    private AdminAuthFeignClient adminAuthFeignClient;
 
     private final String KEY = "123456";
 
@@ -68,7 +60,7 @@ public class AdminGatewayFilter implements GatewayFilter, Ordered {
         }
         AuthUser authUser = TokenUtils.parser(token.replace("Bearer ", ""));
 
-        if (!checkPathPermission(path, Objects.requireNonNull(request.getMethod()).name(), authUser.getId())) {
+        if (!PermissionUtils.checkPathPermission(path, Objects.requireNonNull(request.getMethod()).name(), authUser.getId())) {
             return responseError(exchange);
         }
 
@@ -102,12 +94,12 @@ public class AdminGatewayFilter implements GatewayFilter, Ordered {
         return response.writeWith(Mono.just(buffer));
     }
 
-    public boolean checkPathPermission(String path, String method, String userId) {
-        ResponseData<List<String>> apis = adminAuthFeignClient.listCurrentUserApis(method, userId);
-        if (apis.getCode() == 200 && !apis.getData().isEmpty()) {
-            return antPathMatcher.pathMatch((String[]) apis.getData().toArray(), path);
-        }
-        log.info("unauthorized -> user:{} path:{} {}", userId, method, path);
-        return false;
-    }
+//    public boolean checkPathPermission(String path, String method, String userId) {
+//        ResponseData<List<String>> apis = adminAuthFeignClient.listCurrentUserApis(method, userId);
+//        if (apis.getCode() == 200 && !apis.getData().isEmpty()) {
+//            return antPathMatcher.pathMatch((String[]) apis.getData().toArray(), path);
+//        }
+//        log.info("unauthorized -> user:{} path:{} {}", userId, method, path);
+//        return false;
+//    }
 }

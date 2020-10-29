@@ -1,7 +1,7 @@
 package com.example.admin.api;
 
-import com.example.admin.common.bean.ResponseData;
 import com.example.common.bean.AuthUser;
+import com.example.common.bean.ResponseData;
 import com.example.service.AccessControlService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

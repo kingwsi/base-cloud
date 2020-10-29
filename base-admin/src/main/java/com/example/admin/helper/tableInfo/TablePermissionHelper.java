@@ -1,4 +1,4 @@
-package com.example.admin.common.helper.tableInfo;
+package com.example.admin.helper.tableInfo;
 
 import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;

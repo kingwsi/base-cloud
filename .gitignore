@@ -2,6 +2,7 @@
 **/*.log
 **/*.war
 **/*.iml
+**/target
 
 tests/**/coverage/
 tests/e2e/reports

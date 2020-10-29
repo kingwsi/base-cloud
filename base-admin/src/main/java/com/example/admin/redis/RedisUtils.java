@@ -1,4 +1,4 @@
-package com.example.admin.common.redis;
+package com.example.admin.redis;
 
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.Cursor;

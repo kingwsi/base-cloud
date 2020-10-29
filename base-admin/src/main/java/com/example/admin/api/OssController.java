@@ -1,6 +1,6 @@
 package com.example.admin.api;
 
-import com.example.admin.common.bean.ResponseData;
+import com.example.common.bean.ResponseData;
 import com.example.service.OssService;
 import io.swagger.annotations.Api;
 import org.springframework.util.StringUtils;

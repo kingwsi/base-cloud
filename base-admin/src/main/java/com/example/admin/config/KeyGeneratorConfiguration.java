@@ -1,4 +1,4 @@
-package com.example.admin.common.config;
+package com.example.admin.config;
 
 import com.baomidou.mybatisplus.core.incrementer.IKeyGenerator;
 import com.baomidou.mybatisplus.extension.incrementer.H2KeyGenerator;

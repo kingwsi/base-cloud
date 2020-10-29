@@ -1,6 +1,6 @@
-package com.example.admin.common.handler;
+package com.example.admin.handler;
 
-import com.example.admin.common.bean.ResponseData;
+import com.example.common.bean.ResponseData;
 import com.example.common.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.FieldError;
