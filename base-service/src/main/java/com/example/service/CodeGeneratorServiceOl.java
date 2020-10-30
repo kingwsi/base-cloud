@@ -26,11 +26,11 @@ import java.util.Map;
  * version: 1.0 <br>
  */
 @Component
-public class CodeGeneratorService {
+public class CodeGeneratorServiceOl {
     public static void main(String[] args) {
 
-        String entityName = "Customer";
-        String tableName = "customer";
+        String entityName = "Test";
+        String tableName = "test";
         String prefix = "";
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
@@ -82,7 +82,7 @@ public class CodeGeneratorService {
         // 自定义输出配置
         List<FileOutConfig> focList = new ArrayList<>();
         // 自定义配置会被优先输出
-        focList.add(new FileOutConfig("/resources/templates/convertMapper.java.ftl") {
+        focList.add(new FileOutConfig("/templates/convertMapper.java.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！

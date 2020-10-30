@@ -2,7 +2,7 @@ package com.example.admin.api;
 
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.example.common.bean.ResponseData;
-import com.example.service.CodeGeneratorService;
+import com.example.service.CodeGeneratorServiceOl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +21,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/generator-code")
 public class GeneratorCodeController {
-    private final CodeGeneratorService codeGeneratorService;
+    private final CodeGeneratorServiceOl codeGeneratorService;
 
-    public GeneratorCodeController(CodeGeneratorService codeGeneratorService) {
+    public GeneratorCodeController(CodeGeneratorServiceOl codeGeneratorService) {
         this.codeGeneratorService = codeGeneratorService;
     }
 
