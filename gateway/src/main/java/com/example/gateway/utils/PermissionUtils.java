@@ -29,9 +29,9 @@ public class PermissionUtils {
     public static boolean checkPathPermission(String path, String method, String userId) {
         ResponseData<List<String>> apis = adminAuthFeignClient.listCurrentUserApis(method, userId);
         if (apis.getCode() == 200 && !apis.getData().isEmpty()) {
-            return antPathMatcher.pathMatch((String[]) apis.getData().toArray(), path);
+            return antPathMatcher.pathMatch(apis.getData().toArray(new String[]{}), path);
         }
-        log.info("unauthorized -> user:{} path:{} {}", userId, method, path);
+        log.warn("unauthorized -> user:{} path:{} {}", userId, method, path);
         return false;
     }
 }

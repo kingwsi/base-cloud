@@ -3,6 +3,8 @@ package com.example.service;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.example.common.bean.RespCodeEnum;
 import com.example.common.bean.AuthUser;
+import com.example.common.entity.user.UserConvertMapper;
+import com.example.common.entity.user.UserVO;
 import com.example.common.exception.CustomException;
 import com.example.common.utils.TokenUtils;
 import com.example.common.entity.user.User;
@@ -15,7 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Description: 访问控制服务<br>
@@ -27,7 +31,7 @@ import java.util.List;
 @Service
 public class AccessControlService {
 
-    private final RoleMapper roleMapper;
+    private final HttpServletRequest request;
 
     private final UserMapper userMapper;
 
@@ -35,21 +39,14 @@ public class AccessControlService {
 
     private final ResourceMapper resourceMapper;
 
-    public AccessControlService(RoleMapper roleMapper,  UserMapper userMapper, BCryptPasswordEncoder bCryptPasswordEncoder, ResourceMapper resourceMapper) {
+    private final UserConvertMapper userConvertMapper;
+
+    public AccessControlService(HttpServletRequest request, UserMapper userMapper, BCryptPasswordEncoder bCryptPasswordEncoder, ResourceMapper resourceMapper, UserConvertMapper userConvertMapper) {
+        this.request = request;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.resourceMapper = resourceMapper;
-        this.roleMapper = roleMapper;
         this.userMapper = userMapper;
-    }
-
-    /**
-     * 查询用户拥有的角色列表
-     *
-     * @param userId
-     * @return
-     */
-    public List<Role> getRolesByUserId(String userId) {
-        return roleMapper.selectByUserId(userId);
+        this.userConvertMapper = userConvertMapper;
     }
 
     /**
@@ -72,5 +69,13 @@ public class AccessControlService {
             return TokenUtils.createToken(user.toAuthUser());
         }
         throw new CustomException(RespCodeEnum.AUTH_FAILED);
+    }
+
+    /**
+     * 获取用户信息
+     * @return
+     */
+    public UserVO getUserInfo() {
+        return Optional.of(request.getHeader("x-id")).map(xid -> userMapper.selectOne(Wrappers.query(new User()).eq("id", xid))).map(userConvertMapper::toVO).get();
     }
 }

@@ -67,10 +67,16 @@ public class ResourceController {
         return resourceService.deleteById(id) ? ResponseData.OK() : ResponseData.FAIL("删除失败");
     }
 
-    @ApiOperation("获取api列表")
+    /**
+     * 获取用户所有接口
+     * @param method 请求方式
+     * @param userId 用户标识
+     * @return
+     */
+    @ApiOperation("获取资源")
     @GetMapping("/apis")
-    public ResponseData listCurrentUserApis(String type, String userId) {
-        List<String> list = resourceService.listUrisByMethodAndUser(type, userId);
+    public ResponseData listCurrentUserApis(String method, String userId) {
+        List<String> list = resourceService.listUrisByMethodAndUser(method, userId);
         System.out.println("apis request");
         return ResponseData.OK(list);
     }

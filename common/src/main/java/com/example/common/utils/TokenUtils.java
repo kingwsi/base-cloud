@@ -14,6 +14,7 @@ import java.util.Date;
  * version: 1.0 <br>
  */
 public class TokenUtils {
+
     private final static String KEY = "123456";
 
     public static String createToken(AuthUser authUser){
@@ -36,6 +37,7 @@ public class TokenUtils {
     }
 
     public static AuthUser getCurrentUser(){
+
         return new AuthUser();
     }
 }

@@ -5,7 +5,7 @@ spring:
       port: 8500
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/base?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true
+    url: jdbc:mysql://homec.club:3306/base?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true
     username: root
     password: root
 #  datasource:
@@ -24,6 +24,8 @@ spring:
     change-log: classpath:liquibase/master.yml
     enabled: true
     drop-first: false
+  redis:
+    host: homec.club
 server:
   port: 8094
 #mybatis配置
@@ -40,5 +42,3 @@ mybatis-plus:
   configuration:
     # 开启sql日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
-debug: on

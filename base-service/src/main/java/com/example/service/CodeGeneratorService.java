@@ -7,11 +7,13 @@ import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.example.common.entity.common.BaseEntity;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,16 +29,11 @@ import java.util.Map;
 public class CodeGeneratorService {
     public static void main(String[] args) {
 
-        // 逻辑删除
-        // 搜索支持 ? LIKE/EQUALS/NONE
-        //
-
         String entityName = "Customer";
         String tableName = "customer";
         String prefix = "";
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
-
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir") + "/base-admin";
@@ -54,8 +51,7 @@ public class CodeGeneratorService {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/base?useUnicode=true&useSSL=false&characterEncoding=utf8");
-//        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&useSSL=false&characterEncoding=utf8");
+        dsc.setUrl("jdbc:mysql://homec.club:3306/base?useUnicode=true&useSSL=false&characterEncoding=utf8");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
@@ -94,49 +90,36 @@ public class CodeGeneratorService {
             }
         });
         /*EntityVO*/
-//        focList.add(new FileOutConfig("/base-admin/src/main/resources/templates/entityVO.java.ftl") {
-//            @Override
-//            public String outputFile(TableInfo tableInfo) {
-//                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-//                return projectPath + "/com/example/service/entity/" + entityName.toLowerCase() + "/" + tableInfo.getEntityName() + "VO" + StringPool.DOT_JAVA;
-//            }
-//
-//        });
-//        /*index.vue*/
-//        focList.add(new FileOutConfig("/base-admin/src/main/resources/templates/index.vue.ftl") {
-//            @Override
-//            public String outputFile(TableInfo tableInfo) {
-//                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-//                return projectPath + "/com/example/service/entity/" + entityName.toLowerCase() + "/index.vue";
-//            }
-//
-//        });
-//        cfg.setFileCreate(new IFileCreate() {
-//            @Override
-//            public boolean isCreate(ConfigBuilder configBuilder, FileType fileType, String filePath) {
-//                // 判断自定义文件夹是否需要创建
-//                checkDir("/com/example/service/entity/" + entityName.toLowerCase());
-//                if (fileType == FileType.MAPPER) {
-//                    // 已经生成 mapper 文件判断存在，不想重新生成返回 false
-//                    return !new File(filePath).exists();
-//                }
-//                // 允许生成模板文件
-//                return true;
-//            }
-//        });
-//        cfg.setFileCreate(new IFileCreate() {
-//            @Override
-//            public boolean isCreate(ConfigBuilder configBuilder, FileType fileType, String filePath) {
-//                // 判断自定义文件夹是否需要创建
-//                checkDir("/com/example/service/entity/" + entityName.toLowerCase() + "/");
-//                if (fileType == FileType.MAPPER) {
-//                    // 已经生成 mapper 文件判断存在，不想重新生成返回 false
-//                    return !new File(filePath).exists();
-//                }
-//                // 允许生成模板文件
-//                return true;
-//            }
-//        });
+        focList.add(new FileOutConfig("/base-admin/src/main/resources/templates/entityVO.java.ftl") {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
+                return projectPath + "/com/example/common/entity/" + entityName.toLowerCase() + "/" + tableInfo.getEntityName() + "VO" + StringPool.DOT_JAVA;
+            }
+
+        });
+        /*index.vue*/
+        focList.add(new FileOutConfig("/base-admin/src/main/resources/templates/index.vue.ftl") {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
+                return projectPath + "/com/example/common/entity/" + entityName.toLowerCase() + "/index.vue";
+            }
+
+        });
+        cfg.setFileCreate(new IFileCreate() {
+            @Override
+            public boolean isCreate(ConfigBuilder configBuilder, FileType fileType, String filePath) {
+                // 判断自定义文件夹是否需要创建
+                checkDir("/com/example/common/entity/" + entityName.toLowerCase() + "/");
+                if (fileType == FileType.MAPPER) {
+                    // 已经生成 mapper 文件判断存在，不想重新生成返回 false
+                    return !new File(filePath).exists();
+                }
+                // 允许生成模板文件
+                return true;
+            }
+        });
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
 

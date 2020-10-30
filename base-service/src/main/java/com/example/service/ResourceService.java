@@ -3,7 +3,6 @@ package com.example.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.common.utils.TokenUtils;
 import com.example.common.enumerate.ResourceTypeEnum;
 import com.example.common.exception.CustomException;
 import com.example.common.entity.resource.Resource;
@@ -21,9 +20,12 @@ public class ResourceService {
 
     private final ResourceConvertMapper resourceConvertMapper;
 
-    public ResourceService(ResourceMapper resourceMapper, ResourceConvertMapper resourceConvertMapper) {
+    private final AccessControlService accessControlService;
+
+    public ResourceService(ResourceMapper resourceMapper, ResourceConvertMapper resourceConvertMapper, AccessControlService accessControlService) {
         this.resourceMapper = resourceMapper;
         this.resourceConvertMapper = resourceConvertMapper;
+        this.accessControlService = accessControlService;
     }
 
     public void create(ResourceVO vo) {
@@ -77,7 +79,7 @@ public class ResourceService {
     }
 
     public List<ResourceVO> currentUserRouters() {
-        List<Resource> resources = resourceMapper.selectRouteByUserId(TokenUtils.getCurrentUser().getId());
+        List<Resource> resources = resourceMapper.selectRouteByUserId(accessControlService.getUserInfo().getId());
         return resourceConvertMapper.toResourceVOs(resources);
     }
 }

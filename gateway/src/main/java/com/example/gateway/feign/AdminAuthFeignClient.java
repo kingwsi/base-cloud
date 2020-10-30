@@ -17,7 +17,7 @@ import java.util.List;
 public interface AdminAuthFeignClient {
 
     @RequestMapping(value = "/api/resource/apis", method = RequestMethod.GET)
-    ResponseData<List<String>> listCurrentUserApis(@RequestParam String type, @RequestParam String userId);
+    ResponseData<List<String>> listCurrentUserApis(@RequestParam String method, @RequestParam String userId);
 
     @RequestMapping(value = "/api/auth", method = RequestMethod.POST)
     ResponseData<String> createToken(@RequestBody AuthUser authUser);

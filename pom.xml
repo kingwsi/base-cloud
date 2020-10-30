@@ -41,6 +41,7 @@
         <pagehelper.version>1.2.12</pagehelper.version>
         <org.projectlombok.version>1.18.4</org.projectlombok.version>
         <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
+        <org.hibernate.version>5.3.0.Final</org.hibernate.version>
         <com.baomidou.version>3.3.1</com.baomidou.version>
         <h2database.version>1.4.200</h2database.version>
         <fastjson.version>1.2.68</fastjson.version>
@@ -150,6 +151,12 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${org.mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${org.hibernate.version}</version>
             </dependency>
 
             <dependency>

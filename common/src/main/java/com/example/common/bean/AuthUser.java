@@ -3,6 +3,8 @@ package com.example.common.bean;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * description: User <br>
  * date: 2020/9/29 13:23 <br>
@@ -17,6 +19,7 @@ public class AuthUser {
     private String type;
     private String password;
     private String verifyCode;
+    private List<String> roles;
 
     public AuthUser(String id, String username, String type) {
         this.id = id;

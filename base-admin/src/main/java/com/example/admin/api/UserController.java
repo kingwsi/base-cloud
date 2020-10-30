@@ -5,6 +5,7 @@ import com.example.common.bean.AuthUser;
 import com.example.common.bean.ResponseData;
 import com.example.common.utils.TokenUtils;
 import com.example.common.entity.user.UserVO;
+import com.example.service.AccessControlService;
 import com.example.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,10 +38,13 @@ public class UserController {
 
     private final UserService userService;
 
+    private final AccessControlService accessControlService;
+
     private final RequestMappingHandlerMapping requestMappingHandlerMapping;
 
-    public UserController(UserService userService, RequestMappingHandlerMapping requestMappingHandlerMapping) {
+    public UserController(UserService userService, AccessControlService accessControlService, RequestMappingHandlerMapping requestMappingHandlerMapping) {
         this.userService = userService;
+        this.accessControlService = accessControlService;
         this.requestMappingHandlerMapping = requestMappingHandlerMapping;
     }
 
@@ -67,7 +71,7 @@ public class UserController {
     @ApiOperation("获取用户信息")
     @GetMapping("/info")
     public ResponseData getUserInfo(HttpServletRequest httpServletRequest) {
-        return ResponseData.OK(TokenUtils.getCurrentUser());
+        return ResponseData.OK(accessControlService.getUserInfo());
     }
 
     @ApiOperation("获取用户信息")
@@ -78,7 +82,7 @@ public class UserController {
 
     @ApiOperation("更新用户信息")
     @GetMapping("/current")
-    public ResponseData updateUserCurrentInfo(HttpServletRequest httpServletRequest, @Validated(Update.class) UserVO userVO) {
+    public ResponseData updateUserCurrentInfo(@Validated(Update.class) UserVO userVO) {
         AuthUser currentUser = TokenUtils.getCurrentUser();
         userVO.setId(currentUser.getId());
         userVO.setUsername(currentUser.getUsername());
