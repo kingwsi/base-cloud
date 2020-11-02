@@ -31,8 +31,8 @@ public class BaseServiceApplicationTests
 
     @Test
     public void generateCodeTest(){
-//        codeGeneratorService.generateCommonModule();
-//        codeGeneratorService.generateServiceModule();
+        codeGeneratorService.generateCommonModule();
+        codeGeneratorService.generateServiceModule();
         codeGeneratorService.generateControllerModule();
     }
 

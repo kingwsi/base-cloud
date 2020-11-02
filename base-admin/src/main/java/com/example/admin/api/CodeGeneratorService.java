@@ -11,6 +11,8 @@ import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.example.common.entity.common.BaseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -45,6 +47,9 @@ public class CodeGeneratorService {
         }
     }
 
+    @Autowired
+    DataSourceProperties dataSourceProperties;
+
     public void generateServiceModule() {
         // 逻辑删除
         // 搜索支持 ? LIKE/EQUALS/NONE
@@ -71,10 +76,10 @@ public class CodeGeneratorService {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://homec.club:3306/base?useUnicode=true&useSSL=false&characterEncoding=utf8");
-        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("root");
+        dsc.setUrl(dataSourceProperties.getUrl());
+        dsc.setDriverName(dataSourceProperties.getDriverClassName());
+        dsc.setUsername(dataSourceProperties.getUsername());
+        dsc.setPassword(dataSourceProperties.getPassword());
         mpg.setDataSource(dsc);
 
         // 包配置

@@ -13,7 +13,7 @@ import ${superControllerClassPackage};
 </#if>
 import ${package.Entity}.${entity}VO;
 import ${package.Service}.${entity}Service;
-import ResponseData;
+import com.example.common.bean.ResponseData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.util.StringUtils;
@@ -79,7 +79,7 @@ public class ${table.controllerName} {
     @GetMapping("/page")
     @ApiOperation("获取分页")
     public ResponseData listOfPage(Page<${entity}VO> page, ${entity}VO ${entity?uncap_first}VO) {
-        IPage<${entity}VO> pageInfo = ${entity?uncap_first}Service.listOfPage(page, vo);
+        IPage<${entity}VO> pageInfo = ${entity?uncap_first}Service.listOfPage(page, ${entity?uncap_first}VO);
         return ResponseData.OK(pageInfo);
     }
 }

@@ -6,6 +6,7 @@ import ${superMapperClassPackage};
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -18,6 +19,7 @@ import org.apache.ibatis.annotations.Param;
 <#if kotlin>
 interface ${table.mapperName} : ${superMapperClass}<${entity}>
 <#else>
+@Component
 public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
     IPage<${entity}VO> selectPage(Page<${entity}VO> page, @Param("vo") ${entity}VO vo);
 }
