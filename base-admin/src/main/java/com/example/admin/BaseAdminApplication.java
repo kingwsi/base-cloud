@@ -11,12 +11,10 @@ import org.springframework.boot.web.server.WebServer;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.env.Environment;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.net.InetAddress;
 
 @SpringBootApplication(scanBasePackages = {"com.example"})
-@EnableSwagger2
 @MapperScan(basePackages = "com.example.mapper")
 @EnableFeignClients
 @Slf4j
@@ -35,10 +33,9 @@ public class BaseAdminApplication implements ApplicationListener<WebServerInitia
         String ip = InetAddress.getLocalHost().getHostAddress();
         int port = server.getPort();
         log.info("\n---------------------------------------------------------" +
-                "\n\t启动成功！" +
-                "\n\t本地地址:\thttp://localhost:{}/swagger-ui.html" +
-                "\n\t外部地址:\thttp://{}:{}/swagger-ui.html" +
-                "\n\t配置:\t{}" +
-                "\n---------------------------------------------------------\n", port, ip, port, activeProfiles);
+                "\n\t启动成功！{}" +
+                "\n\t本地地址:\thttp://localhost:{}" +
+                "\n\t外部地址:\thttp://{}:{}" +
+                "\n---------------------------------------------------------\n", activeProfiles, port, ip, port);
     }
 }

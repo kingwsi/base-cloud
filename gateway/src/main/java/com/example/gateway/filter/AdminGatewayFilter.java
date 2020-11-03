@@ -34,15 +34,13 @@ public class AdminGatewayFilter implements GatewayFilter, Ordered {
     private final String KEY = "123456";
 
     private static final String[] excludedAuthPages = {
-            "/api/debug/**",
+            "/admin/api/debug/**",
             "/admin/api/auth",
             "/rest/api/customer/login",
             "/webjars/**",
-            "/swagger**/**",
-            "/v2/api-docs**",
-            "/h2-console/**",
+            "/admin/swagger**/**",
+            "/admin/v2/api-docs**",
             "/**/*.gif", "/**/*.png", "/**/*.jpg", "/**/*.html", "/**/*.js", "/**/*.css", "/**/*.ico",
-            "/health",
             "/api/socket/**"
     };
 

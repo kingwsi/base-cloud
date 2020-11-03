@@ -13,8 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Slf4j
-public class BaseServiceApplicationTests
-{
+public class BaseServiceApplicationTests {
 
     @Autowired
     RoleService roleService;
@@ -23,14 +22,13 @@ public class BaseServiceApplicationTests
     CodeGeneratorService codeGeneratorService;
 
     @Test
-    public void contextLoads()
-    {
+    public void contextLoads() {
         RoleVO roleWithResources = roleService.getRoleWithResources("1");
         log.info("role info -> {}", roleWithResources);
     }
 
     @Test
-    public void generateCodeTest(){
+    public void generateCodeTest() {
         codeGeneratorService.generateCommonModule();
         codeGeneratorService.generateServiceModule();
         codeGeneratorService.generateControllerModule();
