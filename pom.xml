@@ -47,6 +47,7 @@
         <fastjson.version>1.2.68</fastjson.version>
         <aliyun-sdk-oss.version>3.8.0</aliyun-sdk-oss.version>
         <io.springfox-boot.version>3.0.0</io.springfox-boot.version>
+        <com.alibaba.druid.version>1.2.2</com.alibaba.druid.version>
     </properties>
 
     <!--版本管理-->
@@ -180,6 +181,12 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-boot-starter</artifactId>
                 <version>${io.springfox-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${com.alibaba.druid.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

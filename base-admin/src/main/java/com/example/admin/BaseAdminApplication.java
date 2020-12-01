@@ -34,8 +34,8 @@ public class BaseAdminApplication implements ApplicationListener<WebServerInitia
         int port = server.getPort();
         log.info("\n---------------------------------------------------------" +
                 "\n\t启动成功！{}" +
-                "\n\t本地地址:\thttp://localhost:{}" +
-                "\n\t外部地址:\thttp://{}:{}" +
+                "\n\t本地地址:\thttp://localhost:{}/swagger-ui/index.html" +
+                "\n\t外部地址:\thttp://{}:{}/swagger-ui/index.html" +
                 "\n---------------------------------------------------------\n", activeProfiles, port, ip, port);
     }
 }
