@@ -15,7 +15,7 @@ import java.net.InetAddress;
 
 @Slf4j
 @SpringBootApplication(scanBasePackages = {"com.example"})
-@MapperScan(basePackages = "com.example.service")
+@MapperScan(basePackages = "com.example.mapper")
 public class RestApplication implements ApplicationListener<WebServerInitializedEvent> {
 
     public static void main(String[] args) {
