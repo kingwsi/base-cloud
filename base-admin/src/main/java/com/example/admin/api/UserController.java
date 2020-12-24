@@ -3,6 +3,7 @@ package com.example.admin.api;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.common.bean.AuthUser;
 import com.example.common.bean.ResponseData;
+import com.example.common.entity.user.User;
 import com.example.common.utils.TokenUtils;
 import com.example.common.entity.user.UserVO;
 import com.example.service.AccessControlService;
@@ -64,23 +65,23 @@ public class UserController {
 
     @ApiOperation("获取用户分页")
     @GetMapping("/page")
-    public ResponseData page(Page<UserVO> page, UserVO userVO) {
+    public ResponseData page(Page<User> page, UserVO userVO) {
         return ResponseData.OK(userService.listUsersOfPage(page, userVO));
     }
 
     @ApiOperation("获取用户信息")
     @GetMapping("/info")
-    public ResponseData getUserInfo(HttpServletRequest httpServletRequest) {
+    public ResponseData getUserInfo() {
         return ResponseData.OK(accessControlService.getUserInfo());
     }
 
-    @ApiOperation("获取用户信息")
+    @ApiOperation("删除用户")
     @DeleteMapping
     public ResponseData deleteUser(HttpServletRequest httpServletRequest) {
         return ResponseData.OK(TokenUtils.getCurrentUser());
     }
 
-    @ApiOperation("更新用户信息")
+    @ApiOperation("获取当前用户信息")
     @GetMapping("/current")
     public ResponseData updateUserCurrentInfo(@Validated(Update.class) UserVO userVO) {
         AuthUser currentUser = TokenUtils.getCurrentUser();

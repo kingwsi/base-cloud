@@ -1,5 +1,6 @@
 package com.example.common.entity.user;
 
+import com.example.common.entity.role.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,9 +37,9 @@ public class UserVO {
     private String avatar;
     private String introduction;
     private String nickname;
-
     @NotEmpty
-    private List<String> roles;
+    private List<String> roleIds;
+    private List<Role> roles;
     private String creator;
     private Instant createdDate;
     private String lastUpdater;

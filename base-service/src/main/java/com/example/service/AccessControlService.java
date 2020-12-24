@@ -3,16 +3,16 @@ package com.example.service;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.example.common.bean.RespCodeEnum;
 import com.example.common.bean.AuthUser;
+import com.example.common.entity.resource.ResourceConvertMapper;
+import com.example.common.entity.resource.ResourceVO;
 import com.example.common.entity.user.UserConvertMapper;
 import com.example.common.entity.user.UserVO;
 import com.example.common.exception.CustomException;
 import com.example.common.utils.TokenUtils;
 import com.example.common.entity.user.User;
 import com.example.mapper.ResourceMapper;
-import com.example.mapper.RoleMapper;
 import com.example.mapper.UserMapper;
 import com.example.common.entity.resource.Resource;
-import com.example.common.entity.role.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,14 +39,14 @@ public class AccessControlService {
 
     private final ResourceMapper resourceMapper;
 
-    private final UserConvertMapper userConvertMapper;
+    private final ResourceConvertMapper resourceConvertMapper;
 
-    public AccessControlService(HttpServletRequest request, UserMapper userMapper, BCryptPasswordEncoder bCryptPasswordEncoder, ResourceMapper resourceMapper, UserConvertMapper userConvertMapper) {
+    public AccessControlService(HttpServletRequest request, UserMapper userMapper, BCryptPasswordEncoder bCryptPasswordEncoder, ResourceMapper resourceMapper, ResourceConvertMapper resourceConvertMapper) {
         this.request = request;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.resourceMapper = resourceMapper;
         this.userMapper = userMapper;
-        this.userConvertMapper = userConvertMapper;
+        this.resourceConvertMapper = resourceConvertMapper;
     }
 
     /**
@@ -72,10 +72,23 @@ public class AccessControlService {
     }
 
     /**
-     * 获取用户信息
+     * 获取当前用户信息
+     *
      * @return
      */
     public UserVO getUserInfo() {
-        return Optional.of(request.getHeader("x-id")).map(xid -> userMapper.selectOne(Wrappers.query(new User()).eq("id", xid))).map(userConvertMapper::toVO).get();
+        return Optional.of(request.getHeader("x-id"))
+                .map(userMapper::selectUsersWithRoles).get();
+
+    }
+
+    /**
+     * 获取当前用户菜单资源
+     *
+     * @return
+     */
+    public List<ResourceVO> getCurrentUserRouters() {
+        return Optional.of(request.getHeader("x-id"))
+                .map(resourceMapper::selectRouteByUserId).map(resourceConvertMapper::toResourceVOs).get();
     }
 }

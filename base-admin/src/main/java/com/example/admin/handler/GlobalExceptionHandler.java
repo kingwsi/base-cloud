@@ -4,6 +4,7 @@ import com.example.common.bean.ResponseData;
 import com.example.common.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -42,5 +43,11 @@ public class GlobalExceptionHandler {
         FieldError fieldError = ex.getBindingResult().getFieldError();
         assert fieldError != null;
         return ResponseData.FAIL(fieldError.getDefaultMessage());
+    }
+
+    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    public ResponseData handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
+        log.error("不支持 {}",ex.getMethod());
+        return ResponseData.FAIL(ex.getMessage());
     }
 }

@@ -6,12 +6,15 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.common.entity.user.User;
 import com.example.common.entity.user.UserConvertMapper;
 import com.example.common.entity.user.UserVO;
+import com.example.mapper.RoleMapper;
 import com.example.mapper.UserMapper;
 import com.example.mapper.UsersAndRolesMapper;
 import com.example.common.exception.CustomException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Description: []
@@ -31,11 +34,14 @@ public class UserService {
 
     private final UsersAndRolesMapper usersAndRolesMapper;
 
-    public UserService(UserMapper userMapper, BCryptPasswordEncoder bCryptPasswordEncoder, UserConvertMapper userConvertMapper, UsersAndRolesMapper usersAndRolesMapper) {
+    private final RoleMapper roleMapper;
+
+    public UserService(UserMapper userMapper, BCryptPasswordEncoder bCryptPasswordEncoder, UserConvertMapper userConvertMapper, UsersAndRolesMapper usersAndRolesMapper, RoleMapper roleMapper) {
         this.userMapper = userMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userConvertMapper = userConvertMapper;
         this.usersAndRolesMapper = usersAndRolesMapper;
+        this.roleMapper = roleMapper;
     }
 
     public void createUser(UserVO vo) {
@@ -45,11 +51,11 @@ public class UserService {
         queryWrapper.eq("username", vo.getUsername());
         if (!userMapper.selectList(queryWrapper).isEmpty()) throw new CustomException("用户名已存在");
         userMapper.insert(user);
-        usersAndRolesMapper.batchInsert(user.getId(), vo.getRoles());
+        usersAndRolesMapper.batchInsert(user.getId(), vo.getRoleIds());
     }
 
-    public IPage<UserVO> listUsersOfPage(Page<UserVO> page, UserVO userVO) {
-        return userMapper.listUsersOfPage(page, userVO);
+    public IPage<UserVO> listUsersOfPage(Page<User> page, UserVO userVO) {
+        return userMapper.selectUsersOfPage(page, userVO);
     }
 
     /**
@@ -61,19 +67,15 @@ public class UserService {
         userVO.setPassword(null);
         usersAndRolesMapper.deleteByUserId(userVO.getId());
         User user = userConvertMapper.toUser(userVO);
-        usersAndRolesMapper.batchInsert(user.getId(), userVO.getRoles());
+        usersAndRolesMapper.batchInsert(user.getId(), userVO.getRoleIds());
         userMapper.updateById(user);
     }
 
     public UserVO getUserById(String id) {
-        User user = userMapper.selectById(id);
-        if (user == null) {
-            throw new CustomException("用户不存在");
-        }
-        return userConvertMapper.toVO(user);
+        return userConvertMapper.toVO(userMapper.selectById(id));
     }
 
-    public void getUserByUsername(String username) {
-
+    public UserVO getUserWithRolesByUserId(String id) {
+        return userMapper.selectUsersWithRoles(id);
     }
 }
