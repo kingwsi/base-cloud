@@ -30,6 +30,16 @@ import java.util.Map;
 @Service
 public class CodeGeneratorService {
 
+    private final static String tableName = "trade_info";
+    private final static String entityName = "TradeInfo";
+    private final static String prefix = "";
+    private final static String dataUrl = "jdbc:mysql://localhost:3306/base?useUnicode=true&useSSL=false&characterEncoding=utf8";
+    private final static String dataDriver = "com.mysql.cj.jdbc.Driver";
+    private final static String username = "root";
+    private final static String password = "root";
+
+
+
     enum PathConfig {
         SERVICE_PKG("/", "service包"),
         CONTROLLER_PKG("/", "service包"),
@@ -53,10 +63,6 @@ public class CodeGeneratorService {
     public void generateServiceModule() {
         // 逻辑删除
         // 搜索支持 ? LIKE/EQUALS/NONE
-
-        String entityName = "Test";
-        String tableName = "test";
-        String prefix = "";
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -76,10 +82,10 @@ public class CodeGeneratorService {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl(dataSourceProperties.getUrl());
-        dsc.setDriverName(dataSourceProperties.getDriverClassName());
-        dsc.setUsername(dataSourceProperties.getUsername());
-        dsc.setPassword(dataSourceProperties.getPassword());
+        dsc.setUrl(dataUrl);
+        dsc.setDriverName(dataDriver);
+        dsc.setUsername(username);
+        dsc.setPassword(password);
         mpg.setDataSource(dsc);
 
         // 包配置
@@ -153,13 +159,8 @@ public class CodeGeneratorService {
     public void generateControllerModule() {
         // 逻辑删除
         // 搜索支持 ? LIKE/EQUALS/NONE
-
-        String entityName = "Test";
-        String tableName = "test";
-        String prefix = "";
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
-
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
@@ -176,10 +177,10 @@ public class CodeGeneratorService {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://homec.club:3306/base?useUnicode=true&useSSL=false&characterEncoding=utf8");
-        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("root");
+        dsc.setUrl(dataUrl);
+        dsc.setDriverName(dataDriver);
+        dsc.setUsername(username);
+        dsc.setPassword(password);
         mpg.setDataSource(dsc);
 
         // 包配置
@@ -255,10 +256,6 @@ public class CodeGeneratorService {
      * commin module
      */
     public void generateCommonModule() {
-
-        String entityName = "Test";
-        String tableName = "test";
-        String prefix = "";
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -278,10 +275,10 @@ public class CodeGeneratorService {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://homec.club:3306/base?useUnicode=true&useSSL=false&characterEncoding=utf8");
-        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("root");
+        dsc.setUrl(dataUrl);
+        dsc.setDriverName(dataDriver);
+        dsc.setUsername(username);
+        dsc.setPassword(password);
         mpg.setDataSource(dsc);
 
         // 包配置
@@ -317,6 +314,33 @@ public class CodeGeneratorService {
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
                 return projectPath + "/src/main/java/com/example/common/entity/" + entityName.toLowerCase() + "/" + tableInfo.getEntityName() + "VO" + StringPool.DOT_JAVA;
+            }
+
+        });
+        /*createForm.vue.ftl*/
+        focList.add(new FileOutConfig("/templates/createForm.vue.ftl") {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
+                return projectPath + "/src/main/java/com/example/common/entity/" + entityName.toLowerCase() + "/" + "CreateForm.vue";
+            }
+
+        });
+        /*index.vue.ftl*/
+        focList.add(new FileOutConfig("/templates/index.vue.ftl") {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
+                return projectPath + "/src/main/java/com/example/common/entity/" + entityName.toLowerCase() + "/" + "index.vue";
+            }
+
+        });
+        /*index.js.ftl*/
+        focList.add(new FileOutConfig("/templates/index.js.ftl") {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
+                return projectPath + "/src/main/java/com/example/common/entity/" + entityName.toLowerCase() + "/" + "index.js";
             }
 
         });

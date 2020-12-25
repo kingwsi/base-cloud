@@ -3,12 +3,10 @@ package ${package.Entity};
 <#if swagger2>
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import com.example.common.entity.common.BaseEntityVO;
 </#if>
 <#if entityLombokModel>
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.io.Serializable;
 </#if>
 
 /**
@@ -23,7 +21,7 @@ import java.io.Serializable;
 <#if swagger2>
 @ApiModel(value="${entity}VO", description="${table.comment!}")
 </#if>
-public class ${entity}VO implements Serializable {
+public class ${entity}VO extends BaseEntityVO {
 
 <#if entitySerialVersionUID>
     private static final long serialVersionUID = 1L;

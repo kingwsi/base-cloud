@@ -23,13 +23,13 @@ databaseChangeLog:
                       nullable: false
               - column:
                   name: avatar
-                  type: varchar(150)
+                  type: varchar(225)
                   remarks: 头像
                   constraints:
                       nullable: true
               - column:
                   name: introduction
-                  type: varchar(50)
+                  type: varchar(225)
                   remarks: 介绍
                   constraints:
                       nullable: true

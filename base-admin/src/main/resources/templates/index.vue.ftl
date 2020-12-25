@@ -7,7 +7,7 @@
           <#if !field.keyFlag>
           <#if field_index lt 2>
           <a-col :md="8" :sm="24">
-            <a-form-item label="资源名称">
+            <a-form-item label="${field.comment}">
               <a-input v-model="queryParam.${field.propertyName}" placeholder="${field.comment}"/>
             </a-form-item>
           </a-col>
@@ -19,7 +19,7 @@
   <#list table.fields as field>
     <#if !field.keyFlag && field_index gt 1>
             <a-col :md="8" :sm="24">
-              <a-form-item label="资源名称">
+              <a-form-item label="${field.comment}">
                 <a-input v-model="queryParam.${field.propertyName}" placeholder="${field.comment}"/>
               </a-form-item>
             </a-col>
@@ -84,9 +84,8 @@
 </template>
 
 <script>
-import moment from 'moment'
 import { STable } from '@/components'
-import { page, updateById, create, deleteById } from '@/api/${entity?uncap_first}'
+import { GetPage, UpdateById, Create, DeleteById } from '@/api/${entity?uncap_first}'
 
 import CreateForm from './modules/CreateForm'
 
@@ -114,14 +113,20 @@ export default {
         {
           title: '${field.comment}',
           dataIndex: '${field.propertyName}'
-        }<#if field_has_next>,</#if>
+        },
           </#if>
         </#list>
+        {
+          title: '操作',
+          dataIndex: 'action',
+          width: '150px',
+          scopedSlots: { customRender: 'action' }
+        }
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
         console.log('loadData.parameter', parameter)
-        return page(Object.assign(parameter, this.queryParam))
+        return GetPage(Object.assign(parameter, this.queryParam))
           .then(res => {
             return res.data
           })
@@ -129,11 +134,11 @@ export default {
     }
   },
   created () {
-    this.loadData({ t: new Date() })
+    this.loadData()
   },
   methods: {
     handleAdd () {
-      this.mdl = null
+      this.mdl = {}
       this.visible = true
     },
     handleEdit (record) {
@@ -141,44 +146,47 @@ export default {
       this.mdl = { ...record }
     },
     handleOk () {
-      const form = this.$refs.createModal.form
+      const form = this.$refs.createModal.$refs.form
       this.confirmLoading = true
-      form.validateFields((errors, values) => {
-        if (!errors) {
-          console.log('values', values)
-          if (values.id > 0) {
+      form.validate(valid => {
+        if (valid) {
+          if (this.mdl.id) {
             // 修改 e.g.
-            updateById(values).then(res => {
+            UpdateById(this.mdl).then(res => {
               this.visible = false
               this.confirmLoading = false
               // 重置表单数据
               form.resetFields()
               // 刷新表格
               this.$refs.table.refresh()
-
               this.$message.info('修改成功')
             }).catch((err) => {
-              console.log(`form update error:-><#noparse>${err}</#noparse>`)
+              log.error("修改失败",err)
+              this.$message.error('修改失败')
+            }).finally(()=>{
+              this.$message.error('修改失败')
               this.confirmLoading = false
             })
           } else {
             // 新增
-            create(values).then(res => {
+            Create(this.mdl).then(res => {
               this.visible = false
               this.confirmLoading = false
               // 重置表单数据
               form.resetFields()
               // 刷新表格
               this.$refs.table.refresh()
-
               this.$message.info('新增成功')
             }).catch((err) => {
-              console.log(`form update error:-><#noparse>${err}</#noparse>`)
+              console.log(`form update error:->${err}`)
+            }).finally(()=>{
+              this.$message.error('修改失败')
               this.confirmLoading = false
             })
           }
         } else {
           this.confirmLoading = false
+          return false
         }
       })
     },
@@ -187,12 +195,11 @@ export default {
     },
     handleCancel () {
       this.visible = false
-
-      const form = this.$refs.createModal.form
-      form.resetFields() // 清理表单数据（可不做）
+      const form = this.$refs.createModal.$refs.form
+      form.resetFields()
     },
     handleDelete (row) {
-        deleteById(row.id).then(res => {
+        DeleteById(row.id).then(res => {
                 if (res.code === 200) {
                     this.$message.info('删除成功！')
                     // 刷新表格
@@ -200,12 +207,7 @@ export default {
                 } else {
                     this.$message.err('删除失败！')
                 }
-            }).catch((err) => console.log(err))
-    },
-    resetSearchForm () {
-      this.queryParam = {
-        date: moment(new Date())
-      }
+            })
     }
   }
 }
