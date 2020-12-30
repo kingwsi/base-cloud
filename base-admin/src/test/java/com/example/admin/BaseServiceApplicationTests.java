@@ -1,6 +1,6 @@
 package com.example.admin;
 
-import com.example.admin.api.CodeGeneratorService;
+import com.example.admin.api.CodeGeneratorSupport;
 import com.example.common.entity.role.RoleVO;
 import com.example.service.RoleService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +18,6 @@ public class BaseServiceApplicationTests {
     @Autowired
     RoleService roleService;
 
-    @Autowired
-    CodeGeneratorService codeGeneratorService;
-
     @Test
     public void contextLoads() {
         RoleVO roleWithResources = roleService.getRoleWithResources("1");
@@ -29,9 +26,9 @@ public class BaseServiceApplicationTests {
 
     @Test
     public void generateCodeTest() {
-        codeGeneratorService.generateCommonModule();
-        codeGeneratorService.generateServiceModule();
-        codeGeneratorService.generateControllerModule();
+        CodeGeneratorSupport codeGeneratorSupport = new CodeGeneratorSupport("customer", "Customer");
+        codeGeneratorSupport.generateCommonModule();
+        codeGeneratorSupport.generateServiceModule();
+        codeGeneratorSupport.generateControllerModule();
     }
-
 }

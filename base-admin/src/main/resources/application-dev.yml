@@ -12,24 +12,19 @@ spring:
 #      password: "
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:h2:file:~/target/h2db/db/test;DB_CLOSE_DELAY=-1
+    url: jdbc:mysql://localhost:3306/base?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true
     username: root
     password: root
-    platform: H2
     druid:
       stat-view-servlet:
         url-pattern: /druid/*
         enabled: true
-  h2:
-    console:
-      path: /h2-console
-      settings:
-        web-allow-others: true
-      enabled: true
-  liquibase:
-    change-log: classpath:liquibase/master.yml
-    enabled: true
-    drop-first: false
+#  h2:
+#    console:
+#      path: /h2-console
+#      settings:
+#        web-allow-others: true
+#      enabled: true
   redis:
     host: localhost
 server:

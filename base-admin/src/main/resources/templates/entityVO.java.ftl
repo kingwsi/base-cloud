@@ -1,5 +1,8 @@
 package ${package.Entity};
 
+<#list table.importPackages as pkg>
+import ${pkg};
+</#list>
 <#if swagger2>
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -7,6 +10,7 @@ import com.example.common.entity.common.BaseEntityVO;
 </#if>
 <#if entityLombokModel>
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 </#if>
 
 /**
@@ -18,6 +22,11 @@ import lombok.Data;
  * @since ${date}
  */
 @Data
+<#if superEntityClass??>
+@EqualsAndHashCode(callSuper = true)
+<#else>
+@EqualsAndHashCode(callSuper = false)
+</#if>
 <#if swagger2>
 @ApiModel(value="${entity}VO", description="${table.comment!}")
 </#if>

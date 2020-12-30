@@ -36,7 +36,7 @@ public class ${entity}Service {
      * @return
      */
     public boolean create(${entity}VO ${entity?lower_case}VO) {
-        return ${entity?lower_case}Mapper.insert(${entity?lower_case}ConvertMapper.${entity?lower_case}VoTo${entity}(${entity?lower_case}VO)) > 0;
+        return ${entity?lower_case}Mapper.insert(${entity?lower_case}ConvertMapper.to${entity}(${entity?lower_case}VO)) > 0;
     }
 
     /**
@@ -67,11 +67,11 @@ public class ${entity}Service {
      */
     public boolean updateById(${entity}VO ${entity?lower_case}VO) {
         Assert.isNull(${entity?lower_case}VO.getId(), "ID不可为空");
-        return ${entity?lower_case}Mapper.updateById(${entity?lower_case}ConvertMapper.${entity?lower_case}VoTo${entity}(${entity?lower_case}VO)) > 0;
+        return ${entity?lower_case}Mapper.updateById(${entity?lower_case}ConvertMapper.to${entity}(${entity?lower_case}VO)) > 0;
     }
 
     public ${entity}VO getById(String id) {
         ${entity} ${entity?lower_case} = ${entity?lower_case}Mapper.selectById(id);
-        return ${entity?lower_case}ConvertMapper.${entity?lower_case}To${entity}VO(${entity?lower_case});
+        return ${entity?lower_case}ConvertMapper.to${entity}VO(${entity?lower_case});
     }
 }

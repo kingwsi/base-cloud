@@ -11,8 +11,10 @@ import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.example.common.entity.common.BaseEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -27,55 +29,46 @@ import java.util.Map;
  * author: ws <br>
  * version: 1.0 <br>
  */
-@Service
-public class CodeGeneratorService {
+public class CodeGeneratorSupport {
 
-    private final static String tableName = "trade_info";
-    private final static String entityName = "TradeInfo";
+    private final static Logger log = LoggerFactory.getLogger(CodeGeneratorSupport.class);
+    private String tableName;
+    private String entityName;
     private final static String prefix = "";
     private final static String dataUrl = "jdbc:mysql://localhost:3306/base?useUnicode=true&useSSL=false&characterEncoding=utf8";
     private final static String dataDriver = "com.mysql.cj.jdbc.Driver";
     private final static String username = "root";
     private final static String password = "root";
 
-
-
-    enum PathConfig {
-        SERVICE_PKG("/", "service包"),
-        CONTROLLER_PKG("/", "service包"),
-        MAPPER_PKG("/", "service包"),
-        MAPPER_XML_PKG("/", "service包"),
-        MAPPER_PATH("/", "service包"),
-        ;
-
-        private String path;
-        private String description;
-
-        PathConfig(String path, String description) {
-            this.path = path;
-            this.description = description;
-        }
+    public CodeGeneratorSupport(String tableName, String entityName) {
+        this.tableName = tableName;
+        this.entityName = entityName;
     }
 
-    @Autowired
-    DataSourceProperties dataSourceProperties;
-
+    /**
+     * EntityService
+     * EntityMapper
+     * EntityMapper.xml
+     */
     public void generateServiceModule() {
         // 逻辑删除
         // 搜索支持 ? LIKE/EQUALS/NONE
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
+        String fileSeparator = System.getProperty("file.separator");
+
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir").replace("\\base-admin", "") + "\\base-service";
-        System.out.println(projectPath);
+        String projectPath = System.getProperty("user.dir").replace(fileSeparator + "base-admin", "") + fileSeparator + "base-service";
         gc.setOutputDir(projectPath + "/src/main/java");
+        log.info("service 生成输出路径->{}", gc.getOutputDir());
         gc.setAuthor("ws");
         gc.setOpen(false);
         gc.setEntityName(entityName);
         gc.setServiceName(entityName + "Service");
         gc.setMapperName(entityName + "Mapper");
+        gc.setXmlName(entityName + "Mapper");
         gc.setIdType(IdType.ASSIGN_UUID);
         gc.setSwagger2(true); //实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
@@ -115,7 +108,7 @@ public class CodeGeneratorService {
                 // 判断自定义文件夹是否需要创建
                 checkDir("/src/main/java/com/example/mapper/" + entityName.toLowerCase() + "Mapper");
                 if (fileType == FileType.MAPPER) {
-                    // 已经生成 mapper 文件判断存在，不想重新生成返回 false
+                    log.warn("{} 已存在", filePath);
                     return !new File(filePath).exists();
                 }
                 // 允许生成模板文件
@@ -150,27 +143,26 @@ public class CodeGeneratorService {
         strategy.setControllerMappingHyphenStyle(true);
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
-        ConfigBuilder configBuilder = new ConfigBuilder(pc, dsc, strategy, templateConfig, gc);
-        List<TableInfo> tableInfoList = configBuilder.getTableInfoList();
-        System.out.println(tableInfoList.size());
         mpg.execute();
     }
 
+    /**
+     * EntityController
+     */
     public void generateControllerModule() {
-        // 逻辑删除
-        // 搜索支持 ? LIKE/EQUALS/NONE
-        // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        System.out.println(projectPath);
-        gc.setOutputDir(projectPath + "/src/main/java");
+        String fileSeparator = System.getProperty("file.separator");
+        gc.setOutputDir(projectPath + "/src/main/java".replace("/", fileSeparator));
+        log.info("controller生成输出路径->{}", gc.getOutputDir());
         gc.setAuthor("ws");
         gc.setOpen(false);
         gc.setEntityName(entityName);
         gc.setServiceName(entityName + "Service");
         gc.setMapperName(entityName + "Mapper");
+        gc.setControllerName(entityName + "Controller");
         gc.setIdType(IdType.ASSIGN_UUID);
         gc.setSwagger2(true); //实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
@@ -209,12 +201,11 @@ public class CodeGeneratorService {
             @Override
             public boolean isCreate(ConfigBuilder configBuilder, FileType fileType, String filePath) {
                 // 判断自定义文件夹是否需要创建
-                checkDir("/src/main/java/com/example/mapper/" + entityName.toLowerCase() + "Mapper");
-                if (fileType == FileType.MAPPER) {
-                    // 已经生成 mapper 文件判断存在，不想重新生成返回 false
+                checkDir("/src/main/java/com/example/admin/api/".replace("/", fileSeparator) + entityName + "Controller");
+                if (fileType == FileType.CONTROLLER) {
+                    log.warn("{} 已存在", filePath);
                     return !new File(filePath).exists();
                 }
-                // 允许生成模板文件
                 return true;
             }
         });
@@ -246,9 +237,6 @@ public class CodeGeneratorService {
         strategy.setControllerMappingHyphenStyle(true);
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
-        ConfigBuilder configBuilder = new ConfigBuilder(pc, dsc, strategy, templateConfig, gc);
-        List<TableInfo> tableInfoList = configBuilder.getTableInfoList();
-        System.out.println(tableInfoList.size());
         mpg.execute();
     }
 
@@ -261,9 +249,10 @@ public class CodeGeneratorService {
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir").replace("\\base-admin", "") + "\\common";
-        System.out.println(projectPath);
-        gc.setOutputDir(projectPath + "/src/main/java");
+        String fileSeparator = System.getProperty("file.separator");
+        String projectPath = System.getProperty("user.dir").replace(fileSeparator + "base-admin", "") + fileSeparator + "common";
+        gc.setOutputDir(projectPath + "/src/main/java".replace("/", fileSeparator));
+        log.info("common 生成输出路径->{}", gc.getOutputDir());
         gc.setAuthor("ws");
         gc.setOpen(false);
         gc.setEntityName(entityName);
@@ -272,6 +261,8 @@ public class CodeGeneratorService {
         gc.setIdType(IdType.ASSIGN_UUID);
         gc.setSwagger2(true); //实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
+
+        String outputDir = (projectPath + "/src/main/java/com/example/common/entity/" + entityName.toLowerCase() + "/").replace("/", fileSeparator);
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
@@ -305,7 +296,7 @@ public class CodeGeneratorService {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/java/com/example/common/entity/" + entityName.toLowerCase() + "/" + tableInfo.getEntityName() + "ConvertMapper" + StringPool.DOT_JAVA;
+                return outputDir + entityName + "ConvertMapper" + StringPool.DOT_JAVA;
             }
         });
         /*EntityVO*/
@@ -313,16 +304,23 @@ public class CodeGeneratorService {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/java/com/example/common/entity/" + entityName.toLowerCase() + "/" + tableInfo.getEntityName() + "VO" + StringPool.DOT_JAVA;
+                return outputDir + entityName + "VO" + StringPool.DOT_JAVA;
             }
 
         });
+        String webFileOutputDir = projectPath.replace("base-cloud" + fileSeparator + "common", "base-admin-web" + fileSeparator);
         /*createForm.vue.ftl*/
         focList.add(new FileOutConfig("/templates/createForm.vue.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
+                String modulesDir = (webFileOutputDir + "/src/views/" + entityName.toLowerCase() + "/modules/").replace("/", fileSeparator);
+                File dirCheck = new File(modulesDir);
+                if (!dirCheck.exists()) {
+                    boolean mkdirs = dirCheck.mkdirs();
+                    log.warn("目录[{}]不存在，->创建目录{}", modulesDir, mkdirs);
+                }
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/java/com/example/common/entity/" + entityName.toLowerCase() + "/" + "CreateForm.vue";
+                return modulesDir + "CreateForm.vue";
             }
 
         });
@@ -330,8 +328,14 @@ public class CodeGeneratorService {
         focList.add(new FileOutConfig("/templates/index.vue.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
+                String modulesDir = (webFileOutputDir + "/src/views/" + entityName.toLowerCase() + "/").replace("/", fileSeparator);
+                File dirCheck = new File(modulesDir);
+                if (!dirCheck.exists()) {
+                    boolean mkdirs = dirCheck.mkdirs();
+                    log.warn("目录[{}]不存在，->创建目录{}", modulesDir, mkdirs);
+                }
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/java/com/example/common/entity/" + entityName.toLowerCase() + "/" + "index.vue";
+                return modulesDir + "index.vue";
             }
 
         });
@@ -339,8 +343,13 @@ public class CodeGeneratorService {
         focList.add(new FileOutConfig("/templates/index.js.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/java/com/example/common/entity/" + entityName.toLowerCase() + "/" + "index.js";
+                String modulesDir = (webFileOutputDir + "/src/api/").replace("/", fileSeparator);
+                File dirCheck = new File(modulesDir);
+                if (!dirCheck.exists()) {
+                    boolean mkdirs = dirCheck.mkdirs();
+                    log.warn("目录[{}]不存在，->创建目录{}", modulesDir, mkdirs);
+                }
+                return modulesDir + entityName.toLowerCase() + ".js";
             }
 
         });
@@ -348,12 +357,11 @@ public class CodeGeneratorService {
             @Override
             public boolean isCreate(ConfigBuilder configBuilder, FileType fileType, String filePath) {
                 // 判断自定义文件夹是否需要创建
-                checkDir("/src/main/java/com/example/common/entity/" + entityName.toLowerCase());
+                checkDir("/src/main/java/com/example/common/entity/".replace("/", fileSeparator) + entityName + StringPool.DOT_JAVA);
                 if (fileType == FileType.MAPPER) {
-                    // 已经生成 mapper 文件判断存在，不想重新生成返回 false
+                    log.warn("{} 已存在", filePath);
                     return !new File(filePath).exists();
                 }
-                // 允许生成模板文件
                 return true;
             }
         });
@@ -385,9 +393,6 @@ public class CodeGeneratorService {
         strategy.setControllerMappingHyphenStyle(true);
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
-        ConfigBuilder configBuilder = new ConfigBuilder(pc, dsc, strategy, templateConfig, gc);
-        List<TableInfo> tableInfoList = configBuilder.getTableInfoList();
-        System.out.println(tableInfoList.size());
         mpg.execute();
     }
 }

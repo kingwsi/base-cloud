@@ -37,7 +37,7 @@
 
 </#if>
     <select id="selectPage" resultType="${package.Entity}.${entity}VO">
-        SELECT * FROM sys_dictionaries
+        SELECT * FROM ${table.name}
         <where>
             <#list table.fields as field>
             <#if !field.keyFlag><#--生成普通字段 -->

@@ -3,16 +3,16 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
         <a-row :gutter="48">
-          <#list table.fields as field>
-          <#if !field.keyFlag>
-          <#if field_index lt 2>
+<#list table.fields as field>
+<#if !field.keyFlag>
+<#if field_index lt 2>
           <a-col :md="8" :sm="24">
             <a-form-item label="${field.comment}">
               <a-input v-model="queryParam.${field.propertyName}" placeholder="${field.comment}"/>
             </a-form-item>
           </a-col>
-    </#if>
-  </#if>
+</#if>
+</#if>
 </#list>
 <#if (table.fields?size>2)>
           <template v-if="advanced">
@@ -161,10 +161,9 @@ export default {
               this.$refs.table.refresh()
               this.$message.info('修改成功')
             }).catch((err) => {
-              log.error("修改失败",err)
+              console.log('form update error:->', err)
               this.$message.error('修改失败')
-            }).finally(()=>{
-              this.$message.error('修改失败')
+            }).finally(() => {
               this.confirmLoading = false
             })
           } else {
@@ -178,9 +177,9 @@ export default {
               this.$refs.table.refresh()
               this.$message.info('新增成功')
             }).catch((err) => {
-              console.log(`form update error:->${err}`)
-            }).finally(()=>{
+              console.log('form create error:->', err)
               this.$message.error('修改失败')
+            }).finally(() => {
               this.confirmLoading = false
             })
           }

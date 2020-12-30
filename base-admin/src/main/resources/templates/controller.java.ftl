@@ -23,18 +23,19 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 /**
  * <p>
- * ${table.comment!} 前端控制器
+ * ${table.comment!}
  * </p>
  *
  * @author ${author}
  * @since ${date}
  */
+@Api(tags = "${table.comment}")
 <#if restControllerStyle>
 @RestController
 <#else>
 @Controller
 </#if>
-@RequestMapping("<#if package.ModuleName??>/${package.ModuleName}</#if>/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
+@RequestMapping("/api/${controllerMappingHyphen}")
 <#if kotlin>
 class ${table.controllerName}<#if superControllerClass??> : ${superControllerClass}()</#if>
 <#else>

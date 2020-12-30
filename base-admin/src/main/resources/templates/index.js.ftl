@@ -2,10 +2,10 @@ import request from '@/utils/request'
 
 const Api = {
   // get my info
-  Page: '/${entity}/page',
-  Add: '/${entity}',
-  Update: '/${entity}',
-  Delete: '/${entity}'
+  Page: '/${entity?lower_case}/page',
+  Add: '/${entity?lower_case}',
+  Update: '/${entity?lower_case}',
+  Delete: '/${entity?lower_case}'
 }
 
 export function GetPage (parameter) {
@@ -34,7 +34,9 @@ export function UpdateById (data) {
 
 export function DeleteById (id) {
   return request({
+<#noparse>
     url: `${Api.Delete}/${id}`,
     method: 'delete'
+</#noparse>
   })
 }
