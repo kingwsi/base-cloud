@@ -18,5 +18,5 @@ public interface UserMapper extends BaseMapper<User> {
      * @param userId
      * @return
      */
-    UserVO selectUsersWithRoles(@Param("userId") String userId);
+    UserVO selectUsersWithRoles(@Param("userId") Integer userId);
 }

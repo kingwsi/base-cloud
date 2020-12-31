@@ -28,7 +28,7 @@ public class TokenUtils {
 
     public static AuthUser parser(String token) {
         Claims claims = Jwts.parser().setSigningKey(KEY).parseClaimsJws(token).getBody();
-        String id = claims.get("id", String.class);
+        Integer id = claims.get("id", Integer.class);
         String name = claims.get("name", String.class);
         AuthUser authUser = new AuthUser();
         authUser.setId(id);

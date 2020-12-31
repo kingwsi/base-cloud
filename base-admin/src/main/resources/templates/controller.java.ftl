@@ -69,7 +69,7 @@ public class ${table.controllerName} {
 
     @DeleteMapping("/{id}")
     @ApiOperation("删除")
-    public ResponseData deleteById(@PathVariable String id) {
+    public ResponseData deleteById(@PathVariable Integer id) {
         if (StringUtils.isEmpty(id)) {
             ResponseData.FAIL("ID不能为空");
         }

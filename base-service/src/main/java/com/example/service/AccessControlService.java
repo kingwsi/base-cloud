@@ -56,7 +56,7 @@ public class AccessControlService {
      * @param method
      * @return
      */
-    public List<Resource> listByUserAndMethod(String userId, String method) {
+    public List<Resource> listByUserAndMethod(Integer userId, String method) {
         return resourceMapper.selectByUserAndMethod(userId, method);
     }
 
@@ -77,7 +77,7 @@ public class AccessControlService {
      * @return
      */
     public UserVO getUserInfo() {
-        return Optional.of(request.getHeader("x-id"))
+        return Optional.of(Integer.valueOf(request.getHeader("x-id")))
                 .map(userMapper::selectUsersWithRoles).get();
 
     }
@@ -88,7 +88,7 @@ public class AccessControlService {
      * @return
      */
     public List<ResourceVO> getCurrentUserRouters() {
-        return Optional.of(request.getHeader("x-id"))
+        return Optional.of(Integer.valueOf(request.getHeader("x-id")))
                 .map(resourceMapper::selectRouteByUserId).map(resourceConvertMapper::toResourceVOs).get();
     }
 }

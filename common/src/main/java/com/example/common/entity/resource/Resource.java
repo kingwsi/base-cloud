@@ -32,7 +32,7 @@ public class Resource extends BaseEntity {
     private String description;
 
     // 上级id 若资源是菜单则需要
-    private String parentId;
+    private Integer parentId;
 
     // 排序
     private String sort;

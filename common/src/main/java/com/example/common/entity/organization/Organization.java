@@ -19,6 +19,6 @@ import lombok.NoArgsConstructor;
 public class Organization extends BaseEntity {
     private String name;
     private String description;
-    private String parentId;
+    private Integer parentId;
     private String remark;
 }

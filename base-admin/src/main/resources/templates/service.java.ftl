@@ -45,7 +45,7 @@ public class ${entity}Service {
      * @param id
      * @return
      */
-    public boolean removeById(String id) {
+    public boolean removeById(Integer id) {
         return ${entity?lower_case}Mapper.deleteById(id) > 0;
     }
 
@@ -70,7 +70,7 @@ public class ${entity}Service {
         return ${entity?lower_case}Mapper.updateById(${entity?lower_case}ConvertMapper.to${entity}(${entity?lower_case}VO)) > 0;
     }
 
-    public ${entity}VO getById(String id) {
+    public ${entity}VO getById(Integer id) {
         ${entity} ${entity?lower_case} = ${entity?lower_case}Mapper.selectById(id);
         return ${entity?lower_case}ConvertMapper.to${entity}VO(${entity?lower_case});
     }

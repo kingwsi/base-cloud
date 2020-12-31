@@ -9,7 +9,7 @@
             <result column="resource_id"/>
         </collection>
     </resultMap>
-    <select id="selectRouteByUserId" parameterType="string" resultType="com.example.common.entity.resource.Resource">
+    <select id="selectRouteByUserId" resultType="com.example.common.entity.resource.Resource">
         SELECT r.*
         FROM sys_resources r
                  LEFT JOIN sys_roles_and_resources rar ON r.id = rar.resource_id

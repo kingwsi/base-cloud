@@ -13,7 +13,7 @@ import java.time.Instant;
  */
 @Data
 public class BaseEntityVO {
-    private String id;
+    private Integer id;
     private String creator;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

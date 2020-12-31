@@ -63,7 +63,7 @@ public class ResourceController {
 
     @ApiOperation("更新资源")
     @DeleteMapping("/{id}")
-    public ResponseData deleteById(@PathVariable String id) {
+    public ResponseData deleteById(@PathVariable Integer id) {
         return resourceService.deleteById(id) ? ResponseData.OK() : ResponseData.FAIL("删除失败");
     }
 
@@ -75,7 +75,7 @@ public class ResourceController {
      */
     @ApiOperation("获取资源")
     @GetMapping("/apis")
-    public ResponseData listCurrentUserApis(String method, String userId) {
+    public ResponseData listCurrentUserApis(String method, Integer userId) {
         List<String> list = resourceService.listUrisByMethodAndUser(method, userId);
         System.out.println("apis request");
         return ResponseData.OK(list);

@@ -20,7 +20,7 @@ public class BaseServiceApplicationTests {
 
     @Test
     public void contextLoads() {
-        RoleVO roleWithResources = roleService.getRoleWithResources("1");
+        RoleVO roleWithResources = roleService.getRoleWithResources(1);
         log.info("role info -> {}", roleWithResources);
     }
 

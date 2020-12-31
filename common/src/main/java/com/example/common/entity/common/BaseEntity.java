@@ -25,14 +25,14 @@ public abstract class BaseEntity implements Serializable {
 
     protected static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    String id;
+    @TableId(value = "id", type = IdType.AUTO)
+    Integer id;
 
-    String creator;
+    Integer creator;
 
     Instant createdDate;
 
-    String lastUpdater;
+    Integer lastUpdater;
 
     Instant lastUpdateDate;
 

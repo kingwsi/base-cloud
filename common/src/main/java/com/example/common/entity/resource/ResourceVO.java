@@ -7,13 +7,13 @@ import java.util.List;
 
 @Data
 public class ResourceVO {
-    private String id;
+    private Integer id;
     private String name;
     private ResourceTypeEnum type;
     private String description;
     private String uri;
     private String methods;
-    private String parentId;
+    private Integer parentId;
     private String sort;
     private String component;
     private String icon;

@@ -44,7 +44,7 @@ public class ResourceService {
         return this.resourceMapper.updateById(resource);
     }
 
-    public List<String> listUrisByMethodAndUser(String method, String userId) {
+    public List<String> listUrisByMethodAndUser(String method, Integer userId) {
         return resourceMapper.selectUrisByUser(method, userId);
     }
 
@@ -68,7 +68,7 @@ public class ResourceService {
         return repeatCount > 0;
     }
 
-    public boolean deleteById(String id) {
+    public boolean deleteById(Integer id) {
         int rowCount = resourceMapper.deleteById(id);
         return rowCount > 0;
     }

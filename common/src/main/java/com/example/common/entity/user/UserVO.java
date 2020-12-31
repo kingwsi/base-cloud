@@ -23,7 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserVO {
-    private String id;
+    private Integer id;
 
     @Size(groups = {Update.class, Insert.class}, min = 4, max = 15, message = "用户名长度需在5-15之间")
     private String username;
@@ -38,7 +38,7 @@ public class UserVO {
     private String introduction;
     private String nickname;
     @NotEmpty
-    private List<String> roleIds;
+    private List<Integer> roleIds;
     private List<Role> roles;
     private String creator;
     private Instant createdDate;

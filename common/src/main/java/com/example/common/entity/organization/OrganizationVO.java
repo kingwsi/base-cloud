@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrganizationVO {
-    private String id;
+    private Integer id;
     private String name;
     private String description;
-    private String parentId;
+    private Integer parentId;
     private String remark;
 }

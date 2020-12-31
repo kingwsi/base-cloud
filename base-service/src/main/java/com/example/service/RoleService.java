@@ -45,7 +45,7 @@ public class RoleService {
         rolesAndResourcesMapper.batchInsertRoleResources(role.getId(), roleVO.getResourceIdList());
     }
 
-    public void deleteById(String id) {
+    public void deleteById(Integer id) {
         this.roleMapper.deleteById(id);
     }
 
@@ -68,7 +68,7 @@ public class RoleService {
      * @param id
      * @return
      */
-    public RoleVO getRoleWithResources(String id) {
+    public RoleVO getRoleWithResources(Integer id) {
         return roleMapper.selectRoleWithResources(id);
     }
 

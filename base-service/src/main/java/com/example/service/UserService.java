@@ -71,11 +71,11 @@ public class UserService {
         userMapper.updateById(user);
     }
 
-    public UserVO getUserById(String id) {
+    public UserVO getUserById(Integer id) {
         return userConvertMapper.toVO(userMapper.selectById(id));
     }
 
-    public UserVO getUserWithRolesByUserId(String id) {
+    public UserVO getUserWithRolesByUserId(Integer id) {
         return userMapper.selectUsersWithRoles(id);
     }
 }

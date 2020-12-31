@@ -19,9 +19,9 @@ import lombok.NoArgsConstructor;
 @TableName("sys_users_and_roles")
 public class UsersAndRoles {
     @TableId(type = IdType.ASSIGN_UUID)
-    private String id;
+    private Integer id;
 
-    private String userId;
+    private Integer userId;
 
     private String roleId;
 }

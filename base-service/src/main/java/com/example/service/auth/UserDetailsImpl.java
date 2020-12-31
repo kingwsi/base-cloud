@@ -58,7 +58,7 @@ public class UserDetailsImpl implements UserDetails {
         return "1".equals(user.getStatus());
     }
 
-    public String getId() {
+    public Integer getId() {
         return this.user.getId();
     }
 }

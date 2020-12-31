@@ -10,7 +10,7 @@
         <result column="description" property="description"/>
         <result column="last_updater" property="lastUpdater"/>
         <result column="last_update_date" property="lastUpdateDate"/>
-        <collection property="resourceIdList" ofType="string">
+        <collection property="resourceIdList" ofType="integer">
             <result column="resource_id"/>
         </collection>
     </resultMap>

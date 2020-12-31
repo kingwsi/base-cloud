@@ -14,14 +14,14 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class AuthUser {
-    private String id;
+    private Integer id;
     private String username;
     private String type;
     private String password;
     private String verifyCode;
     private List<String> roles;
 
-    public AuthUser(String id, String username, String type) {
+    public AuthUser(Integer id, String username, String type) {
         this.id = id;
         this.username = username;
         this.type = type;

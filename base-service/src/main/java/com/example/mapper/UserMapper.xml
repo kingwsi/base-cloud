@@ -13,7 +13,7 @@
         <result column="last_updater" property="lastUpdater"/>
         <result column="last_update_date" property="lastUpdateDate"/>
         <result column="status" property="status"/>
-        <collection property="roleIds" ofType="string">
+        <collection property="roleIds" ofType="integer">
             <result column="role_id"/>
         </collection>
     </resultMap>

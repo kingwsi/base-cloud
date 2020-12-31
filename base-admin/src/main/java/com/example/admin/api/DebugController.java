@@ -47,7 +47,7 @@ public class DebugController {
         }
         AuthUser authUser = new AuthUser();
         authUser.setUsername(username);
-        authUser.setId("888");
+        authUser.setId(1);
         return TokenUtils.createToken(authUser);
     }
 

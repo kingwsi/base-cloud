@@ -21,17 +21,17 @@ public interface ResourceMapper extends BaseMapper<Resource> {
     @Select("SELECT * FROM sys_resources WHERE type = #{route} AND deleted = 0")
     List<ResourceVO> selectAllByType(@Param("route") ResourceTypeEnum route);
 
-    List<Resource> selectRouteByUserId(@Param("userId") String userId);
+    List<Resource> selectRouteByUserId(@Param("userId") Integer userId);
 
-    List<Resource> selectByUserId(@Param("userId") String userId);
+    List<Resource> selectByUserId(@Param("userId") Integer userId);
 
-    List<Resource> selectByMethodAndUserIdAndUri(@Param("method") String method, @Param("userId") String userId);
+    List<Resource> selectByMethodAndUserIdAndUri(@Param("method") String method, @Param("userId") Integer userId);
 
-    List<String> selectUrisByUser(@Param("method") String method, @Param("userId") String userId);
+    List<String> selectUrisByUser(@Param("method") String method, @Param("userId") Integer userId);
 
-    List<Resource> selectByUser(@Param("userId") String userId);
+    List<Resource> selectByUser(@Param("userId") Integer userId);
 
-    List<Resource> selectByUserAndMethod(@Param("userId") String userId, @Param("method") String method);
+    List<Resource> selectByUserAndMethod(@Param("userId") Integer userId, @Param("method") String method);
 
     IPage<ResourceVO> selectOfPage(Page page, @Param("query") ResourceQuery query);
 

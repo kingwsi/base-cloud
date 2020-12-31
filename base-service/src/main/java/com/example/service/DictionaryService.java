@@ -35,7 +35,7 @@ public class DictionaryService {
         return this.dictionaryMapper.updateById(dictionary) > 0;
     }
 
-    public boolean removeById(String id) {
+    public boolean removeById(Integer id) {
         return this.dictionaryMapper.deleteById(id) > 0;
     }
 

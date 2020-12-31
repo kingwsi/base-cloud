@@ -16,5 +16,5 @@ public class RoleVO extends BaseEntityVO {
     private String status;
     private String description;
     private List<ResourceVO> resourceList;
-    private List<String> resourceIdList;
+    private List<Integer> resourceIdList;
 }

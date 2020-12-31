@@ -15,7 +15,7 @@ public class RouteVO {
     private String uri;
 
     @NotBlank
-    private String parentId;
+    private Integer parentId;
     private String sort = "-1";
 
     private String icon = "icon";

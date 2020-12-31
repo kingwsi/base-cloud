@@ -18,7 +18,7 @@ public class OrganizationService {
         this.organizationMapper = organizationMapper;
     }
 
-    public List<Organization> recursive(List<Organization> organizations, String parentId) {
+    public List<Organization> recursive(List<Organization> organizations, Integer parentId) {
         List<Organization> result = organizations.stream().filter(o -> o.getParentId().equals(parentId)).collect(Collectors.toList());
         if (!result.isEmpty()){
             this.organizations.addAll(result);

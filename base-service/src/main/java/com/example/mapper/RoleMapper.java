@@ -14,9 +14,9 @@ import java.util.List;
 public interface RoleMapper extends BaseMapper<Role> {
     IPage<RoleVO> selectPageWithResources(Page<RoleVO> page, @Param("roleVO") RoleVO roleVO);
 
-    RoleVO selectRoleWithResourceIds(@Param("id") String id);
+    RoleVO selectRoleWithResourceIds(@Param("id") Integer id);
 
-    RoleVO selectRoleWithResources(@Param("id") String id);
+    RoleVO selectRoleWithResources(@Param("id") Integer id);
 
-    List<Role> selectByUserId(@Param("userId") String userId);
+    List<Role> selectByUserId(@Param("userId") Integer userId);
 }

@@ -23,7 +23,7 @@ import java.util.List;
 public interface UsersAndRolesMapper extends BaseMapper<UsersAndRoles> {
 
     @Select("SELECT _r.* FROM sys_roles _r LEFT JOIN user_and_roles _u_r ON _r.id = _u_r.role_id WHERE _u_r.user_id = #{id}")
-    List<Role> findRolesByUserId(@Param("id") String id);
+    List<Role> findRolesByUserId(@Param("id") Integer id);
 
     @Select("SELECT _r.* FROM sys_roles _r LEFT JOIN sys_users_and_roles _u_r ON _r.id = _u_r.role_id LEFT JOIN sys_users _u ON _u_r.user_id = _u.id WHERE _u.username = #{username}")
     HashSet<Role> findRolesByUserName(@Param("username") String username);
@@ -32,7 +32,7 @@ public interface UsersAndRolesMapper extends BaseMapper<UsersAndRoles> {
 
     UserVO listUserWithRolesByUsername(@Param("username") String username);
 
-    Integer batchInsert(@Param("userId") String userId, @Param("roleIds") List<String> roleIds);
+    Integer batchInsert(@Param("userId") Integer userId, @Param("roleIds") List<Integer> roleIds);
 
-    void deleteByUserId(@Param("userId") String userId);
+    void deleteByUserId(@Param("userId") Integer userId);
 }

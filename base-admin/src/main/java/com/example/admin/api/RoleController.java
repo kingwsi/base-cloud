@@ -25,13 +25,13 @@ public class RoleController {
     }
 
     @GetMapping("/resources")
-    public ResponseData listByRoleId(@RequestParam String id) {
+    public ResponseData listByRoleId(@RequestParam Integer id) {
         RoleVO roleVO = roleService.getRoleWithResources(id);
         return ResponseData.OK(roleVO);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseData delete(@PathVariable("id") String id) {
+    public ResponseData delete(@PathVariable("id") Integer id) {
         roleService.deleteById(id);
         return ResponseData.OK();
     }
