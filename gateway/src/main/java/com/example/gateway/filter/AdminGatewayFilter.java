@@ -52,7 +52,13 @@ public class AdminGatewayFilter implements GatewayFilter, Ordered {
         if (StringUtils.isEmpty(token)) {
             return responseError(exchange);
         }
-        AuthUser authUser = TokenUtils.parser(token.replace("Bearer ", ""));
+        AuthUser authUser;
+        try {
+            authUser = TokenUtils.parser(token.replace("Bearer ", ""));
+        } catch (Exception e){
+            log.error("Token解析失败->{}", e.getMessage());
+            return responseError(exchange);
+        }
 
         if (!PermissionUtils.checkPathPermission(path, Objects.requireNonNull(request.getMethod()).name(), authUser.getId())) {
             return responseError(exchange);
