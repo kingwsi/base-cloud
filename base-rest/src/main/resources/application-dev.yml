@@ -5,6 +5,25 @@ spring:
     consul:
       host: localhost
       port: 8500
+      enabled: false
     loadbalancer:
       ribbon:
         enabled: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/base?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true
+    username: root
+    password: root
+#mybatis配置
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    # 开启sql日志
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: flag  #全局逻辑删除字段值 3.3.0开始支持，详情看下面。
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  configuration:
+    # 开启sql日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

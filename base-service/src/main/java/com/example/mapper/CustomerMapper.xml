@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CustomerMapper">
+
+    <select id="selectPage" resultType="com.example.common.entity.customer.CustomerVO">
+        SELECT * FROM customer
+        <where>
+            <if test="vo.realName != null and vo.realName != ''">
+                AND realName LIKE CONCAT('%',#{vo.realName},'%')
+            </if>
+            <if test="vo.nickName != null and vo.nickName != ''">
+                AND nickName LIKE CONCAT('%',#{vo.nickName},'%')
+            </if>
+            <if test="vo.gender != null and vo.gender != ''">
+                AND gender LIKE CONCAT('%',#{vo.gender},'%')
+            </if>
+            <if test="vo.mobile != null and vo.mobile != ''">
+                AND mobile LIKE CONCAT('%',#{vo.mobile},'%')
+            </if>
+            <if test="vo.email != null and vo.email != ''">
+                AND email LIKE CONCAT('%',#{vo.email},'%')
+            </if>
+            <if test="vo.avatar != null and vo.avatar != ''">
+                AND avatar LIKE CONCAT('%',#{vo.avatar},'%')
+            </if>
+            <if test="vo.introduce != null and vo.introduce != ''">
+                AND introduce LIKE CONCAT('%',#{vo.introduce},'%')
+            </if>
+            <if test="vo.lastLoginTime != null and vo.lastLoginTime != ''">
+                AND lastLoginTime LIKE CONCAT('%',#{vo.lastLoginTime},'%')
+            </if>
+            <if test="vo.lastLoginIp != null and vo.lastLoginIp != ''">
+                AND lastLoginIp LIKE CONCAT('%',#{vo.lastLoginIp},'%')
+            </if>
+            <if test="vo.password != null and vo.password != ''">
+                AND password LIKE CONCAT('%',#{vo.password},'%')
+            </if>
+            AND deleted = 0
+        </where>
+    </select>
+</mapper>

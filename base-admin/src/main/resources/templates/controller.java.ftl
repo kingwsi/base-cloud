@@ -54,7 +54,7 @@ public class ${table.controllerName} {
     @ApiOperation("更新")
     public ResponseData updateById(@RequestBody ${entity}VO ${entity?uncap_first}VO) {
         if (StringUtils.isEmpty(${entity?uncap_first}VO.getId())) {
-            ResponseData.FAIL("ID不能为空");
+            return ResponseData.FAIL("ID不能为空");
         }
         boolean result = ${entity?uncap_first}Service.updateById(${entity?uncap_first}VO);
         return result ? ResponseData.OK() : ResponseData.FAIL();

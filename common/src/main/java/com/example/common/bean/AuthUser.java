@@ -16,6 +16,7 @@ import java.util.List;
 public class AuthUser {
     private Integer id;
     private String username;
+    private String mobile;
     private String type;
     private String password;
     private String verifyCode;

@@ -21,6 +21,17 @@ public class TokenUtils {
         return Jwts.builder()
                 .claim("id", authUser.getId())
                 .claim("name", authUser.getUsername())
+                .claim("type","administrator")
+                .setExpiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
+                .signWith(SignatureAlgorithm.HS512, KEY)
+                .compact();
+    }
+
+    public static String createCustomerToken(AuthUser authUser){
+        return Jwts.builder()
+                .claim("id", authUser.getId())
+                .claim("name", authUser.getUsername())
+                .claim("type","customer")
                 .setExpiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
                 .signWith(SignatureAlgorithm.HS512, KEY)
                 .compact();
@@ -37,7 +48,6 @@ public class TokenUtils {
     }
 
     public static AuthUser getCurrentUser(){
-
         return new AuthUser();
     }
 }
