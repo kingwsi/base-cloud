@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 同意返回对象封装
+ * 返回对象封装
  */
 @Data
 @AllArgsConstructor

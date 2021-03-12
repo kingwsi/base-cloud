@@ -1,14 +1,12 @@
 package com.example.rest.api;
 
+import com.example.common.annotation.Limiter;
 import com.example.common.bean.AuthUser;
 import com.example.common.bean.ResponseData;
 import com.example.service.CustomerService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * description: UserController <br>
@@ -33,6 +31,12 @@ public class CustomerController {
     @PostMapping("/authByPwd")
     public ResponseData authByPwd(@RequestBody AuthUser authUser) {
         return ResponseData.OK(customerService.authByPwd(authUser));
+    }
+
+    @Limiter
+    @GetMapping("/limiterTest")
+    public ResponseData limiterTest(){
+        return ResponseData.OK();
     }
 
     public void authByMobile() {
