@@ -2,22 +2,23 @@ package com.example.common.interceptor;
 
 import com.example.common.annotation.Limiter;
 import com.example.common.bean.ResponseData;
+import com.example.common.utils.LimiterUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,14 +34,11 @@ public class LimiterInterceptor {
 
     private final StringRedisTemplate redisTemplate;
 
-    private final RedisScript redisRequestRateLimiterScript;
+    private final RedisScript limiterScript;
 
-    private final HttpServletRequest httpServletRequest;
-
-    public LimiterInterceptor(StringRedisTemplate redisTemplate, RedisScript redisRequestRateLimiterScript, HttpServletRequest httpServletRequest) {
+    public LimiterInterceptor(StringRedisTemplate redisTemplate, RedisScript limiterScript) {
         this.redisTemplate = redisTemplate;
-        this.redisRequestRateLimiterScript = redisRequestRateLimiterScript;
-        this.httpServletRequest = httpServletRequest;
+        this.limiterScript = limiterScript;
     }
 
     /**
@@ -76,9 +74,9 @@ public class LimiterInterceptor {
         }
 
         try {
-            List<String> keys = getKeys(key);
+            List<String> keys = LimiterUtils.getKeys(key);
             String[] args = new String[]{limiter.replenishRate() + "", limiter.burstCapacity() + "", Instant.now().getEpochSecond() + "", limiter.requestedTokens() + ""};
-            List<Long> results = (List<Long>) this.redisTemplate.execute(redisRequestRateLimiterScript, keys, args);
+            List<Long> results = (List<Long>) this.redisTemplate.execute(limiterScript, keys, args);
             assert results != null;
             boolean allowed = results.get(0) == 1L;
             if (!allowed) {
@@ -97,35 +95,27 @@ public class LimiterInterceptor {
         return point.proceed();
     }
 
-    static List<String> getKeys(String key) {
-        // use `{}` around keys to use Redis Key hash tags
-        // this allows for using redis cluster
-
-        // Make a unique key per user.
-        String prefix = "request_rate_limiter.{" + key;
-
-        // You need two Redis keys for Token Bucket.
-        String tokenKey = prefix + "}.tokens";
-        String timestampKey = prefix + "}.timestamp";
-        return Arrays.asList(tokenKey, timestampKey);
-    }
-
     public String getIpAddress() {
-        String ip = httpServletRequest.getHeader("x-forwarded-for");
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = servletRequestAttributes.getRequest();
+
+        String ip = request.getHeader("x-forwarded-for");
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = httpServletRequest.getHeader("Proxy-Client-IP");
+            ip = request.getHeader("Proxy-Client-IP");
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = httpServletRequest.getHeader("WL-Proxy-Client-IP");
+            ip = request.getHeader("WL-Proxy-Client-IP");
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = httpServletRequest.getRemoteAddr();
+            ip = request.getRemoteAddr();
         }
         return ip;
     }
 
     public String getUserId() {
-        String userId = httpServletRequest.getHeader("customer-id");
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = servletRequestAttributes.getRequest();
+        String userId = request.getHeader("customer-id");
         if (StringUtils.hasText(userId)) {
             return userId;
         }

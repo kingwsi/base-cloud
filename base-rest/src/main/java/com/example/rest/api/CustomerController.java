@@ -3,6 +3,7 @@ package com.example.rest.api;
 import com.example.common.annotation.Limiter;
 import com.example.common.bean.AuthUser;
 import com.example.common.bean.ResponseData;
+import com.example.common.enumerate.LimiterType;
 import com.example.service.CustomerService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,24 +24,24 @@ public class CustomerController {
     private CustomerService customerService;
 
     @PostMapping("/register")
-    public ResponseData register(@RequestBody AuthUser authUser) {
+    public ResponseData<?> register(@RequestBody AuthUser authUser) {
         customerService.register(authUser);
         return ResponseData.OK();
     }
 
     @PostMapping("/authByPwd")
-    public ResponseData authByPwd(@RequestBody AuthUser authUser) {
+    public ResponseData<String> authByPwd(@RequestBody AuthUser authUser) {
         return ResponseData.OK(customerService.authByPwd(authUser));
     }
 
-    @Limiter
+    @Limiter(type = LimiterType.IP, requestedTokens = 30, burstCapacity = 30)
     @GetMapping("/limiterTest")
-    public ResponseData limiterTest(){
+    public ResponseData<?> limiterTest() {
         return ResponseData.OK();
     }
 
     public void authByMobile() {
 
     }
-    
+
 }

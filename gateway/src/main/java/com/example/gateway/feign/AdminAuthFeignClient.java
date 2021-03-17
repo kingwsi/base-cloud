@@ -1,7 +1,7 @@
 package com.example.gateway.feign;
 
 import com.example.common.bean.AuthUser;
-import com.example.gateway.config.ResponseData;
+import com.example.common.bean.ResponseData;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

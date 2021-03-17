@@ -8,7 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 
 /**
- * description: TokenUtils <br>
+ * description: token处理工具类 <br>
  * date: 2020/9/29 13:18 <br>
  * author: ws <br>
  * version: 1.0 <br>

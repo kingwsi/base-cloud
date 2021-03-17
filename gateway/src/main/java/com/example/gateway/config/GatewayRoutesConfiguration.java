@@ -2,6 +2,7 @@ package com.example.gateway.config;
 
 import com.example.gateway.filter.AdminGatewayFilter;
 import com.example.gateway.filter.RestGatewayFilter;
+import com.example.gateway.service.PermissionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Slf4j
 public class GatewayRoutesConfiguration {
+
     /**
      * java 配置 server 服务路由
      *

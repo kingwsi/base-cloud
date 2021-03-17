@@ -2,9 +2,9 @@ package com.example.gateway.filter;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.common.bean.AuthUser;
+import com.example.common.bean.ResponseData;
+import com.example.common.utils.AntPathMatcherExt;
 import com.example.common.utils.TokenUtils;
-import com.example.gateway.config.ResponseData;
-import com.example.gateway.utils.BaseUtils;
 import com.example.gateway.utils.PermissionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -27,24 +27,20 @@ import java.util.function.Consumer;
 @Component
 public class AdminGatewayFilter implements GatewayFilter, Ordered {
 
-    private final String KEY = "123456";
+    AntPathMatcherExt antPathMatcherExt = new AntPathMatcherExt();
 
     private static final String[] excludedAuthPages = {
-            "/admin/api/debug/**",
-            "/admin/api/auth",
-            "/rest/api/customer/login",
-            "/webjars/**",
-            "/admin/swagger**/**",
-            "/admin/v2/api-docs**",
-            "/**/*.gif", "/**/*.png", "/**/*.jpg", "/**/*.html", "/**/*.js", "/**/*.css", "/**/*.ico",
-            "/api/socket/**"
+            "/api/debug/**",
+            "/api/auth",
+            "/api/customer/login",
     };
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
-        String path = request.getPath().toString();
-        if (BaseUtils.pathMatch(excludedAuthPages, path)) {
+        String path = request.getPath().toString().replace("/admin", "");
+        // 白名单
+        if (antPathMatcherExt.pathMatch(excludedAuthPages, path)) {
             return chain.filter(exchange);
         }
         HttpHeaders headers = request.getHeaders();
@@ -55,12 +51,12 @@ public class AdminGatewayFilter implements GatewayFilter, Ordered {
         AuthUser authUser;
         try {
             authUser = TokenUtils.parser(token.replace("Bearer ", ""));
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("Token解析失败->{}", e.getMessage());
             return responseError(exchange);
         }
 
-        if (!PermissionUtils.checkPathPermission(path, Objects.requireNonNull(request.getMethod()).name(), authUser.getId())) {
+        if (!PermissionUtils.isAllowed(path, Objects.requireNonNull(request.getMethod()).name(), authUser.getId())) {
             return responseError(exchange);
         }
 
@@ -84,22 +80,11 @@ public class AdminGatewayFilter implements GatewayFilter, Ordered {
     public Mono<Void> responseError(ServerWebExchange exchange) {
         exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
         ServerHttpResponse response = exchange.getResponse();
-        ResponseData<String> data = new ResponseData<>();
-        data.setCode(HttpStatus.UNAUTHORIZED.value());
-        data.setMessage("Unauthorized");
+        ResponseData<Object> data = ResponseData.FAIL().setCode(HttpStatus.UNAUTHORIZED.value()).setMessage("Unauthorized");
         byte[] dataBytes = JSONObject.toJSONBytes(data);
         DataBuffer buffer = response.bufferFactory().wrap(dataBytes);
         response.setStatusCode(HttpStatus.UNAUTHORIZED);
         response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
         return response.writeWith(Mono.just(buffer));
     }
-
-//    public boolean checkPathPermission(String path, String method, String userId) {
-//        ResponseData<List<String>> apis = adminAuthFeignClient.listCurrentUserApis(method, userId);
-//        if (apis.getCode() == 200 && !apis.getData().isEmpty()) {
-//            return antPathMatcher.pathMatch((String[]) apis.getData().toArray(), path);
-//        }
-//        log.info("unauthorized -> user:{} path:{} {}", userId, method, path);
-//        return false;
-//    }
 }

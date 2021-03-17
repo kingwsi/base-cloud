@@ -18,7 +18,7 @@ import java.util.List;
 public class RedisConfiguration {
     @Bean
     @SuppressWarnings("unchecked")
-    public org.springframework.data.redis.core.script.RedisScript redisRequestRateLimiterScript() {
+    public org.springframework.data.redis.core.script.RedisScript limiterScript() {
         DefaultRedisScript redisScript = new DefaultRedisScript<>();
         redisScript.setScriptSource(new ResourceScriptSource(
                 new ClassPathResource("request_rate_limiter.lua")));
