@@ -2,7 +2,6 @@ package com.example.gateway.config;
 
 import com.example.gateway.filter.AdminGatewayFilter;
 import com.example.gateway.filter.RestGatewayFilter;
-import com.example.gateway.service.PermissionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;

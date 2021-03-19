@@ -48,6 +48,7 @@
         <aliyun-sdk-oss.version>3.8.0</aliyun-sdk-oss.version>
         <io.springfox-boot.version>3.0.0</io.springfox-boot.version>
         <com.alibaba.druid.version>1.2.2</com.alibaba.druid.version>
+        <org.liquibase.version>4.3.1</org.liquibase.version>
         <org.apache.maven.plugins.version>3.8.1</org.apache.maven.plugins.version>
     </properties>
 
@@ -188,6 +189,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${com.alibaba.druid.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>${org.liquibase.version}</version>
             </dependency>
 
             <!-- lombok 开发小插件 -->
