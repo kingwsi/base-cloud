@@ -50,6 +50,7 @@
         <com.alibaba.druid.version>1.2.2</com.alibaba.druid.version>
         <org.liquibase.version>4.3.1</org.liquibase.version>
         <org.apache.maven.plugins.version>3.8.1</org.apache.maven.plugins.version>
+        <com.github.whvcse.version>1.6.2</com.github.whvcse.version>
     </properties>
 
     <!--版本管理-->
@@ -203,6 +204,12 @@
                 <artifactId>lombok</artifactId>
                 <version>1.16.14</version>
                 <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.whvcse</groupId>
+                <artifactId>easy-captcha</artifactId>
+                <version>${com.github.whvcse.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

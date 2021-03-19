@@ -20,6 +20,7 @@ public class AuthUser {
     private String type;
     private String password;
     private String verifyCode;
+    private String key;
     private List<String> roles;
 
     public AuthUser(Integer id, String username, String type) {
