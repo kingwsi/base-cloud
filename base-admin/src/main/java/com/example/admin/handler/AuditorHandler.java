@@ -31,14 +31,13 @@ public class AuditorHandler implements Interceptor {
         Object parameter = invocation.getArgs()[1];
         if (parameter instanceof BaseEntity) {
             BaseEntity entity = (BaseEntity) parameter;
-            if (SqlCommandType.INSERT.equals(sqlCommandType)) {
+            if (SqlCommandType.INSERT == sqlCommandType) {
                 entity.setCreatedDate(Instant.now());
                 entity.setCreator(TokenUtils.getCurrentUser().getId());
-            } else if (SqlCommandType.UPDATE.equals(sqlCommandType)) {
+            } else if (SqlCommandType.UPDATE == sqlCommandType) {
                 entity.setLastUpdater(TokenUtils.getCurrentUser().getId());
                 entity.setLastUpdateDate(Instant.now());
             }
-
         }
         return invocation.proceed();
     }

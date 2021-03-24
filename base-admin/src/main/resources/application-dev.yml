@@ -27,8 +27,8 @@ spring:
         web-allow-others: true
       enabled: true
   redis:
-    host: localhost
-
+    password: 1234qwer
+    host: 10.10.0.124
 
 server:
   port: 8094

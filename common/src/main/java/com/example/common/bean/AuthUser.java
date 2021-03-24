@@ -19,7 +19,8 @@ public class AuthUser {
     private String mobile;
     private String type;
     private String password;
-    private String verifyCode;
+    private String captcha
+            ;
     private String key;
     private List<String> roles;
 

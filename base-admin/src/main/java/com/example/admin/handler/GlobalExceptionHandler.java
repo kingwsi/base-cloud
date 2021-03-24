@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
-    public ResponseData handlerException(Exception e) {
+    public ResponseData<?> handlerException(Exception e) {
         log.error(e.getMessage());
         e.printStackTrace();
         return ResponseData.FAIL("服务器异常", 500);
     }
 
     @ExceptionHandler(value = CustomException.class)
-    public ResponseData handlerCustomException(CustomException ex) {
+    public ResponseData<?> handlerCustomException(CustomException ex) {
         log.warn(ex.getMessage());
         return ResponseData.FAIL(ex.getMessage(), ex.getStatus());
     }
@@ -39,14 +39,14 @@ public class GlobalExceptionHandler {
      * @throws MethodArgumentNotValidException
      */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public ResponseData handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    public ResponseData<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         FieldError fieldError = ex.getBindingResult().getFieldError();
         assert fieldError != null;
         return ResponseData.FAIL(fieldError.getDefaultMessage());
     }
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
-    public ResponseData handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
+    public ResponseData<?> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
         log.error("不支持 {}",ex.getMethod());
         return ResponseData.FAIL(ex.getMessage());
     }

@@ -8,6 +8,7 @@ import com.wf.captcha.SpecCaptcha;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -39,24 +40,11 @@ public class AuthController {
         String key = RedisKey.LOGIN_VERIFY_CODE + authUser.getKey();
         String code = stringRedisTemplate.opsForValue().get(key);
         stringRedisTemplate.delete(key);
-        if (!authUser.getVerifyCode().equalsIgnoreCase(code)) {
+        if (StringUtils.isEmpty(code) || !code.equalsIgnoreCase(authUser.getCaptcha())) {
             return ResponseData.FAIL("验证码错误");
         } else {
             return ResponseData.OK(accessControlService.auth(authUser));
         }
-    }
-
-    @ApiOperation("captcha")
-    @GetMapping("/captcha")
-    public ResponseData<?> captcha() {
-        SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 5);
-        String verCode = specCaptcha.text().toLowerCase();
-        String key = UUID.randomUUID().toString();
-        stringRedisTemplate.opsForValue().set(RedisKey.LOGIN_VERIFY_CODE + key, verCode, RedisKey.LOGIN_VERIFY_CODE.getExpire());
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("key", key);
-        hashMap.put("image", specCaptcha.toBase64());
-        return ResponseData.OK(hashMap);
     }
 
     @ApiOperation("登出")

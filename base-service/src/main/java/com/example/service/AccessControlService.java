@@ -5,7 +5,6 @@ import com.example.common.bean.RespCodeEnum;
 import com.example.common.bean.AuthUser;
 import com.example.common.entity.resource.ResourceConvertMapper;
 import com.example.common.entity.resource.ResourceVO;
-import com.example.common.entity.user.UserConvertMapper;
 import com.example.common.entity.user.UserVO;
 import com.example.common.exception.CustomException;
 import com.example.common.utils.TokenUtils;
@@ -16,6 +15,7 @@ import com.example.common.entity.resource.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -77,7 +77,11 @@ public class AccessControlService {
      * @return
      */
     public UserVO getUserInfo() {
-        return Optional.of(Integer.valueOf(request.getHeader("x-id")))
+        String id = request.getHeader("x-id");
+        if (StringUtils.isEmpty(id)){
+            id = "1";
+        }
+        return Optional.of(Integer.valueOf(id))
                 .map(userMapper::selectUsersWithRoles).get();
 
     }
