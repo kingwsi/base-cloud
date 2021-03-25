@@ -2,6 +2,8 @@ package com.example.admin;
 
 import com.example.admin.api.CodeGeneratorSupport;
 import com.example.common.entity.role.RoleVO;
+import com.example.common.enumerate.RedisKey;
+import com.example.common.utils.RedisUtils;
 import com.example.service.RoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -30,5 +32,11 @@ public class BaseServiceApplicationTests {
         codeGeneratorSupport.generateCommonModule();
         codeGeneratorSupport.generateServiceModule();
         codeGeneratorSupport.generateControllerModule();
+    }
+
+    @Test
+    public void testRedisUtils() {
+        String property = System.getProperty("user.dir");
+        log.info("user.dir->{}", property);
     }
 }

@@ -2,7 +2,6 @@ package com.example.common.interceptor;
 
 import com.example.common.annotation.Limiter;
 import com.example.common.bean.ResponseData;
-import com.example.common.utils.LimiterUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -19,6 +18,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -74,7 +74,7 @@ public class LimiterInterceptor {
         }
 
         try {
-            List<String> keys = LimiterUtils.getKeys(key);
+            List<String> keys = getKeys(key);
             String[] args = new String[]{limiter.replenishRate() + "", limiter.burstCapacity() + "", Instant.now().getEpochSecond() + "", limiter.requestedTokens() + ""};
             List<Long> results = (List<Long>) this.redisTemplate.execute(limiterScript, keys, args);
             assert results != null;
@@ -120,5 +120,18 @@ public class LimiterInterceptor {
             return userId;
         }
         return "unknown";
+    }
+
+    public static List<String> getKeys(String key) {
+        // use `{}` around keys to use Redis Key hash tags
+        // this allows for using redis cluster
+
+        // Make a unique key per user.
+        String prefix = "request_rate_limiter.{" + key;
+
+        // You need two Redis keys for Token Bucket.
+        String tokenKey = prefix + "}.tokens";
+        String timestampKey = prefix + "}.timestamp";
+        return Arrays.asList(tokenKey, timestampKey);
     }
 }

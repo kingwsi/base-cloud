@@ -14,6 +14,7 @@ import com.example.common.entity.common.BaseEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -32,17 +33,29 @@ import java.util.Map;
 public class CodeGeneratorSupport {
 
     private final static Logger log = LoggerFactory.getLogger(CodeGeneratorSupport.class);
-    private String tableName;
-    private String entityName;
+    private final String tableName;
+    private final String entityName;
+    private final String username;
     private final static String prefix = "";
-    private final static String dataUrl = "jdbc:mysql://localhost:3306/base?useUnicode=true&useSSL=false&characterEncoding=utf8";
-    private final static String dataDriver = "com.mysql.cj.jdbc.Driver";
-    private final static String username = "root";
-    private final static String password = "root";
 
     public CodeGeneratorSupport(String tableName, String entityName) {
         this.tableName = tableName;
         this.entityName = entityName;
+        this.username = System.getenv().get("USERNAME");
+    }
+
+    /**
+     * 获取数据源
+     *
+     * @return
+     */
+    protected DataSourceConfig getDataSource() {
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        dataSourceConfig.setUrl("jdbc:h2:file:./target/h2db/db/test;DB_CLOSE_DELAY=-1;;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE");
+        dataSourceConfig.setDriverName("org.h2.Driver");
+        dataSourceConfig.setUsername("root");
+        dataSourceConfig.setPassword("root");
+        return dataSourceConfig;
     }
 
     /**
@@ -51,35 +64,23 @@ public class CodeGeneratorSupport {
      * EntityMapper.xml
      */
     public void generateServiceModule() {
-        // 逻辑删除
-        // 搜索支持 ? LIKE/EQUALS/NONE
-        // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
-
         String fileSeparator = System.getProperty("file.separator");
-
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir").replace(fileSeparator + "base-admin", "") + fileSeparator + "base-service";
-        gc.setOutputDir(projectPath + "/src/main/java");
+        String projectPath = System.getProperty("user.dir") + fileSeparator + "base-service";
+        gc.setOutputDir(projectPath + "/src/main/java".replace("/", fileSeparator));
         log.info("service 生成输出路径->{}", gc.getOutputDir());
-        gc.setAuthor("ws");
+        gc.setAuthor(username);
         gc.setOpen(false);
         gc.setEntityName(entityName);
         gc.setServiceName(entityName + "Service");
         gc.setMapperName(entityName + "Mapper");
         gc.setXmlName(entityName + "Mapper");
-        gc.setIdType(IdType.ASSIGN_UUID);
+        gc.setIdType(IdType.NONE);
         gc.setSwagger2(true); //实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
-
-        // 数据源配置
-        DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl(dataUrl);
-        dsc.setDriverName(dataDriver);
-        dsc.setUsername(username);
-        dsc.setPassword(password);
-        mpg.setDataSource(dsc);
+        mpg.setDataSource(getDataSource());
 
         // 包配置
         PackageConfig pc = new PackageConfig();
@@ -153,11 +154,12 @@ public class CodeGeneratorSupport {
         AutoGenerator mpg = new AutoGenerator();
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir");
+
         String fileSeparator = System.getProperty("file.separator");
+        String projectPath = System.getProperty("user.dir").replace(fileSeparator + "base-admin", "") + fileSeparator + "base-admin";
         gc.setOutputDir(projectPath + "/src/main/java".replace("/", fileSeparator));
-        log.info("controller生成输出路径->{}", gc.getOutputDir());
-        gc.setAuthor("ws");
+        log.info("common 生成输出路径->{}", gc.getOutputDir());
+        gc.setAuthor(username);
         gc.setOpen(false);
         gc.setEntityName(entityName);
         gc.setServiceName(entityName + "Service");
@@ -166,14 +168,7 @@ public class CodeGeneratorSupport {
         gc.setIdType(IdType.ASSIGN_UUID);
         gc.setSwagger2(true); //实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
-
-        // 数据源配置
-        DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl(dataUrl);
-        dsc.setDriverName(dataDriver);
-        dsc.setUsername(username);
-        dsc.setPassword(password);
-        mpg.setDataSource(dsc);
+        mpg.setDataSource(getDataSource());
 
         // 包配置
         PackageConfig pc = new PackageConfig();
@@ -185,8 +180,6 @@ public class CodeGeneratorSupport {
         pc.setXml("mapper");
         mpg.setPackageInfo(pc);
 
-        // 自定义属性注入
-        // 在.ftl(或者是.vm)模板中，通过${cfg.abc}获取属性
         InjectionConfig cfg = new InjectionConfig() {
             @Override
             public void initMap() {
@@ -241,19 +234,17 @@ public class CodeGeneratorSupport {
     }
 
     /**
-     * commin module
+     * common module
+     * 生成 entity,vo,mapper,covertMapper,
      */
     public void generateCommonModule() {
-        // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
-
-        // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String fileSeparator = System.getProperty("file.separator");
-        String projectPath = System.getProperty("user.dir").replace(fileSeparator + "base-admin", "") + fileSeparator + "common";
+        String projectPath = System.getProperty("user.dir") + fileSeparator + "common";
         gc.setOutputDir(projectPath + "/src/main/java".replace("/", fileSeparator));
         log.info("common 生成输出路径->{}", gc.getOutputDir());
-        gc.setAuthor("ws");
+        gc.setAuthor(username);
         gc.setOpen(false);
         gc.setEntityName(entityName);
         gc.setServiceName(entityName + "Service");
@@ -261,16 +252,8 @@ public class CodeGeneratorSupport {
         gc.setIdType(IdType.ASSIGN_UUID);
         gc.setSwagger2(true); //实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
-
         String outputDir = (projectPath + "/src/main/java/com/example/common/entity/" + entityName.toLowerCase() + "/").replace("/", fileSeparator);
-
-        // 数据源配置
-        DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl(dataUrl);
-        dsc.setDriverName(dataDriver);
-        dsc.setUsername(username);
-        dsc.setPassword(password);
-        mpg.setDataSource(dsc);
+        mpg.setDataSource(getDataSource());
 
         // 包配置
         PackageConfig pc = new PackageConfig();
@@ -284,7 +267,6 @@ public class CodeGeneratorSupport {
             @Override
             public void initMap() {
                 Map<String, Object> map = new HashMap<>();
-                map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
                 this.setMap(map);
             }
         };
@@ -308,8 +290,8 @@ public class CodeGeneratorSupport {
             }
 
         });
+        // 替换目录 生成vue相关文件
         String webFileOutputDir = projectPath.replace("base-cloud" + fileSeparator + "common", "base-admin-web" + fileSeparator);
-        /*createForm.vue.ftl*/
         focList.add(new FileOutConfig("/templates/createForm.vue.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
@@ -317,29 +299,27 @@ public class CodeGeneratorSupport {
                 File dirCheck = new File(modulesDir);
                 if (!dirCheck.exists()) {
                     boolean mkdirs = dirCheck.mkdirs();
-                    log.warn("目录[{}]不存在，->创建目录{}", modulesDir, mkdirs);
+                    log.warn("web项目目录{}不存在，->创建目录{}", modulesDir, mkdirs);
                 }
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
                 return modulesDir + "CreateForm.vue";
             }
 
         });
-        /*index.vue.ftl*/
-        focList.add(new FileOutConfig("/templates/index.vue.ftl") {
+        focList.add(new FileOutConfig("/templates/list.vue.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 String modulesDir = (webFileOutputDir + "/src/views/" + entityName.toLowerCase() + "/").replace("/", fileSeparator);
                 File dirCheck = new File(modulesDir);
                 if (!dirCheck.exists()) {
                     boolean mkdirs = dirCheck.mkdirs();
-                    log.warn("目录[{}]不存在，->创建目录{}", modulesDir, mkdirs);
+                    log.warn("web项目目录{}不存在，->创建目录{}", modulesDir, mkdirs);
                 }
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return modulesDir + "index.vue";
+                return modulesDir + "List.vue";
             }
 
         });
-        /*index.js.ftl*/
         focList.add(new FileOutConfig("/templates/index.js.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
@@ -347,7 +327,7 @@ public class CodeGeneratorSupport {
                 File dirCheck = new File(modulesDir);
                 if (!dirCheck.exists()) {
                     boolean mkdirs = dirCheck.mkdirs();
-                    log.warn("目录[{}]不存在，->创建目录{}", modulesDir, mkdirs);
+                    log.warn("web项目目录{}不存在，->创建目录{}", modulesDir, mkdirs);
                 }
                 return modulesDir + entityName.toLowerCase() + ".js";
             }

@@ -8,3 +8,5 @@ id,uri,name,description,methods,type,icon,parent_id,sort,component,remark
 7,/dashboard,仪表盘,,,MENU,dashboard,-1,1,RouteView,
 8,user/center,个人中心,,,MENU,user,7,2,user/Info,
 9,workplace,工作台,,,MENU,dashboard,7,3,dashboard/Workplace,
+10,/user,会员中心,,,MENU,user,-1,1,RouteView,
+11,/user,会员中心,,,MENU,user,10,1,customer/List,
