@@ -1,7 +1,6 @@
-package com.example.admin.handler;
+package com.example.common.exception;
 
 import com.example.common.bean.ResponseData;
-import com.example.common.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;

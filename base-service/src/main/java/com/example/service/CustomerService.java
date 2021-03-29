@@ -1,7 +1,10 @@
 package com.example.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.common.bean.AuthUser;
 import com.example.common.entity.customer.Customer;
@@ -13,6 +16,7 @@ import com.example.mapper.CustomerMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -104,6 +108,17 @@ public class CustomerService {
     }
 
     public void register(AuthUser authUser) {
+        if (StringUtils.isEmpty(authUser.getUsername()) ||
+                StringUtils.isEmpty(authUser.getMobile()) ||
+                StringUtils.isEmpty(authUser.getPassword())) {
+            throw new CustomException("参数错误！");
+        }
+        LambdaQueryWrapper<Customer> queryWrapper = Wrappers.lambdaQuery(Customer.class)
+                .eq(Customer::getMobile, authUser.getMobile());
+        Integer count = customerMapper.selectCount(queryWrapper);
+        if (count > 0) {
+            throw new CustomException("账户已存在！");
+        }
         Customer customer = new Customer();
         customer.setMobile(authUser.getMobile());
         customer.setNickName(authUser.getUsername());

@@ -136,17 +136,17 @@
             <column name="id" type="int(11)" autoIncrement="true" remarks="id">
                 <constraints nullable="false"/>
             </column>
-            <column name="realName" type="varchar(20)" remarks="真实姓名"/>
-            <column name="nickName" type="varchar(30)" remarks="昵称"/>
+            <column name="real_name" type="varchar(20)" remarks="真实姓名"/>
+            <column name="nick_name" type="varchar(30)" remarks="昵称"/>
             <column name="gender" type="varchar(2)" remarks="性别"/>
             <column name="mobile" type="varchar(20)" remarks="手机号"/>
             <column name="email" type="varchar(50)" remarks="邮箱"/>
             <column name="avatar" type="varchar(255)" remarks="头像"/>
             <column name="introduce" type="varchar(500)" remarks="介绍"/>
-            <column name="lastLoginTime" type="timestamp" remarks="最后登录时间"/>
+            <column name="last_login_time" type="timestamp" remarks="最后登录时间"/>
             <column name="password" type="varchar(255)" remarks="密码"/>
-            <column name="lastLoginIp" type="varchar(255)" remarks="最后登录ip"/>
-            <column name="accountStatus" type="int(1)" remarks="账户状态 1 正常 0 停用"/>
+            <column name="last_login_ip" type="varchar(255)" remarks="最后登录ip"/>
+            <column name="account_status" type="int(1)" remarks="账户状态 1 正常 0 停用"/>
             <column name="creator" type="varchar(100)" remarks="创建者"/>
             <column name="created_date" type="timestamp" remarks="创建日期"/>
             <column name="last_updater" type="varchar(100)" remarks="最后更新人"/>
@@ -159,5 +159,6 @@
         <loadData tableName="sys_users" file="classpath:liquibase/csv/users.csv" separator=","/>
         <loadData tableName="sys_resources" file="classpath:liquibase/csv/resources.csv" separator=","/>
         <loadData tableName="sys_organizations" file="classpath:liquibase/csv/organizations.csv" separator=","/>
+        <loadData tableName="customer" file="classpath:liquibase/csv/customer.csv" separator=","/>
     </changeSet>
 </databaseChangeLog>

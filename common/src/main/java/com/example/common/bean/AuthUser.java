@@ -3,6 +3,7 @@ package com.example.common.bean;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -13,14 +14,13 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
-public class AuthUser {
+public class AuthUser implements Serializable {
     private Integer id;
     private String username;
     private String mobile;
     private String type;
     private String password;
-    private String captcha
-            ;
+    private String captcha;
     private String key;
     private List<String> roles;
 
