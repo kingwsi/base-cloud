@@ -20,7 +20,7 @@ public class OrganizationController {
 
     @ApiOperation("获取组织list")
     @GetMapping
-    public ResponseData list(){
+    public ResponseData<?> list(){
         return ResponseData.OK();
     }
 }

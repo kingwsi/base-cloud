@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     public ResponseData<?> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
-        log.error("不支持 {}",ex.getMethod());
+        log.error(ex.getMessage());
         return ResponseData.FAIL(ex.getMessage());
     }
 }

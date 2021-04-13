@@ -1,6 +1,7 @@
 package com.example.admin.api;
 
 import com.example.common.bean.AuthUser;
+import com.example.common.entity.user.User;
 import com.example.common.utils.TokenUtils;
 import com.example.service.RoleService;
 import io.swagger.annotations.Api;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.util.function.Tuples;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +51,14 @@ public class DebugController {
         authUser.setUsername(username);
         authUser.setId(1);
         return TokenUtils.createToken(authUser);
+    }
+
+    @GetMapping("/mono-test")
+    public Mono<User> getUserById(){
+        User user = new User();
+        user.setFullName("mono");
+        user.setNickname("mm");
+        return Mono.just(user);
     }
 
     /**

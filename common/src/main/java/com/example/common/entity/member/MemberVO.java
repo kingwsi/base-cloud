@@ -1,4 +1,4 @@
-package com.example.common.entity.customer;
+package com.example.common.entity.member;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -12,17 +12,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * <p>
- * 客户
- * </p>
- *
- * @author ws
- * @since 2020-12-29
- */
+* description: 会员 <br>
+* date: 2021-04-13 <br>
+* author: ws <br>
+*/
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value="CustomerVO", description="客户")
-public class CustomerVO extends BaseEntityVO {
+@ApiModel(value="MemberVO", description="会员")
+public class MemberVO extends BaseEntityVO {
 
     private static final long serialVersionUID = 1L;
 
@@ -50,13 +47,14 @@ public class CustomerVO extends BaseEntityVO {
     @ApiModelProperty(value = "最后登录时间")
     private LocalDateTime lastLoginTime;
 
+    @ApiModelProperty(value = "密码")
+    private String password;
+
     @ApiModelProperty(value = "最后登录ip")
     private String lastLoginIp;
 
-    private String password;
-
     @ApiModelProperty(value = "账户状态 1 正常 0 停用")
-    private String accountStatus;
+    private Integer accountStatus;
 
 
 }

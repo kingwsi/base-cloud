@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -13,6 +14,7 @@ import com.example.mapper.RolesAndResourcesMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -39,32 +41,37 @@ public class RoleService {
 
     @Transactional(rollbackFor = Exception.class)
     public void createRoleVO(RoleVO roleVO) {
-        Role role = new Role();
-        BeanUtils.copyProperties(roleVO, role);
-        this.roleMapper.insert(role);
-        rolesAndResourcesMapper.batchInsertRoleResources(role.getId(), roleVO.getResourceIdList());
+        this.roleMapper.insert(roleConvertMapper.toRole(roleVO));
     }
 
     public void deleteById(Integer id) {
         this.roleMapper.deleteById(id);
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    public void updateById(RoleVO roleVO) {
-        QueryWrapper<RolesAndResources> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("role_id", roleVO.getId());
-        rolesAndResourcesMapper.delete(queryWrapper);
-        rolesAndResourcesMapper.batchInsertRoleResources(roleVO.getId(), roleVO.getResourceIdList());
+
+    public Role updateById(RoleVO roleVO) {
         Role role = roleConvertMapper.toRole(roleVO);
         roleMapper.updateById(role);
+        return role;
     }
 
-    public IPage<RoleVO> listOfPages(Page<RoleVO> page, RoleVO roleVO) {
-        return roleMapper.selectPageWithResources(page, roleVO);
+    /**
+     * 更新角色资源
+     *
+     * @param roleVO
+     */
+    public void updateRoleResources(RoleVO roleVO) {
+        rolesAndResourcesMapper.delete(Wrappers.lambdaQuery(RolesAndResources.class).eq(RolesAndResources::getRoleId, roleVO.getId()));
+        rolesAndResourcesMapper.batchInsertRoleResources(roleVO.getId(), roleVO.getResourceIdList());
+    }
+
+    public IPage<Role> listOfPages(Page<Role> page, RoleVO roleVO) {
+        return roleMapper.selectPage(page, Wrappers.lambdaQuery(Role.class).eq(!StringUtils.isEmpty(roleVO.getStatus()), Role::getStatus, roleVO.getStatus()));
     }
 
     /**
      * 根据id获取角色信息
+     *
      * @param id
      * @return
      */

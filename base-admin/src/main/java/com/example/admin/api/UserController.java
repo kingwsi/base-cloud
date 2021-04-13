@@ -51,39 +51,39 @@ public class UserController {
 
     @ApiOperation("创建用户")
     @PostMapping
-    public ResponseData createUser(@Validated @RequestBody UserVO user) {
+    public ResponseData<String> createUser(@Validated @RequestBody UserVO user) {
         userService.createUser(user);
         return ResponseData.OK();
     }
 
     @ApiOperation("更新用户")
     @PutMapping
-    public ResponseData update(@Validated(Update.class) @RequestBody UserVO userVO) {
+    public ResponseData<?> update(@Validated(Update.class) @RequestBody UserVO userVO) {
         userService.updateUser(userVO);
         return ResponseData.OK();
     }
 
     @ApiOperation("获取用户分页")
     @GetMapping("/page")
-    public ResponseData page(Page<User> page, UserVO userVO) {
+    public ResponseData<?> page(Page<User> page, UserVO userVO) {
         return ResponseData.OK(userService.listUsersOfPage(page, userVO));
     }
 
     @ApiOperation("获取用户信息")
     @GetMapping("/info")
-    public ResponseData getUserInfo() {
+    public ResponseData<?> getUserInfo() {
         return ResponseData.OK(accessControlService.getUserInfo());
     }
 
     @ApiOperation("删除用户")
     @DeleteMapping
-    public ResponseData deleteUser(HttpServletRequest httpServletRequest) {
+    public ResponseData<?> deleteUser(HttpServletRequest httpServletRequest) {
         return ResponseData.OK(TokenUtils.getCurrentUser());
     }
 
     @ApiOperation("获取当前用户信息")
     @GetMapping("/current")
-    public ResponseData updateUserCurrentInfo(@Validated(Update.class) UserVO userVO) {
+    public ResponseData<?> updateUserCurrentInfo(@Validated(Update.class) UserVO userVO) {
         AuthUser currentUser = TokenUtils.getCurrentUser();
         userVO.setId(currentUser.getId());
         userVO.setUsername(currentUser.getUsername());

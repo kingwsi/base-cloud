@@ -28,7 +28,7 @@ public class OssController {
     }
 
     @PostMapping("/image")
-    public ResponseData uploadFile(@RequestParam("file") MultipartFile file){
+    public ResponseData<String> uploadFile(@RequestParam("file") MultipartFile file){
 //        String path = ossService.uploadImage(file);
         String path = "https://vant-admin.oss-cn-hangzhou.aliyuncs.com/c749e499-ef95-49b1-9336-c2d1c2267552.png";
         if (StringUtils.isEmpty(path)) {

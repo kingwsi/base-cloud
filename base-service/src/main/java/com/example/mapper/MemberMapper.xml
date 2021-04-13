@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mapper.CustomerMapper">
+<mapper namespace="com.example.mapper.MemberMapper">
 
-    <select id="selectPage" resultType="com.example.common.entity.customer.CustomerVO">
-        SELECT * FROM customer
+    <select id="selectPage" resultType="com.example.common.entity.member.MemberVO">
+        SELECT * FROM member
         <where>
             <if test="vo.realName != null and vo.realName != ''">
                 AND realName LIKE CONCAT('%',#{vo.realName},'%')
@@ -29,11 +29,14 @@
             <if test="vo.lastLoginTime != null and vo.lastLoginTime != ''">
                 AND lastLoginTime LIKE CONCAT('%',#{vo.lastLoginTime},'%')
             </if>
+            <if test="vo.password != null and vo.password != ''">
+                AND password LIKE CONCAT('%',#{vo.password},'%')
+            </if>
             <if test="vo.lastLoginIp != null and vo.lastLoginIp != ''">
                 AND lastLoginIp LIKE CONCAT('%',#{vo.lastLoginIp},'%')
             </if>
-            <if test="vo.password != null and vo.password != ''">
-                AND password LIKE CONCAT('%',#{vo.password},'%')
+            <if test="vo.accountStatus != null and vo.accountStatus != ''">
+                AND accountStatus LIKE CONCAT('%',#{vo.accountStatus},'%')
             </if>
             AND deleted = 0
         </where>

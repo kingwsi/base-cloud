@@ -22,13 +22,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 /**
- * <p>
- * ${table.comment!}
- * </p>
- *
- * @author ${author}
- * @since ${date}
- */
+* description: ${table.comment} controller <br>
+* date: ${date} <br>
+* author: ${author} <br>
+*/
+
 @Api(tags = "${table.comment}")
 <#if restControllerStyle>
 @RestController
@@ -52,7 +50,7 @@ public class ${table.controllerName} {
 
     @PutMapping
     @ApiOperation("更新")
-    public ResponseData updateById(@RequestBody ${entity}VO ${entity?uncap_first}VO) {
+    public ResponseData<String> updateById(@RequestBody ${entity}VO ${entity?uncap_first}VO) {
         if (StringUtils.isEmpty(${entity?uncap_first}VO.getId())) {
             return ResponseData.FAIL("ID不能为空");
         }
@@ -62,16 +60,16 @@ public class ${table.controllerName} {
 
     @PostMapping
     @ApiOperation("新增")
-    public ResponseData create(@RequestBody ${entity}VO ${entity?uncap_first}VO) {
+    public ResponseData<String> create(@RequestBody ${entity}VO ${entity?uncap_first}VO) {
         boolean result = ${entity?uncap_first}Service.create(${entity?uncap_first}VO);
         return result ? ResponseData.OK() : ResponseData.FAIL();
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation("删除")
-    public ResponseData deleteById(@PathVariable Integer id) {
+    public ResponseData<String> deleteById(@PathVariable Integer id) {
         if (StringUtils.isEmpty(id)) {
-            ResponseData.FAIL("ID不能为空");
+            return ResponseData.FAIL("ID不能为空");
         }
         boolean result = ${entity?uncap_first}Service.removeById(id);
         return result ? ResponseData.OK() : ResponseData.FAIL();
@@ -79,7 +77,7 @@ public class ${table.controllerName} {
 
     @GetMapping("/page")
     @ApiOperation("获取分页")
-    public ResponseData listOfPage(Page<${entity}VO> page, ${entity}VO ${entity?uncap_first}VO) {
+    public ResponseData<IPage<${entity}VO>> listOfPage(Page<${entity}VO> page, ${entity}VO ${entity?uncap_first}VO) {
         IPage<${entity}VO> pageInfo = ${entity?uncap_first}Service.listOfPage(page, ${entity?uncap_first}VO);
         return ResponseData.OK(pageInfo);
     }

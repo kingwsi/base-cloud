@@ -29,9 +29,9 @@ public class DictionaryController {
 
     @PutMapping
     @ApiOperation("更新字典")
-    public ResponseData updateById(@RequestBody DictionaryVO dictionaryVO) {
+    public ResponseData<String> updateById(@RequestBody DictionaryVO dictionaryVO) {
         if (StringUtils.isEmpty(dictionaryVO.getId())) {
-            ResponseData.FAIL("ID不能为空");
+            return ResponseData.FAIL("ID不能为空");
         }
         boolean result = dictionaryService.updateById(dictionaryVO);
         return result ? ResponseData.OK() : ResponseData.FAIL();
@@ -39,16 +39,16 @@ public class DictionaryController {
 
     @PostMapping
     @ApiOperation("新增字典")
-    public ResponseData create(@RequestBody DictionaryVO dictionaryVO) {
+    public ResponseData<String> create(@RequestBody DictionaryVO dictionaryVO) {
         boolean result = dictionaryService.create(dictionaryVO);
         return result ? ResponseData.OK() : ResponseData.FAIL();
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation("删除字典")
-    public ResponseData deleteById(@PathVariable Integer id) {
+    public ResponseData<String> deleteById(@PathVariable Integer id) {
         if (StringUtils.isEmpty(id)) {
-            ResponseData.FAIL("ID不能为空");
+            return ResponseData.FAIL("ID不能为空");
         }
         boolean result = dictionaryService.removeById(id);
         return result ? ResponseData.OK() : ResponseData.FAIL();
@@ -56,7 +56,7 @@ public class DictionaryController {
 
     @GetMapping("/page")
     @ApiOperation("获取字典分页")
-    public ResponseData listOfPage(Page<DictionaryVO> page, DictionaryVO vo) {
+    public ResponseData<IPage<DictionaryVO>> listOfPage(Page<DictionaryVO> page, DictionaryVO vo) {
         IPage<DictionaryVO> pageInfo = dictionaryService.listOfPage(page, vo);
         return ResponseData.OK(pageInfo);
     }

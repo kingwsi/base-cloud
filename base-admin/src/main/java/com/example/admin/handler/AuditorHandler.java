@@ -33,9 +33,11 @@ public class AuditorHandler implements Interceptor {
             BaseEntity entity = (BaseEntity) parameter;
             if (SqlCommandType.INSERT == sqlCommandType) {
                 entity.setCreatedDate(Instant.now());
-                entity.setCreator(TokenUtils.getCurrentUser().getId());
+                entity.setCreator(TokenUtils.getCurrentUserId());
             } else if (SqlCommandType.UPDATE == sqlCommandType) {
-                entity.setLastUpdater(TokenUtils.getCurrentUser().getId());
+                entity.setCreatedDate(null);
+                entity.setCreator(null);
+                entity.setLastUpdater(TokenUtils.getCurrentUserId());
                 entity.setLastUpdateDate(Instant.now());
             }
         }
