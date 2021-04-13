@@ -4,8 +4,8 @@ package com.example.admin.api;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
-import com.example.common.entity.customer.CustomerVO;
-import com.example.service.CustomerService;
+import com.example.common.entity.member.MemberVO;
+import com.example.service.MemberService;
 import com.example.common.bean.ResponseData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,54 +15,52 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 /**
- * <p>
- * customer
- * </p>
- *
- * @author ws
- * @since 2020-12-29
- */
-@Api(tags = "客户")
-@RestController
-@RequestMapping("/api/customer")
-public class CustomerController {
-    private final CustomerService customerService;
+* description: 会员 controller <br>
+* date: 2021-04-13 <br>
+* author: ws <br>
+*/
 
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
+@Api(tags = "会员")
+@RestController
+@RequestMapping("/api/member")
+public class MemberController {
+    private final MemberService memberService;
+
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
     }
 
     @PutMapping
     @ApiOperation("更新")
-    public ResponseData updateById(@RequestBody CustomerVO customerVO) {
-        if (StringUtils.isEmpty(customerVO.getId())) {
+    public ResponseData<String> updateById(@RequestBody MemberVO memberVO) {
+        if (StringUtils.isEmpty(memberVO.getId())) {
             return ResponseData.FAIL("ID不能为空");
         }
-        boolean result = customerService.updateById(customerVO);
+        boolean result = memberService.updateById(memberVO);
         return result ? ResponseData.OK() : ResponseData.FAIL();
     }
 
     @PostMapping
     @ApiOperation("新增")
-    public ResponseData create(@RequestBody CustomerVO customerVO) {
-        boolean result = customerService.create(customerVO);
+    public ResponseData<String> create(@RequestBody MemberVO memberVO) {
+        boolean result = memberService.create(memberVO);
         return result ? ResponseData.OK() : ResponseData.FAIL();
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation("删除")
-    public ResponseData deleteById(@PathVariable Integer id) {
+    public ResponseData<String> deleteById(@PathVariable Integer id) {
         if (StringUtils.isEmpty(id)) {
-            ResponseData.FAIL("ID不能为空");
+            return ResponseData.FAIL("ID不能为空");
         }
-        boolean result = customerService.removeById(id);
+        boolean result = memberService.removeById(id);
         return result ? ResponseData.OK() : ResponseData.FAIL();
     }
 
     @GetMapping("/page")
     @ApiOperation("获取分页")
-    public ResponseData listOfPage(Page<CustomerVO> page, CustomerVO customerVO) {
-        IPage<CustomerVO> pageInfo = customerService.listOfPage(page, customerVO);
+    public ResponseData<IPage<MemberVO>> listOfPage(Page<MemberVO> page, MemberVO memberVO) {
+        IPage<MemberVO> pageInfo = memberService.listOfPage(page, memberVO);
         return ResponseData.OK(pageInfo);
     }
 }

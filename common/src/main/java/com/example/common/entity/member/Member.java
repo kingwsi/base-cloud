@@ -1,11 +1,8 @@
-package com.example.common.entity.customer;
+package com.example.common.entity.member;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.example.common.bean.AuthUser;
 import com.example.common.entity.common.BaseEntity;
 import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -13,19 +10,17 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * <p>
- * 客户
- * </p>
- *
- * @author ws
- * @since 2020-12-29
- */
+* description: 会员 <br>
+* date: 2021-04-13 <br>
+* author: ws <br>
+*/
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("customer")
-@ApiModel(value="Customer对象", description="客户")
-public class Customer extends BaseEntity {
+@TableName("member")
+@ApiModel(value="Member对象", description="会员")
+public class Member extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -53,11 +48,14 @@ public class Customer extends BaseEntity {
     @ApiModelProperty(value = "最后登录时间")
     private LocalDateTime lastLoginTime;
 
+    @ApiModelProperty(value = "密码")
+    private String password;
+
     @ApiModelProperty(value = "最后登录ip")
     private String lastLoginIp;
 
-    private String password;
-
     @ApiModelProperty(value = "账户状态 1 正常 0 停用")
-    private String accountStatus;
+    private Integer accountStatus;
+
+
 }
