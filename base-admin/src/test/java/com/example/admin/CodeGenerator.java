@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CodeGenerator {
     public static void main(String[] args) {
-        CodeGeneratorSupport codeGeneratorSupport = new CodeGeneratorSupport("customer", "Customer");
+        CodeGeneratorSupport codeGeneratorSupport = new CodeGeneratorSupport("member", "Member");
         codeGeneratorSupport.generateCommonModule();
         codeGeneratorSupport.generateServiceModule();
         codeGeneratorSupport.generateControllerModule();

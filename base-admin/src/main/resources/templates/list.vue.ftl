@@ -72,8 +72,8 @@
         </template>
       </span>
     </s-table>
-    <create-form
-      ref="createModal"
+    <form-modal
+      ref="formModal"
       :visible="visible"
       :loading="confirmLoading"
       :model="mdl"
@@ -87,13 +87,13 @@
 import { STable } from '@/components'
 import { GetPage, UpdateById, Create, DeleteById } from '@/api/${entity?uncap_first}'
 
-import CreateForm from './modules/CreateForm'
+import FormModal from './modules/FormModal'
 
 export default {
   name: '${entity}',
   components: {
     STable,
-    CreateForm
+    FormModal
   },
   data () {
     return {
@@ -101,7 +101,7 @@ export default {
       visible: false,
       warningVisible: false,
       confirmLoading: false,
-      mdl: null,
+      mdl: {},
       // 高级搜索 展开/关闭
       advanced: false,
       // 查询参数

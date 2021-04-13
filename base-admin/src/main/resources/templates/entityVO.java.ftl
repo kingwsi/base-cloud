@@ -14,13 +14,10 @@ import lombok.EqualsAndHashCode;
 </#if>
 
 /**
- * <p>
- * ${table.comment!}
- * </p>
- *
- * @author ${author}
- * @since ${date}
- */
+* description: ${table.comment} <br>
+* date: ${date} <br>
+* author: ${author} <br>
+*/
 @Data
 <#if superEntityClass??>
 @EqualsAndHashCode(callSuper = true)

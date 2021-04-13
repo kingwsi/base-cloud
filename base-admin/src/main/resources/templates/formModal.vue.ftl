@@ -14,12 +14,12 @@
         :rules="rules"
         v-bind="formLayout">
         <a-form-model-item v-show="false" label="ID">
-          <a-input v-model="model.id" disabled />
+          <a-input v-if="model.id" disabled />
         </a-form-model-item>
 <#list table.fields as field>
 <#if !field.keyFlag><#--生成普通字段 -->
-        <a-form-model-item label="${field.comment}">
-          <a-input v-model="${field.propertyName}" placeholder="请输入${field.comment}" />
+        <a-form-model-item label="${field.comment}" prop="${field.propertyName}">
+          <a-input v-model="model.${field.propertyName}" placeholder="请输入${field.comment}" />
         </a-form-model-item>
 </#if>
 </#list>

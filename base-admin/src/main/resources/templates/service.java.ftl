@@ -10,13 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 /**
- * <p>
- * ${table.comment!} service
- * </p>
- *
- * @author ${author}
- * @since ${date}
- */
+* description: ${table.comment} Service <br>
+* date: ${date} <br>
+* author: ${author} <br>
+*/
 @Service
 public class ${entity}Service {
 

@@ -11,12 +11,8 @@ import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.example.common.entity.common.BaseEntity;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -51,8 +47,9 @@ public class CodeGeneratorSupport {
      */
     protected DataSourceConfig getDataSource() {
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
-        dataSourceConfig.setUrl("jdbc:h2:file:./target/h2db/db/test;DB_CLOSE_DELAY=-1;;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE");
-        dataSourceConfig.setDriverName("org.h2.Driver");
+        dataSourceConfig.setUrl("jdbc:mysql://localhost:3306/base?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true");
+//        dataSourceConfig.setDriverName("org.h2.Driver");
+        dataSourceConfig.setDriverName("com.mysql.jdbc.Driver");
         dataSourceConfig.setUsername("root");
         dataSourceConfig.setPassword("root");
         return dataSourceConfig;
@@ -113,6 +110,7 @@ public class CodeGeneratorSupport {
                     return !new File(filePath).exists();
                 }
                 // 允许生成模板文件
+                log.info("允许生成模板文件");
                 return true;
             }
         });
@@ -158,7 +156,7 @@ public class CodeGeneratorSupport {
         String fileSeparator = System.getProperty("file.separator");
         String projectPath = System.getProperty("user.dir").replace(fileSeparator + "base-admin", "") + fileSeparator + "base-admin";
         gc.setOutputDir(projectPath + "/src/main/java".replace("/", fileSeparator));
-        log.info("common 生成输出路径->{}", gc.getOutputDir());
+        log.info("Controller 生成输出路径->{}", gc.getOutputDir());
         gc.setAuthor(username);
         gc.setOpen(false);
         gc.setEntityName(entityName);
@@ -292,7 +290,7 @@ public class CodeGeneratorSupport {
         });
         // 替换目录 生成vue相关文件
         String webFileOutputDir = projectPath.replace("base-cloud" + fileSeparator + "common", "base-admin-web" + fileSeparator);
-        focList.add(new FileOutConfig("/templates/createForm.vue.ftl") {
+        focList.add(new FileOutConfig("/templates/formModal.vue.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 String modulesDir = (webFileOutputDir + "/src/views/" + entityName.toLowerCase() + "/modules/").replace("/", fileSeparator);
@@ -302,7 +300,7 @@ public class CodeGeneratorSupport {
                     log.warn("web项目目录{}不存在，->创建目录{}", modulesDir, mkdirs);
                 }
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return modulesDir + "CreateForm.vue";
+                return modulesDir + "FormModal.vue";
             }
 
         });

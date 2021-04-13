@@ -5,6 +5,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+* description: ${table.comment} 转换工具 <br>
+* date: ${date} <br>
+* author: ${author} <br>
+*/
 @Component
 @Mapper(componentModel = "spring")
 public interface ${entity}ConvertMapper {
