@@ -32,7 +32,7 @@ public class CodeGeneratorSupport {
     private final String tableName;
     private final String entityName;
     private final String username;
-    private final static String prefix = "";
+    private final static String prefix = "SYS_";
 
     public CodeGeneratorSupport(String tableName, String entityName) {
         this.tableName = tableName;
@@ -47,9 +47,10 @@ public class CodeGeneratorSupport {
      */
     protected DataSourceConfig getDataSource() {
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
-        dataSourceConfig.setUrl("jdbc:mysql://localhost:3306/base?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true");
-//        dataSourceConfig.setDriverName("org.h2.Driver");
-        dataSourceConfig.setDriverName("com.mysql.jdbc.Driver");
+        dataSourceConfig.setUrl("jdbc:h2:file:D:/Projects/private/base-cloud/target/h2db/db/test;DB_CLOSE_DELAY=-1;AUTO_SERVER=true");
+//        dataSourceConfig.setUrl("jdbc:mysql://localhost:3306/base?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true");
+        dataSourceConfig.setDriverName("org.h2.Driver");
+//        dataSourceConfig.setDriverName("com.mysql.jdbc.Driver");
         dataSourceConfig.setUsername("root");
         dataSourceConfig.setPassword("root");
         return dataSourceConfig;

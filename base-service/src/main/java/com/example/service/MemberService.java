@@ -127,7 +127,6 @@ public class MemberService {
     }
 
     public String authByMobile(AuthUser authUser) {
-        stringRedisTemplate.opsForValue().get();
         return null;
     }
 }
