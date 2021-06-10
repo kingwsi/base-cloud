@@ -1,7 +1,7 @@
 package com.example.admin.api;
 
 import com.example.common.bean.ResponseData;
-import com.example.common.enumerate.RedisKey;
+import com.example.common.enumerate.RedisConstKey;
 import com.wf.captcha.SpecCaptcha;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,8 +36,8 @@ public class VerificationController {
         SpecCaptcha specCaptcha = new SpecCaptcha(100, 45, 5);
         String verCode = specCaptcha.text().toLowerCase();
         String key = UUID.randomUUID().toString();
-        stringRedisTemplate.opsForValue().set(RedisKey.LOGIN_VERIFY_CODE + key, verCode, RedisKey.LOGIN_VERIFY_CODE.getExpire(), RedisKey.LOGIN_VERIFY_CODE.getTimeUnit());
-        String val = stringRedisTemplate.opsForValue().get(RedisKey.LOGIN_VERIFY_CODE + key);
+        stringRedisTemplate.opsForValue().set(RedisConstKey.LOGIN_VERIFY_CODE + key, verCode, RedisConstKey.LOGIN_VERIFY_CODE.getExpire(), RedisConstKey.LOGIN_VERIFY_CODE.getTimeUnit());
+        String val = stringRedisTemplate.opsForValue().get(RedisConstKey.LOGIN_VERIFY_CODE + key);
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("key", key);
         hashMap.put("image", specCaptcha.toBase64());

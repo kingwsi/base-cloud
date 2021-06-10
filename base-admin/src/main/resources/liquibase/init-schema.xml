@@ -160,6 +160,6 @@
         <loadData tableName="sys_users" file="classpath:liquibase/csv/users.csv" separator=","/>
         <loadData tableName="sys_resources" file="classpath:liquibase/csv/resources.csv" separator=","/>
         <loadData tableName="sys_organizations" file="classpath:liquibase/csv/organizations.csv" separator=","/>
-        <loadData tableName="customer" file="classpath:liquibase/csv/customer.csv" separator=","/>
+        <loadData tableName="member" file="classpath:liquibase/csv/member.csv" separator=","/>
     </changeSet>
 </databaseChangeLog>

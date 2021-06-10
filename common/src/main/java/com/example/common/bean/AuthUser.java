@@ -1,5 +1,6 @@
 package com.example.common.bean;
 
+import com.example.common.enumerate.AuthType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,15 +19,15 @@ public class AuthUser implements Serializable {
     private Integer id;
     private String username;
     private String mobile;
-    private String type;
+    private AuthType authType;
     private String password;
     private String captcha;
     private String key;
     private List<String> roles;
 
-    public AuthUser(Integer id, String username, String type) {
+    public AuthUser(Integer id, String username, AuthType type) {
         this.id = id;
         this.username = username;
-        this.type = type;
+        this.authType = type;
     }
 }

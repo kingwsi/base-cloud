@@ -1,10 +1,7 @@
 package com.example.admin.redis;
 
 import com.example.admin.handler.RedisSubHandler;
-import com.example.common.enumerate.RedisKey;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.common.enumerate.RedisConstKey;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -90,7 +87,7 @@ public class RedisConfig {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
         //订阅了一个叫chat的通道
-        container.addMessageListener(listenerAdapter, new PatternTopic(RedisKey.GATEWAY_LOG_FILTER.name()));
+        container.addMessageListener(listenerAdapter, new PatternTopic(RedisConstKey.GATEWAY_LOG_FILTER.name()));
         return container;
     }
 

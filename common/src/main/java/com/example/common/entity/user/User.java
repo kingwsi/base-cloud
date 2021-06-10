@@ -3,6 +3,7 @@ package com.example.common.entity.user;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.common.bean.AuthUser;
 import com.example.common.entity.common.BaseEntity;
+import com.example.common.enumerate.AuthType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,6 +45,6 @@ public class User extends BaseEntity {
     private String status;
 
     public AuthUser toAuthUser(){
-        return new AuthUser(this.getId(), this.username, "B");
+        return new AuthUser(this.getId(), this.username, AuthType.MOBILE);
     }
 }

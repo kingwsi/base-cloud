@@ -29,9 +29,16 @@ public class MemberController {
         return ResponseData.OK();
     }
 
-    @PostMapping("/authByPwd")
+    @PostMapping("/auth")
     public ResponseData<String> authByPwd(@RequestBody AuthUser authUser) {
-        return ResponseData.OK(memberService.authByPwd(authUser));
+        switch (authUser.getAuthType()){
+            case PASSWORD:
+                return ResponseData.OK(memberService.authByPwd(authUser));
+            case MOBILE:
+                return ResponseData.OK(memberService.authByMobile(authUser));
+            default:
+                return ResponseData.FAIL();
+        }
     }
 
     @Limiter(type = LimiterType.IP, requestedTokens = 30, burstCapacity = 30)

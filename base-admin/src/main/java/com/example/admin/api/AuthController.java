@@ -2,17 +2,13 @@ package com.example.admin.api;
 
 import com.example.common.bean.AuthUser;
 import com.example.common.bean.ResponseData;
-import com.example.common.enumerate.RedisKey;
+import com.example.common.enumerate.RedisConstKey;
 import com.example.service.AccessControlService;
-import com.wf.captcha.SpecCaptcha;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * Description: 授权相关接口
@@ -37,7 +33,7 @@ public class AuthController {
     @ApiOperation("获取token")
     @PostMapping
     public ResponseData<String> auth(@RequestBody AuthUser authUser) {
-        String key = RedisKey.LOGIN_VERIFY_CODE + authUser.getKey();
+        String key = RedisConstKey.LOGIN_VERIFY_CODE + authUser.getKey();
         String code = stringRedisTemplate.opsForValue().get(key);
         stringRedisTemplate.delete(key);
         if (StringUtils.isEmpty(code) || !code.equalsIgnoreCase(authUser.getCaptcha())) {

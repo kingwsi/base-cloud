@@ -1,6 +1,6 @@
 package com.example.admin.handler;
 
-import com.example.common.enumerate.RedisKey;
+import com.example.common.enumerate.RedisConstKey;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RedisSubHandler {
     public void receiverMessage(String message) {
-        log.info(RedisKey.GATEWAY_LOG_FILTER.getDescription() + "recover->{}", message);
+        log.info(RedisConstKey.GATEWAY_LOG_FILTER.getDescription() + "recover->{}", message);
         // TODO 日志持久化
     }
 }

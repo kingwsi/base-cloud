@@ -1,6 +1,6 @@
 package com.example.common.utils;
 
-import com.example.common.enumerate.RedisKey;
+import com.example.common.enumerate.RedisConstKey;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -17,11 +17,11 @@ public class RedisUtils {
         redisTemplate = template;
     }
 
-    public static void set(RedisKey redisKey, String val) {
-        redisTemplate.opsForValue().set(redisKey.getKey(), val, redisKey.getExpire(), redisKey.getTimeUnit());
+    public static void set(RedisConstKey redisConstKey, String val) {
+        redisTemplate.opsForValue().set(redisConstKey.getKey(), val, redisConstKey.getExpire(), redisConstKey.getTimeUnit());
     }
 
-    public static Object get(RedisKey redisKey) {
-        return redisTemplate.opsForValue().get(redisKey.getKey());
+    public static Object get(RedisConstKey redisConstKey) {
+        return redisTemplate.opsForValue().get(redisConstKey.getKey());
     }
 }

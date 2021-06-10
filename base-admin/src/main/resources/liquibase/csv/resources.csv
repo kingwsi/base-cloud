@@ -4,9 +4,9 @@ id,uri,name,description,methods,type,icon,parent_id,sort,component,remark
 3,user,用户管理,,,MENU,user,2,2,user/List,
 4,role,角色管理,,,MENU,user,2,3,role/List,
 5,resource/index,资源管理,,,MENU,user,2,4,resource/List,
-6,role/permission/:id,角色权限配置,,,MENU,user,2,4,role/Edit,hidden
+6,role/permission/:id,角色权限配置,,,MENU,user,2,4,role/Permission,hidden
 7,/dashboard,仪表盘,,,MENU,dashboard,-1,1,RouteView,
 8,user/center,个人中心,,,MENU,user,7,2,user/Info,
 9,workplace,工作台,,,MENU,dashboard,7,3,dashboard/Workplace,
-10,/user,会员中心,,,MENU,user,-1,1,RouteView,
-11,/user,会员中心,,,MENU,user,10,1,customer/List,
+10,/member,会员中心,,,MENU,user,-1,1,RouteView,
+11,list,会员管理,,,MENU,user,10,1,member/List,

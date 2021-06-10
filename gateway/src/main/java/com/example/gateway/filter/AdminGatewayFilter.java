@@ -3,6 +3,7 @@ package com.example.gateway.filter;
 import com.alibaba.fastjson.JSONObject;
 import com.example.common.bean.AuthUser;
 import com.example.common.bean.ResponseData;
+import com.example.common.enumerate.RequestHeader;
 import com.example.common.utils.AntPathMatcherExt;
 import com.example.common.utils.TokenUtils;
 import com.example.gateway.utils.PermissionUtils;
@@ -62,7 +63,7 @@ public class AdminGatewayFilter implements GatewayFilter, Ordered {
 
         //将数据返回给下级服务器
         Consumer<HttpHeaders> httpHeaders = httpHeader -> {
-            httpHeader.set("x-id", String.valueOf(authUser.getId()));
+            httpHeader.set(RequestHeader.PRINCIPAL_ID.name(), String.valueOf(authUser.getId()));
             httpHeader.set("x-name", authUser.getUsername());
         };
         //将现在的request，添加当前身份

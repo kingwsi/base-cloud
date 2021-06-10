@@ -12,6 +12,7 @@ import com.example.common.entity.member.MemberVO;
 import com.example.common.exception.CustomException;
 import com.example.common.utils.TokenUtils;
 import com.example.mapper.MemberMapper;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -34,10 +35,13 @@ public class MemberService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public MemberService(MemberMapper memberMapper, MemberConvertMapper memberConvertMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    private final StringRedisTemplate stringRedisTemplate;
+
+    public MemberService(MemberMapper memberMapper, MemberConvertMapper memberConvertMapper, BCryptPasswordEncoder bCryptPasswordEncoder, StringRedisTemplate stringRedisTemplate) {
         this.memberMapper = memberMapper;
         this.memberConvertMapper = memberConvertMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.stringRedisTemplate = stringRedisTemplate;
     }
 
     /**
@@ -120,5 +124,10 @@ public class MemberService {
         member.setPassword(bCryptPasswordEncoder.encode(authUser.getPassword()));
         member.setCreatedDate(Instant.now());
         memberMapper.insert(member);
+    }
+
+    public String authByMobile(AuthUser authUser) {
+        stringRedisTemplate.opsForValue().get();
+        return null;
     }
 }

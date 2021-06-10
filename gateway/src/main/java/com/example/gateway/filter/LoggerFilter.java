@@ -1,6 +1,6 @@
 package com.example.gateway.filter;
 
-import com.example.common.enumerate.RedisKey;
+import com.example.common.enumerate.RedisConstKey;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -33,7 +33,7 @@ public class LoggerFilter implements GlobalFilter, Ordered {
             long executeTime = (System.currentTimeMillis() - startTime);
             String format = String.format("{\"remoteHost\":\"%s\",\"method\":\"%s\",\"path\":\"%s\",\"executeTime\":\"%s\"}", request.getMethod(), request.getURI().getHost(), request.getURI().getPath(), executeTime);
             log.info(format);
-            stringRedisTemplate.convertAndSend(RedisKey.GATEWAY_LOG_FILTER.name(), format);
+            stringRedisTemplate.convertAndSend(RedisConstKey.GATEWAY_LOG_FILTER.name(), format);
         }));
     }
 

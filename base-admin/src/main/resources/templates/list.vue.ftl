@@ -194,7 +194,7 @@ export default {
     },
     handleCancel () {
       this.visible = false
-      const form = this.$refs.createModal.$refs.form
+      const form = this.$refs.formModal.$refs.form
       form.resetFields()
     },
     handleDelete (row) {
