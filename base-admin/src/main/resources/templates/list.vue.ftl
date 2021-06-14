@@ -108,6 +108,10 @@ export default {
       queryParam: {},
       // 表头
       columns: [
+        {
+          title: '#',
+          dataIndex: 'id'
+        },
         <#list table.fields as field>
           <#if !field.keyFlag><#--生成普通字段 -->
         {
@@ -125,7 +129,6 @@ export default {
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        console.log('loadData.parameter', parameter)
         return GetPage(Object.assign(parameter || {}, this.queryParam))
           .then(res => {
             return res.data
@@ -146,7 +149,7 @@ export default {
       this.mdl = { ...record }
     },
     handleOk () {
-      const form = this.$refs.createModal.$refs.form
+      const form = this.$refs.formModal.$refs.form
       this.confirmLoading = true
       form.validate(valid => {
         if (valid) {
@@ -160,9 +163,6 @@ export default {
               // 刷新表格
               this.$refs.table.refresh()
               this.$message.info('修改成功')
-            }).catch((err) => {
-              console.log('form update error:->', err)
-              this.$message.error('修改失败')
             }).finally(() => {
               this.confirmLoading = false
             })
@@ -176,9 +176,6 @@ export default {
               // 刷新表格
               this.$refs.table.refresh()
               this.$message.info('新增成功')
-            }).catch((err) => {
-              console.log('form create error:->', err)
-              this.$message.error('修改失败')
             }).finally(() => {
               this.confirmLoading = false
             })
@@ -203,8 +200,6 @@ export default {
                     this.$message.info('删除成功！')
                     // 刷新表格
                     this.$refs.table.refresh()
-                } else {
-                    this.$message.err('删除失败！')
                 }
             })
     }

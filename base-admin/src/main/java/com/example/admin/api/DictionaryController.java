@@ -53,6 +53,7 @@ public class DictionaryController {
         if (StringUtils.isEmpty(id)) {
             return ResponseData.FAIL("ID不能为空");
         }
+        int i = 10/0;
         boolean result = dictionaryService.removeById(id);
         return result ? ResponseData.OK() : ResponseData.FAIL();
     }

@@ -13,8 +13,8 @@
         :model="model"
         :rules="rules"
         v-bind="formLayout">
-        <a-form-model-item v-show="false" label="ID">
-          <a-input v-if="model.id" disabled />
+        <a-form-model-item v-show="model && model.id" label="ID">
+          <a-input :disabled="model && model.id" v-model="model.id"/>
         </a-form-model-item>
 <#list table.fields as field>
 <#if !field.keyFlag><#--生成普通字段 -->
