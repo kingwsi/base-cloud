@@ -1,26 +1,29 @@
 package com.example.admin.api;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.common.bean.ResponseData;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.springframework.web.bind.annotation.RestController;
 import com.example.common.entity.dictionary.DictionaryVO;
 import com.example.service.DictionaryService;
+import com.example.common.bean.ResponseData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 /**
- * description: DictionaryController <br>
- * date: 2020/8/6 11:04 <br>
- * author: ws <br>
- * version: 1.0 <br>
- */
-@Api(tags = "字典管理")
+* description: 字典数据 controller <br>
+* date: 2021-06-14 <br>
+* author:  <br>
+*/
+
+@Api(tags = "字典数据")
 @RestController
 @RequestMapping("/api/dictionary")
 public class DictionaryController {
-
     private final DictionaryService dictionaryService;
 
     public DictionaryController(DictionaryService dictionaryService) {
@@ -28,7 +31,7 @@ public class DictionaryController {
     }
 
     @PutMapping
-    @ApiOperation("更新字典")
+    @ApiOperation("更新")
     public ResponseData<String> updateById(@RequestBody DictionaryVO dictionaryVO) {
         if (StringUtils.isEmpty(dictionaryVO.getId())) {
             return ResponseData.FAIL("ID不能为空");
@@ -38,14 +41,14 @@ public class DictionaryController {
     }
 
     @PostMapping
-    @ApiOperation("新增字典")
+    @ApiOperation("新增")
     public ResponseData<String> create(@RequestBody DictionaryVO dictionaryVO) {
         boolean result = dictionaryService.create(dictionaryVO);
         return result ? ResponseData.OK() : ResponseData.FAIL();
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation("删除字典")
+    @ApiOperation("删除")
     public ResponseData<String> deleteById(@PathVariable Integer id) {
         if (StringUtils.isEmpty(id)) {
             return ResponseData.FAIL("ID不能为空");
@@ -55,9 +58,9 @@ public class DictionaryController {
     }
 
     @GetMapping("/page")
-    @ApiOperation("获取字典分页")
-    public ResponseData<IPage<DictionaryVO>> listOfPage(Page<DictionaryVO> page, DictionaryVO vo) {
-        IPage<DictionaryVO> pageInfo = dictionaryService.listOfPage(page, vo);
+    @ApiOperation("获取分页")
+    public ResponseData<IPage<DictionaryVO>> listOfPage(Page<DictionaryVO> page, DictionaryVO dictionaryVO) {
+        IPage<DictionaryVO> pageInfo = dictionaryService.listOfPage(page, dictionaryVO);
         return ResponseData.OK(pageInfo);
     }
 }

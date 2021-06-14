@@ -110,8 +110,8 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <createTable tableName="sys_dictionaries" remarks="用户角色关联">
-            <column name="id" type="varchar(32)" remarks="角色id">
+        <createTable tableName="sys_dictionaries" remarks="字典数据">
+            <column name="id" type="varchar(32)" remarks="id">
                 <constraints nullable="false"/>
             </column>
             <column name="creator" type="varchar(100)" remarks="创建者"/>
@@ -119,16 +119,17 @@
             <column name="last_updater" type="varchar(100)" remarks="最后更新人"/>
             <column name="last_update_date" type="timestamp" remarks="最后更新时间"/>
             <column name="deleted" defaultValue="0" type="int(1)" remarks="删除标记"/>
-            <column name="name" type="varchar(32)" remarks="角色id">
+            <column name="value" type="varchar(500)" remarks="值">
                 <constraints nullable="false"/>
             </column>
-            <column name="code" type="varchar(32)" remarks="角色id">
+            <column name="code" type="varchar(100)" remarks="编码">
                 <constraints nullable="false"/>
             </column>
-            <column name="description" type="varchar(32)" remarks="角色id">
+            <column name="description" type="varchar(500)" remarks="描述">
                 <constraints nullable="false"/>
             </column>
-            <column name="sort" type="varchar(32)" remarks="角色id">
+            <column name="group_code" type="varchar(100)" remarks="分组CODE"/>
+            <column name="sort" type="int" remarks="排序">
                 <constraints nullable="false"/>
             </column>
         </createTable>

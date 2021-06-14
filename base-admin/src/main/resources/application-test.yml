@@ -1,18 +1,23 @@
 spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://192.168.123.232:3306/test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/base?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true
     username: root
     password: root
-  liquibase:
-    change-log: classpath:liquibase/master.yml
-    enabled: true
-    drop-first: false
+    druid:
+      stat-view-servlet:
+        url-pattern: /druid/*
+        enabled: true
+  redis:
+    host: 192.168.123.232
 server:
-  port: 8094
+  port: 18087
 #mybatis配置
 mybatis:
-  mapper-locations: classpath:mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
     # 开启sql日志
@@ -25,5 +30,3 @@ mybatis-plus:
   configuration:
     # 开启sql日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-logging:
-  level: debug

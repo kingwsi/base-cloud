@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.example.common.entity.common.BaseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -37,7 +38,12 @@ public class CodeGeneratorSupport {
     public CodeGeneratorSupport(String tableName, String entityName) {
         this.tableName = tableName;
         this.entityName = entityName;
-        this.username = System.getenv().get("USERNAME");
+        String username = System.getenv().get("USERNAME");
+        if (!StringUtils.isEmpty(username)) {
+            this.username = username;
+        } else {
+            this.username = "";
+        }
     }
 
     /**
@@ -47,7 +53,7 @@ public class CodeGeneratorSupport {
      */
     protected DataSourceConfig getDataSource() {
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
-        dataSourceConfig.setUrl("jdbc:h2:file:D:/Projects/private/base-cloud/target/h2db/db/test;DB_CLOSE_DELAY=-1;AUTO_SERVER=true");
+        dataSourceConfig.setUrl("jdbc:h2:file:\\Users\\ws\\Documents\\projects\\base-cloud\\target\\h2db\\db\\test;DB_CLOSE_DELAY=-1;AUTO_SERVER=true");
 //        dataSourceConfig.setUrl("jdbc:mysql://localhost:3306/base?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true");
         dataSourceConfig.setDriverName("org.h2.Driver");
 //        dataSourceConfig.setDriverName("com.mysql.jdbc.Driver");

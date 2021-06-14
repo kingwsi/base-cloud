@@ -1,11 +1,24 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.DictionaryMapper">
+
     <select id="selectPage" resultType="com.example.common.entity.dictionary.DictionaryVO">
-        SELECT * FROM sys_dictionaries
+        SELECT * FROM SYS_DICTIONARIES
         <where>
-            <if test="vo.name!=null and vo.name!=null">
-                AND name LIKE CONCAT('%',#{vo.name},'%')
+            <if test="vo.value != null and vo.value != ''">
+                AND value LIKE CONCAT('%',#{vo.value},'%')
+            </if>
+            <if test="vo.code != null and vo.code != ''">
+                AND code LIKE CONCAT('%',#{vo.code},'%')
+            </if>
+            <if test="vo.description != null and vo.description != ''">
+                AND description LIKE CONCAT('%',#{vo.description},'%')
+            </if>
+            <if test="vo.groupCode != null and vo.groupCode != ''">
+                AND groupCode LIKE CONCAT('%',#{vo.groupCode},'%')
+            </if>
+            <if test="vo.sort != null and vo.sort != ''">
+                AND sort LIKE CONCAT('%',#{vo.sort},'%')
             </if>
             AND deleted = 0
         </where>
