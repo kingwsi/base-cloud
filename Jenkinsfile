@@ -23,8 +23,8 @@ else
   echo "find result: $sp_pid "
   kill -9 $sp_pid
 fi'''
-        dir(path: '~/base-admin-web_cloud/applications') {
-          sh 'cp ~/base-admin-web_cloud/base-admin/target/base-admin-1.0-SNAPSHOT.jar ./admin-server.jar'
+        dir(path: 'apps') {
+          sh 'cp ../base-admin/target/base-admin-1.0-SNAPSHOT.jar ./admin-server.jar'
           sh 'java -jar -Dname=admin-server -Duser.timezone=Asia/Shanghai -Xms128M -Xmx256M -XX:MaxNewSize=128M admin-server.jar --spring.profiles.active=test > admin.log 2>&1 &'
         }
 
