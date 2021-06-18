@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
       image 'maven:3-alpine'
-      args '-v /var/jenkins_home/maven/.m2:/var/maven/.m2'
+      args '--env "$MAVEN_CONFIG=/root/.m2" -v /var/jenkins_home/maven/.m2:/root/.m2'
     }
 
   }
