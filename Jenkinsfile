@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('maven package') {
       steps {
-        sh 'mvn -f /pom.xml -B -DskipTests -pl base-admin clean package -am -amd'
+        sh 'mvn -f ./pom.xml -B -DskipTests -pl base-admin clean package -am -amd'
       }
     }
 
