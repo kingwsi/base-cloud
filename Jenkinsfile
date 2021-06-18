@@ -1,9 +1,15 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'maven:3.8.1-adoptopenjdk-11'
+      args '-v /root/.m2:/root/.m2'
+    }
+
+  }
   stages {
     stage('maven package') {
       steps {
-        sh 'docker run -it --rm --name my-maven -v /var/jenkins_home/maven/.m2:/root/.m2  -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3-alpine mvn -B -DskipTests -pl base-admin clean compile -am -amd'
+        sh 'mvn -B -DskipTests -pl base-admin clean compile -am -amd'
       }
     }
 
