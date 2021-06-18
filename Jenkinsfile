@@ -1,15 +1,9 @@
 pipeline {
-  agent {
-    docker {
-      image 'maven:3-alpine'
-      args '--env "$MAVEN_CONFIG=/root/.m2" -v /var/jenkins_home/maven/.m2:/root/.m2'
-    }
-
-  }
+  agent none
   stages {
     stage('maven package') {
       steps {
-        sh 'mvn -f ./pom.xml -B -DskipTests -pl base-admin clean package -am -amd'
+        sh 'docker run -it --rm --name my-maven -v /var/jenkins_home/maven/.m2:/root/.m2  -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3-alpine mvn -B -DskipTests -pl base-admin clean compile -am -amd'
       }
     }
 
