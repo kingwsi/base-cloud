@@ -8,13 +8,13 @@ pipeline {
 
   }
   stages {
-    stage('maven package') {
+    stage('Build') {
       steps {
         sh 'mvn -B -Dmaven.test.skip=true -Dmaven.repo.local=/var/jenkins_home/maven/.m2/repository -pl base-admin clean package -am -amd'
       }
     }
 
-    stage('Restart Application') {
+    stage('Application') {
       steps {
         sh '''if [[ ! -d ./apps ]]; then
 mkdir ./apps
@@ -30,7 +30,7 @@ else
   kill -9 $sp_pid
 fi'''
         sh 'cp base-admin/target/base-admin-1.0-SNAPSHOT.jar ./apps/admin-server.jar'
-        sh 'source /etc/profile'
+        sh 'java -version'
         dir(path: 'apps') {
           sh 'nohup java -jar -Dname=admin-server -Duser.timezone=Asia/Shanghai -Xms128M -Xmx256M -XX:MaxNewSize=128M admin-server.jar --spring.profiles.active=test > admin.log 2>&1 &'
         }
