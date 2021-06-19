@@ -16,7 +16,11 @@ pipeline {
 
     stage('Restart Application') {
       steps {
-        sh 'pwd'
+        sh '''if [[ ! -d ./apps ]]; then
+mkdir ./apps
+else
+echo "apps exist"
+fi'''
         sh '''sp_pid=`ps -ef | grep admin-server | grep -v grep | awk \'{print $2}\'`
 if [ -z "$sp_pid" ];
 then
