@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('maven package') {
       steps {
-        sh 'mvn -B -Dmaven.repo.local=/root/.m2/repo -pl base-admin clean compile -am -amd'
+        sh 'mvn -B -pl base-admin clean compile -am -amd'
       }
     }
 
