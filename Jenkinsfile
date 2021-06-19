@@ -7,17 +7,15 @@ pipeline {
 
   }
   stages {
-    stage('maven package') {
+    stage('Build') {
       steps {
         sh 'mvn -B -Dmaven.test.skip=true -Dmaven.repo.local=/var/jenkins_home/maven/.m2/repository -pl base-admin clean package -am -amd'
       }
     }
-
     stage('Deliver') {
       steps {
         sh './jenkins/deliver.sh'
       }
     }
-
   }
 }
