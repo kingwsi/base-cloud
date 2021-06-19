@@ -15,6 +15,7 @@ pipeline {
 
     stage('Restart Application') {
       steps {
+        sh 'pwd'
         sh '''sp_pid=`ps -ef | grep admin-server | grep -v grep | awk \'{print $2}\'`
 if [ -z "$sp_pid" ];
 then
