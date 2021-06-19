@@ -2,14 +2,14 @@ pipeline {
   agent {
     docker {
       image 'maven:3-alpine'
-      args '--name=maven -e MAVEN_CONFIG=/root/.m2 -v /root/.m2:/root/.m2'
+      args '--name=maven -v /root/.m2:/root/.m2'
     }
 
   }
   stages {
     stage('maven package') {
       steps {
-        sh 'mvn -B -DskipTests -pl base-admin clean compile -am -amd'
+        sh 'mvn -B -Dmaven.repo.local=/root/.m2/repo -pl base-admin clean compile -am -amd'
       }
     }
 
