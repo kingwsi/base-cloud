@@ -30,6 +30,7 @@ else
   kill -9 $sp_pid
 fi'''
         sh 'cp base-admin/target/base-admin-1.0-SNAPSHOT.jar ./apps/admin-server.jar'
+        sh 'source /etc/profile'
         dir(path: 'apps') {
           sh 'nohup java -jar -Dname=admin-server -Duser.timezone=Asia/Shanghai -Xms128M -Xmx256M -XX:MaxNewSize=128M admin-server.jar --spring.profiles.active=test > admin.log 2>&1 &'
         }
