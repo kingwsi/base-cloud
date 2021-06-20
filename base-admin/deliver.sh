@@ -1,6 +1,6 @@
 pwd
 # 构建镜像
-docker build -t base-admin-server:latest .
+docker build -t base-admin-server:latest ./base-admin/.
 # 先删除之前的容器
 echo "remove old container"
 docker ps -a | grep base-admin-server | awk '{print $1}'| xargs docker stop
