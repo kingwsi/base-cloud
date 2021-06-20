@@ -14,7 +14,6 @@ pipeline {
     }
 
     stage('Deliver') {
-      agent any
       steps {
         sh 'sh ./base-admin/deliver.sh'
       }
