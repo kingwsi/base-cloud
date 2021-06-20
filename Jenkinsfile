@@ -14,12 +14,7 @@ pipeline {
     }
 
     stage('Deliver') {
-      agent {
-        node {
-          label 'docker build'
-        }
-
-      }
+      agent any
       steps {
         sh 'sh ./base-admin/deliver.sh'
       }
