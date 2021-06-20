@@ -1,3 +1,4 @@
+pwd
 # 构建镜像
 docker build -t base-admin-server:latest .
 # 先删除之前的容器
