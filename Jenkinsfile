@@ -18,7 +18,7 @@ pipeline {
     stage('Deliver') {
       agent {
         node {
-          label 'deliver'
+          label 'master'
         }
 
       }
