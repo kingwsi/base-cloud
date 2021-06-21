@@ -5,11 +5,12 @@ pipeline {
       agent {
         docker {
           image 'maven:3-alpine'
-          args '--rm -v /var/jenkins_home/maven/.m2:/var/jenkins_home/maven/.m2 -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven'
+          args '--rm -v /var/jenkins_home/maven/.m2:/var/jenkins_home/maven/.m2 -v ./:/usr/src/mymaven -w /usr/src/mymaven'
         }
       }
       steps {
         sh 'pwd'
+        sh 'ls'
         sh 'mvn -B -Dmaven.test.skip=true -Dmaven.repo.local=/var/jenkins_home/maven/.m2/repository -pl base-admin clean package -am -amd'
         echo 'Maven Build Success!'
       }
