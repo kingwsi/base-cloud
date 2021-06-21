@@ -16,11 +16,11 @@ pipeline {
     }
 
     stage('Deliver') {
+      agent { node { label 'master' } }
       steps {
         sh 'sh ./base-admin/deliver.sh'
       }
     }
-
   }
   options {
     skipDefaultCheckout(true)
