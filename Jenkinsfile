@@ -5,9 +5,8 @@ pipeline {
       agent {
         docker {
           image 'maven:3-alpine'
-          args '--rm -v /var/jenkins_home/maven/.m2:/var/jenkins_home/maven/.m2'
+          args '--rm -v /var/jenkins_home/maven/.m2:/var/jenkins_home/maven/.m2 -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven'
         }
-
       }
       steps {
         sh 'pwd'
