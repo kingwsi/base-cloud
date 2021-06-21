@@ -1,14 +1,6 @@
 pipeline {
   agent none
   stages {
-    stage('Setup') {
-      agent {
-        label "master"
-      }
-      steps {
-        sh "git checkout -f main"
-      }
-    }
     stage('Build') {
       agent {
         docker {
@@ -31,6 +23,6 @@ pipeline {
 
   }
   options {
-    skipDefaultCheckout(true)
+    skipDefaultCheckout(false)
   }
 }
