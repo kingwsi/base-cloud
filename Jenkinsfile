@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent none
   options {
     skipDefaultCheckout true
   }
@@ -18,6 +18,7 @@ pipeline {
     }
 
     stage('Deliver') {
+      agent any
       steps {
         sh 'sh ./base-admin/deliver.sh'
       }
