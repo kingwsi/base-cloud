@@ -12,10 +12,8 @@ pipeline {
         }
       }
       steps {
-        dir(path: '$WORKSPACE/base-cloud_main') {
-          sh 'mvn -B -Dmaven.test.skip=true -Dmaven.repo.local=/var/jenkins_home/maven/.m2/repository -pl base-admin clean package -am -amd'
-          echo 'Maven Build Success!'
-        }
+        sh 'mvn -B -Dmaven.test.skip=true -Dmaven.repo.local=/var/jenkins_home/maven/.m2/repository -pl base-admin clean package -am -amd'
+        echo 'Maven Build Success!'
       }
     }
 
@@ -24,6 +22,5 @@ pipeline {
         sh 'sh ./base-admin/deliver.sh'
       }
     }
-
   }
 }
