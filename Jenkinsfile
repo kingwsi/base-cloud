@@ -1,6 +1,7 @@
 pipeline {
   agent none
   stages {
+    agent any
     stage('Setup') {
       steps {
         sh "git checkout -f main"
