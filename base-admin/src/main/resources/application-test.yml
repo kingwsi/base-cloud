@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: base-admin
   cloud:
     consul:
       host: localhost
@@ -16,6 +18,8 @@ spring:
   redis:
     host: 39.98.170.255
     password: cZmx8
+  liquibase:
+    enabled: false
 server:
   port: 8094
 #mybatis配置
@@ -32,7 +36,10 @@ mybatis-plus:
   configuration:
     # 开启sql日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-management:
-  endpoint:
-    liquibase:
-      enabled: false
+logging:
+  level: info
+  file:
+    path: /logs
+    name: ${spring.application.name}_info.log
+  pattern:
+    file: %d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n

@@ -11,7 +11,7 @@ echo "current docker images"
 docker images | grep base-admin-server
 # 启动容器
 echo "start container"
-docker run -d --rm --name base-admin-server -p 8094:8094  base-admin-server:latest
+docker run -d --rm --name base-admin-server -p 8094:8094 -v "$HOME/logs":/logs base-admin-server:latest
 # 打印当前容器
 echo "current container"
 docker ps -a | grep base-admin-server
