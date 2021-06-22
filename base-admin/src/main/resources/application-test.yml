@@ -37,7 +37,6 @@ mybatis-plus:
     # 开启sql日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 logging:
-  level: info
   file:
     path: /logs
     name: ${spring.application.name}_info.log
