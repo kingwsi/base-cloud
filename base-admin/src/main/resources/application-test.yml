@@ -13,16 +13,9 @@ spring:
       stat-view-servlet:
         url-pattern: /druid/*
         enabled: true
-  h2:
-    console:
-      path: /h2-console
-      settings:
-        web-allow-others: true
-      enabled: true
   redis:
     host: 39.98.170.255
     password: cZmx8
-
 server:
   port: 8094
 #mybatis配置
@@ -39,3 +32,7 @@ mybatis-plus:
   configuration:
     # 开启sql日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+management:
+  endpoint:
+    liquibase:
+      enabled: false
