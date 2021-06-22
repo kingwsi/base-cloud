@@ -81,14 +81,14 @@ public class RedisConfig {
         return new MessageListenerAdapter(receiver, "receiverMessage");
     }
 
-    @Bean
-    RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory,
-                                            MessageListenerAdapter listenerAdapter) {
-        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        //订阅了一个叫chat的通道
-        container.addMessageListener(listenerAdapter, new PatternTopic(RedisConstKey.GATEWAY_LOG_FILTER.name()));
-        return container;
-    }
+//    @Bean
+//    RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory,
+//                                            MessageListenerAdapter listenerAdapter) {
+//        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+//        container.setConnectionFactory(connectionFactory);
+//        //订阅了一个叫chat的通道
+//        container.addMessageListener(listenerAdapter, new PatternTopic(RedisConstKey.GATEWAY_LOG_FILTER.name()));
+//        return container;
+//    }
 
 }
