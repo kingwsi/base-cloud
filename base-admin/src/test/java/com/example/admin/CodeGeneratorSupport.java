@@ -1,4 +1,4 @@
-package com.example.admin.api;
+package com.example.admin;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;

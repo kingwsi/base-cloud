@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -35,9 +36,9 @@ public class VerificationController {
     public ResponseData<?> captcha() {
         SpecCaptcha specCaptcha = new SpecCaptcha(100, 45, 5);
         String verCode = specCaptcha.text().toLowerCase();
+        specCaptcha.setFont(new Font("DejaVu Serif", Font.PLAIN, 28));
         String key = UUID.randomUUID().toString();
         stringRedisTemplate.opsForValue().set(RedisConstKey.LOGIN_VERIFY_CODE + key, verCode, RedisConstKey.LOGIN_VERIFY_CODE.getExpire(), RedisConstKey.LOGIN_VERIFY_CODE.getTimeUnit());
-        String val = stringRedisTemplate.opsForValue().get(RedisConstKey.LOGIN_VERIFY_CODE + key);
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("key", key);
         hashMap.put("image", specCaptcha.toBase64());

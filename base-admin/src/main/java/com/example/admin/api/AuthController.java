@@ -30,8 +30,8 @@ public class AuthController {
         this.stringRedisTemplate = stringRedisTemplate;
     }
 
-    @ApiOperation("获取token(验证验证码)")
-    @PostMapping("/verify")
+    @ApiOperation("获取token")
+    @PostMapping
     public ResponseData<String> authWithVerify(@RequestBody AuthUser authUser) {
         String key = RedisConstKey.LOGIN_VERIFY_CODE + authUser.getKey();
         String code = stringRedisTemplate.opsForValue().get(key);
@@ -42,13 +42,6 @@ public class AuthController {
             return ResponseData.OK(accessControlService.auth(authUser));
         }
     }
-
-    @ApiOperation("获取token")
-    @PostMapping
-    public ResponseData<String> auth(@RequestBody AuthUser authUser) {
-        return ResponseData.OK(accessControlService.auth(authUser));
-    }
-
     @ApiOperation("登出")
     @PostMapping("/logout")
     public ResponseData<?> logout() {
