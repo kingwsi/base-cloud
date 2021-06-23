@@ -3,7 +3,7 @@
 <mapper namespace="com.example.mapper.DictionaryMapper">
 
     <select id="selectPage" resultType="com.example.common.entity.dictionary.DictionaryVO">
-        SELECT * FROM SYS_DICTIONARIES
+        SELECT * FROM sys_dictionaries
         <where>
             <if test="vo.value != null and vo.value != ''">
                 AND value LIKE CONCAT('%',#{vo.value},'%')

@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CodeGenerator {
     public static void main(String[] args) {
 //        CodeGeneratorSupport codeGeneratorSupport = new CodeGeneratorSupport("SYS_API_WHITELIST", "ApiWhitelist");
-        CodeGeneratorSupport codeGeneratorSupport = new CodeGeneratorSupport("SYS_DICTIONARIES", "Dictionary");
+        CodeGeneratorSupport codeGeneratorSupport = new CodeGeneratorSupport("sys_dictionaries", "Dictionary");
         codeGeneratorSupport.generateCommonModule();
         codeGeneratorSupport.generateServiceModule();
         codeGeneratorSupport.generateControllerModule();

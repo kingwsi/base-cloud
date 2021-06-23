@@ -20,7 +20,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("SYS_DICTIONARIES")
+@TableName("sys_dictionaries")
 @ApiModel(value="Dictionary对象", description="字典数据")
 public class Dictionary extends BaseEntity {
 
