@@ -36,7 +36,6 @@ public class VerificationController {
     public ResponseData<?> captcha() {
         SpecCaptcha specCaptcha = new SpecCaptcha(100, 45, 5);
         String verCode = specCaptcha.text().toLowerCase();
-        specCaptcha.setFont(new Font("DejaVu Serif", Font.PLAIN, 28));
         String key = UUID.randomUUID().toString();
         stringRedisTemplate.opsForValue().set(RedisConstKey.LOGIN_VERIFY_CODE + key, verCode, RedisConstKey.LOGIN_VERIFY_CODE.getExpire(), RedisConstKey.LOGIN_VERIFY_CODE.getTimeUnit());
         HashMap<String, String> hashMap = new HashMap<>();
