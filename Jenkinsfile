@@ -42,6 +42,18 @@ pipeline {
           }
         }
 
+        stage('Deliver Gateway') {
+          agent {
+            node {
+              label 'master'
+            }
+
+          }
+          steps {
+            sh 'sh ./deliver.sh gateway'
+          }
+        }
+
       }
     }
 
