@@ -22,11 +22,11 @@ public class PermissionUtils {
 
     private static AdminAuthFeignClient adminAuthFeignClient;
 
-    private static RedisTemplate<Object, Object> redisTemplate;
+    private static RedisTemplate<String, Object> redisTemplate;
 
-    private static AntPathMatcherExt antPathMatcher = new AntPathMatcherExt();
+    private static final AntPathMatcherExt antPathMatcher = new AntPathMatcherExt();
 
-    public PermissionUtils(AdminAuthFeignClient adminAuthFeignClient, RedisTemplate<Object, Object> redisTemplate) {
+    public PermissionUtils(AdminAuthFeignClient adminAuthFeignClient, RedisTemplate<String, Object> redisTemplate) {
         PermissionUtils.adminAuthFeignClient = adminAuthFeignClient;
         PermissionUtils.redisTemplate = redisTemplate;
     }

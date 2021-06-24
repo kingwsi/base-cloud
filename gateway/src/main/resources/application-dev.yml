@@ -12,5 +12,6 @@ spring:
           lower-case-service-id: true # 服务名称小写
       routes:
   redis:
-    host: 192.168.123.232
+    host: 39.98.170.255
+    password: cZmx8
 
