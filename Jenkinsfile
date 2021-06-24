@@ -10,7 +10,7 @@ pipeline {
       }
       steps {
         checkout scm
-        sh 'mvn -B -Dmaven.test.skip=true -Dmaven.repo.local=/var/jenkins_home/maven/.m2/repository -pl base-admin clean package -am -amd'
+        sh 'mvn -B -Dmaven.test.skip=true -Dmaven.repo.local=/var/jenkins_home/maven/.m2/repository clean package'
         echo 'Maven Build Success!'
       }
     }
@@ -18,7 +18,7 @@ pipeline {
     stage('Deliver') {
       agent { node { label 'master' } }
       steps {
-        sh 'sh ./base-admin/deliver.sh'
+        sh 'sh ./deliver.sh'
       }
     }
   }
