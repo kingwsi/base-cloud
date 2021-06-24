@@ -7,6 +7,7 @@ pipeline {
           image 'maven:3-alpine'
           args '--rm -v /var/jenkins_home/maven/.m2:/var/jenkins_home/maven/.m2'
         }
+
       }
       steps {
         checkout scm
@@ -16,11 +17,34 @@ pipeline {
     }
 
     stage('Deliver') {
-      agent { node { label 'master' } }
-      steps {
-        sh 'sh ./deliver.sh $JOB_BASE_NAME'
+      parallel {
+        stage('Deliver') {
+          agent {
+            node {
+              label 'master'
+            }
+
+          }
+          steps {
+            sh 'sh ./deliver.sh base-admin'
+          }
+        }
+
+        stage('Deliver Rest') {
+          agent {
+            node {
+              label 'master'
+            }
+
+          }
+          steps {
+            sh 'sh ./deliver.sh base-rest'
+          }
+        }
+
       }
     }
+
   }
   options {
     skipDefaultCheckout(true)
