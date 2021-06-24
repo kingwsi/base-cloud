@@ -18,7 +18,7 @@ pipeline {
     stage('Deliver') {
       agent { node { label 'master' } }
       steps {
-        sh 'sh ./deliver.sh'
+        sh 'sh ./deliver.sh base-admin'
       }
     }
   }
