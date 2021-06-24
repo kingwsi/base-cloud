@@ -33,6 +33,7 @@ public class AdminGatewayFilter implements GatewayFilter, Ordered {
     private static final String[] excludedAuthPages = {
             "/api/debug/**",
             "/api/auth",
+            "/api/verification/captcha",
             "/api/customer/login",
     };
 
