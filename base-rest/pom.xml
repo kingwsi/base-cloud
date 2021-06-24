@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>base-rest</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <name>base-rest</name>
     <description>Rest</description>
 
