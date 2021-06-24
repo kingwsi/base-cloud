@@ -18,7 +18,7 @@ pipeline {
     stage('Deliver') {
       agent { node { label 'master' } }
       steps {
-        sh 'sh ./deliver.sh $JOB_NAME'
+        sh 'sh ./deliver.sh $JOB_BASE_NAME'
       }
     }
   }
