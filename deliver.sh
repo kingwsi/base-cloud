@@ -48,7 +48,7 @@ docker ps -a | grep "$MODULE_NAME-server" | awk '{print $1}'| xargs docker stop
 echo "清理无效镜像 <none>"
 docker image prune -f
 echo "启动容器..."
-docker run -d --rm --name $MODULE_NAME-server --network bridge -p $MODULE_PORT:$MODULE_PORT -v "$HOME/logs":/logs $MODULE_NAME-server:latest
+docker run -d --rm --name $MODULE_NAME-server --network base --network-alias $MODULE_NAME -p $MODULE_PORT:$MODULE_PORT -v "$HOME/logs":/logs $MODULE_NAME-server:latest
 # 是否启动成功
 RES=$(docker ps | grep "$MODULE_NAME-server" | awk '{print $3}')
 if [ -n "$RES" ]; then

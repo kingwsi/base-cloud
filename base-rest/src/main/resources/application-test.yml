@@ -3,10 +3,10 @@ spring:
     name: base-rest
   cloud:
     consul:
-      host: 192.168.123.232
+      host: dev-consul
       port: 8500
       discovery:
-        hostname: 192.168.123.232
+        hostname: base-admin
     loadbalancer:
       ribbon:
         enabled: false
