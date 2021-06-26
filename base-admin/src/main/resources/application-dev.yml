@@ -1,9 +1,12 @@
 spring:
+  application:
+    name: base-admin
   cloud:
     consul:
-      host: localhost
-      port: 8500
-      enabled: false
+      host: 192.168.123.232
+      port: 8600
+      discovery:
+        hostname: 192.168.123.19
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:h2:file:./target/h2db/db/test;DB_CLOSE_DELAY=-1;;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE
@@ -27,8 +30,8 @@ spring:
         web-allow-others: true
       enabled: true
   redis:
-    host: 192.168.123.232
-
+    host: 39.98.170.255
+    password: cZmx8
 server:
   port: 8094
 #mybatis配置
