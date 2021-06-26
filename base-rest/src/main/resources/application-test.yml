@@ -3,7 +3,7 @@ spring:
     name: base-rest
   cloud:
     consul:
-      host: docker
+      host: localhost
       port: 8500
     loadbalancer:
       ribbon:
