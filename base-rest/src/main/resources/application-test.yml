@@ -5,8 +5,6 @@ spring:
     consul:
       host: docker
       port: 8500
-      discovery:
-        hostname: docker
     loadbalancer:
       ribbon:
         enabled: false
