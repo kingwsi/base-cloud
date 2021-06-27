@@ -31,31 +31,7 @@ public class PermissionUtils {
         PermissionUtils.redisTemplate = redisTemplate;
     }
 
-    /**
-     * 权限校验
-     *
-     * @param path   请求路径
-     * @param method 请求方式
-     * @param userId 用户ID
-     * @return 允许访问返回true
-     */
-    public static boolean isAllowed(String path, String method, Integer userId) {
-        String[] apisArray = (String[]) redisTemplate.opsForValue().get("permission:" + method + ":" + userId);
-        if (apisArray == null) {
-            ResponseData<List<String>> responseData = adminAuthFeignClient.listCurrentUserApis(method, userId);
-            if (responseData.getCode() == 200 && !responseData.getData().isEmpty()) {
-                apisArray = responseData.getData().toArray(new String[]{});
-                redisTemplate.opsForValue().set("permission:" + method + ":" + userId, apisArray, 10, TimeUnit.MINUTES);
-            } else {
-                return false;
-            }
-        }
-        if (antPathMatcher.pathMatch(apisArray, path)) {
-            return true;
-        }
-        log.warn("unauthorized -> user:{} path:{} {}", userId, method, path);
-        return false;
-    }
+
 
     public void Test(){
 

@@ -33,12 +33,12 @@ public class AuthController {
     @ApiOperation("获取token")
     @PostMapping
     public ResponseData<String> authWithVerify(@RequestBody AuthUser authUser) {
-//        String key = RedisConstKey.LOGIN_VERIFY_CODE + authUser.getKey();
-//        String code = stringRedisTemplate.opsForValue().get(key);
-//        stringRedisTemplate.delete(key);
-//        if (StringUtils.isEmpty(code) || !code.equalsIgnoreCase(authUser.getCaptcha())) {
-//            return ResponseData.FAIL("验证码错误");
-//        }
+        String key = RedisConstKey.LOGIN_VERIFY_CODE + authUser.getKey();
+        String code = stringRedisTemplate.opsForValue().get(key);
+        stringRedisTemplate.delete(key);
+        if (StringUtils.isEmpty(code) || !code.equalsIgnoreCase(authUser.getCaptcha())) {
+            return ResponseData.FAIL("验证码错误");
+        }
 
         return ResponseData.OK(accessControlService.auth(authUser));
     }

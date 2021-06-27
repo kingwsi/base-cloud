@@ -46,7 +46,7 @@ public class GatewayRoutesConfiguration {
         return builder.routes()
                 .route(r -> r.path("/base-admin/**")
                         .filters(f -> f.stripPrefix(1)
-                                .filters(new AdminGatewayFilter())
+                                .filters(new AdminGatewayFilter(redisTemplate, adminAuthFeignClient))
                         ).uri("lb://base-admin"))
                 .route(r -> r.path("/base-rest/**")
                         .filters(f -> f.stripPrefix(1)
