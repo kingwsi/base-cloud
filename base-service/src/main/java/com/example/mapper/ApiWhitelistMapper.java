@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
 * description: api白名单 Mapper接口 <br>
 * date: 2021-06-10 <br>
@@ -16,4 +18,6 @@ import org.springframework.stereotype.Component;
 @Component
 public interface ApiWhitelistMapper extends BaseMapper<ApiWhitelist> {
     IPage<ApiWhitelistVO> selectPage(Page<ApiWhitelistVO> page, @Param("vo") ApiWhitelistVO vo);
+
+    List<String> selectListPath();
 }

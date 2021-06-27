@@ -56,4 +56,8 @@ public class PermissionUtils {
         log.warn("unauthorized -> user:{} path:{} {}", userId, method, path);
         return false;
     }
+
+    public void Test(){
+
+    }
 }

@@ -37,7 +37,7 @@
 
 </#if>
     <select id="selectPage" resultType="${package.Entity}.${entity}VO">
-        SELECT * FROM ${table.name}
+        SELECT * FROM ${table.name?lower_case}
         <where>
             <#list table.fields as field>
             <#if !field.keyFlag><#--生成普通字段 -->

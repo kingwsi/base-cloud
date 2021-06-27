@@ -1,13 +1,22 @@
 package com.example.gateway.config;
 
+import com.example.gateway.feign.AdminAuthFeignClient;
 import com.example.gateway.filter.AdminGatewayFilter;
 import com.example.gateway.filter.RestGatewayFilter;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.util.pattern.PathPatternParser;
 
 /**
  * description: GatewayRoutesConfiguration <br>
@@ -19,6 +28,13 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 public class GatewayRoutesConfiguration {
 
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+
+    @Lazy
+    @Autowired
+    private AdminAuthFeignClient adminAuthFeignClient;
+
     /**
      * java 配置 server 服务路由
      *
@@ -28,14 +44,40 @@ public class GatewayRoutesConfiguration {
     @Bean
     public RouteLocator routeLocator(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route(r -> r.path("/admin/**")
+                .route(r -> r.path("/base-admin/**")
                         .filters(f -> f.stripPrefix(1)
                                 .filters(new AdminGatewayFilter())
-                        ).uri("lb://admin"))
-                .route(r -> r.path("/rest/**")
+                        ).uri("lb://base-admin"))
+                .route(r -> r.path("/base-rest/**")
                         .filters(f -> f.stripPrefix(1)
-                                .filters(new RestGatewayFilter())
-                        ).uri("lb://rest"))
+                                .filters(new RestGatewayFilter(redisTemplate, adminAuthFeignClient))
+                        ).uri("lb://base-rest"))
                 .build();
+    }
+
+    /**
+     * 配置跨域
+     * @return
+     */
+    @Bean
+    public CorsWebFilter corsFilter() {
+        CorsConfiguration config = new CorsConfiguration();
+        // cookie跨域
+        config.setAllowCredentials(Boolean.TRUE);
+        config.addAllowedMethod("*");
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        // 配置前端js允许访问的自定义响应头
+        config.addExposedHeader("Authorization:");
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(new PathPatternParser());
+        source.registerCorsConfiguration("/**", config);
+
+        return new CorsWebFilter(source);
+    }
+
+    @Bean
+    public HttpMessageConverters httpMessageConverters(){
+        return new HttpMessageConverters();
     }
 }

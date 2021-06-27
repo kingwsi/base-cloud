@@ -6,6 +6,7 @@ import com.example.common.bean.ResponseData;
 import com.example.common.enumerate.RequestHeader;
 import com.example.common.utils.AntPathMatcherExt;
 import com.example.common.utils.TokenUtils;
+import com.example.gateway.utils.MonoResponse;
 import com.example.gateway.utils.PermissionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -40,7 +41,7 @@ public class AdminGatewayFilter implements GatewayFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
-        String path = request.getPath().toString().replace("/admin", "");
+        String path = request.getPath().toString().replace("/base-admin", "");
         // 白名单
         if (antPathMatcherExt.pathMatch(excludedAuthPages, path)) {
             return chain.filter(exchange);
@@ -48,24 +49,24 @@ public class AdminGatewayFilter implements GatewayFilter, Ordered {
         HttpHeaders headers = request.getHeaders();
         String token = headers.getFirst(HttpHeaders.AUTHORIZATION);
         if (StringUtils.isEmpty(token)) {
-            return responseError(exchange);
+            return MonoResponse.responseError(exchange);
         }
         AuthUser authUser;
         try {
             authUser = TokenUtils.parser(token.replace("Bearer ", ""));
         } catch (Exception e) {
             log.error("Token解析失败->{}", e.getMessage());
-            return responseError(exchange);
+            return MonoResponse.responseError(exchange);
         }
 
         if (!PermissionUtils.isAllowed(path, Objects.requireNonNull(request.getMethod()).name(), authUser.getId())) {
-            return responseError(exchange);
+            return MonoResponse.responseError(exchange);
         }
 
         //将数据返回给下级服务器
         Consumer<HttpHeaders> httpHeaders = httpHeader -> {
             httpHeader.set(RequestHeader.PRINCIPAL_ID.name(), String.valueOf(authUser.getId()));
-            httpHeader.set("x-name", authUser.getUsername());
+            httpHeader.set(RequestHeader.PRINCIPAL_NAME.name(), authUser.getUsername());
         };
         //将现在的request，添加当前身份
         ServerHttpRequest mutableReq = exchange.getRequest().mutate().headers(httpHeaders).build();
@@ -77,16 +78,5 @@ public class AdminGatewayFilter implements GatewayFilter, Ordered {
     @Override
     public int getOrder() {
         return -1;
-    }
-
-    public Mono<Void> responseError(ServerWebExchange exchange) {
-        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-        ServerHttpResponse response = exchange.getResponse();
-        ResponseData<Object> data = ResponseData.FAIL().setCode(HttpStatus.UNAUTHORIZED.value()).setMessage("Unauthorized");
-        byte[] dataBytes = JSONObject.toJSONBytes(data);
-        DataBuffer buffer = response.bufferFactory().wrap(dataBytes);
-        response.setStatusCode(HttpStatus.UNAUTHORIZED);
-        response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
-        return response.writeWith(Mono.just(buffer));
     }
 }

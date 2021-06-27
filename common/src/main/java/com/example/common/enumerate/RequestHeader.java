@@ -7,5 +7,7 @@ package com.example.common.enumerate;
  * version: 1.0 <br>
  */
 public enum RequestHeader {
-    PRINCIPAL_ID
+    PRINCIPAL_ID,
+    PRINCIPAL_NAME
+
 }

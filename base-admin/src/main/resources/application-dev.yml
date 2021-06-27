@@ -9,11 +9,9 @@ spring:
         hostname: 192.168.123.19
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:h2:file:./target/h2db/db/test;DB_CLOSE_DELAY=-1;;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE
-#    url: jdbc:mysql://localhost:3306/base?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true
+    url: jdbc:mysql://39.98.170.255:3381/base?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
-    password: root
-    platform: H2
+    password: AnTG2G
     druid:
       stat-view-servlet:
         url-pattern: /druid/*
@@ -21,14 +19,8 @@ spring:
 ## DEV liquibase & H2
   liquibase:
     change-log: classpath:liquibase/master.yml
-    enabled: true
+    enabled: false
     drop-first: false
-  h2:
-    console:
-      path: /h2-console
-      settings:
-        web-allow-others: true
-      enabled: true
   redis:
     host: 39.98.170.255
     password: cZmx8

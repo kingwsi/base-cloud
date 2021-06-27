@@ -6,6 +6,7 @@ import com.example.common.bean.AuthUser;
 import com.example.common.entity.resource.ResourceConvertMapper;
 import com.example.common.entity.resource.ResourceVO;
 import com.example.common.entity.user.UserVO;
+import com.example.common.enumerate.RequestHeader;
 import com.example.common.exception.CustomException;
 import com.example.common.utils.TokenUtils;
 import com.example.common.entity.user.User;
@@ -13,6 +14,7 @@ import com.example.mapper.ResourceMapper;
 import com.example.mapper.UserMapper;
 import com.example.common.entity.resource.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -41,12 +43,15 @@ public class AccessControlService {
 
     private final ResourceConvertMapper resourceConvertMapper;
 
-    public AccessControlService(HttpServletRequest request, UserMapper userMapper, BCryptPasswordEncoder bCryptPasswordEncoder, ResourceMapper resourceMapper, ResourceConvertMapper resourceConvertMapper) {
+    private final Environment env;
+
+    public AccessControlService(HttpServletRequest request, UserMapper userMapper, BCryptPasswordEncoder bCryptPasswordEncoder, ResourceMapper resourceMapper, ResourceConvertMapper resourceConvertMapper, Environment env) {
         this.request = request;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.resourceMapper = resourceMapper;
         this.userMapper = userMapper;
         this.resourceConvertMapper = resourceConvertMapper;
+        this.env = env;
     }
 
     /**
@@ -77,9 +82,10 @@ public class AccessControlService {
      * @return
      */
     public UserVO getUserInfo() {
-        String id = request.getHeader("x-id");
-        if (StringUtils.isEmpty(id)){
-            id = "1";
+        String activeProfile = env.getActiveProfiles()[0];
+        String id = request.getHeader(RequestHeader.PRINCIPAL_ID.name());
+        if (StringUtils.isEmpty(id) && "dev".equals(activeProfile)){
+            id = "2";
         }
         return Optional.of(Integer.valueOf(id))
                 .map(userMapper::selectUsersWithRoles).get();

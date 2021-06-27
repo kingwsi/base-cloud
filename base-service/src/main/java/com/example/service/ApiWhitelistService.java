@@ -80,4 +80,8 @@ public class ApiWhitelistService {
     public List<ApiWhitelist> listAll() {
         return apiwhitelistMapper.selectList(new QueryWrapper<ApiWhitelist>());
     }
+
+    public List<String> listAllPath() {
+        return apiwhitelistMapper.selectListPath();
+    }
 }

@@ -35,13 +35,10 @@ public class MemberService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private final StringRedisTemplate stringRedisTemplate;
-
-    public MemberService(MemberMapper memberMapper, MemberConvertMapper memberConvertMapper, BCryptPasswordEncoder bCryptPasswordEncoder, StringRedisTemplate stringRedisTemplate) {
+    public MemberService(MemberMapper memberMapper, MemberConvertMapper memberConvertMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.memberMapper = memberMapper;
         this.memberConvertMapper = memberConvertMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.stringRedisTemplate = stringRedisTemplate;
     }
 
     /**

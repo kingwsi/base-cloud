@@ -20,6 +20,7 @@ import java.util.Optional;
 public class TokenUtils {
 
     private final static String KEY = "123456";
+    private final static String MEMBER_KEY = "member-test";
 
     public static String createToken(AuthUser authUser) {
         return Jwts.builder()
@@ -35,7 +36,7 @@ public class TokenUtils {
         return Jwts.builder()
                 .claim("id", authUser.getId())
                 .claim("name", authUser.getUsername())
-                .claim("type", "customer")
+                .claim("type", "member")
                 .setExpiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
                 .signWith(SignatureAlgorithm.HS512, KEY)
                 .compact();
@@ -43,6 +44,16 @@ public class TokenUtils {
 
     public static AuthUser parser(String token) {
         Claims claims = Jwts.parser().setSigningKey(KEY).parseClaimsJws(token).getBody();
+        Integer id = claims.get("id", Integer.class);
+        String name = claims.get("name", String.class);
+        AuthUser authUser = new AuthUser();
+        authUser.setId(id);
+        authUser.setUsername(name);
+        return authUser;
+    }
+
+    public static AuthUser parserMember(String token) {
+        Claims claims = Jwts.parser().setSigningKey(MEMBER_KEY).parseClaimsJws(token).getBody();
         Integer id = claims.get("id", Integer.class);
         String name = claims.get("name", String.class);
         AuthUser authUser = new AuthUser();

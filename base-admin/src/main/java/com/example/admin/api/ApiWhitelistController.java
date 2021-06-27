@@ -1,6 +1,7 @@
 package com.example.admin.api;
 
 
+import com.example.common.entity.apiwhitelist.ApiWhitelist;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
+import java.util.List;
 
 /**
 * description: api白名单 controller <br>
@@ -62,5 +65,11 @@ public class ApiWhitelistController {
     public ResponseData<IPage<ApiWhitelistVO>> listOfPage(Page<ApiWhitelistVO> page, ApiWhitelistVO apiWhitelistVO) {
         IPage<ApiWhitelistVO> pageInfo = apiWhitelistService.listOfPage(page, apiWhitelistVO);
         return ResponseData.OK(pageInfo);
+    }
+
+    @GetMapping("/all")
+    @ApiOperation("获取所有")
+    public ResponseData<List<String>> listAll(Page<ApiWhitelistVO> page, ApiWhitelistVO apiWhitelistVO) {
+        return ResponseData.OK(apiWhitelistService.listAllPath());
     }
 }

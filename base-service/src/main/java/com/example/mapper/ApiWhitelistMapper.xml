@@ -3,7 +3,7 @@
 <mapper namespace="com.example.mapper.ApiWhitelistMapper">
 
     <select id="selectPage" resultType="com.example.common.entity.apiwhitelist.ApiWhitelistVO">
-        SELECT * FROM SYS_API_WHITELIST
+        SELECT * FROM sys_api_whitelist
         <where>
             <if test="vo.description != null and vo.description != ''">
                 AND description LIKE CONCAT('%',#{vo.description},'%')
@@ -13,5 +13,8 @@
             </if>
             AND deleted = 0
         </where>
+    </select>
+    <select id="selectListPath" resultType="java.lang.String">
+        SELECT path FROM sys_api_whitelist
     </select>
 </mapper>
