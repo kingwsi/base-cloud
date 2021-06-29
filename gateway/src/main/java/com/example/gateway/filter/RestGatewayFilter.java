@@ -36,11 +36,11 @@ public class RestGatewayFilter implements GatewayFilter, Ordered {
 
     AntPathMatcherExt antPathMatcherExt = new AntPathMatcherExt();
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, List<String>> redisTemplate;
 
     private final AdminAuthFeignClient adminAuthFeignClient;
 
-    public RestGatewayFilter(RedisTemplate<String, Object> redisTemplate, AdminAuthFeignClient adminAuthFeignClient) {
+    public RestGatewayFilter(RedisTemplate<String, List<String>> redisTemplate, AdminAuthFeignClient adminAuthFeignClient) {
         this.redisTemplate = redisTemplate;
         this.adminAuthFeignClient = adminAuthFeignClient;
     }
@@ -50,37 +50,30 @@ public class RestGatewayFilter implements GatewayFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getPath().toString().replace("/base-rest", "");
         // 白名单
-        redisTemplate.delete("rest_whitelist:" + Objects.requireNonNull(request.getMethod()).toString());
-        Object whitelistObject = redisTemplate.opsForValue().get("rest_whitelist:" + Objects.requireNonNull(request.getMethod()).toString());
-        List<String> whitelist = Collections.emptyList();
-        if (whitelistObject == null) {
+        String WHITELIST_KEY = "rest_api_whitelist:" + Objects.requireNonNull(request.getMethod()).toString();
+        List<String> whitelist = redisTemplate.opsForValue().get(WHITELIST_KEY);
+        if (whitelist == null) {
             ResponseData<List<String>> listResponseData = adminAuthFeignClient.listApiWhitelist();
-            whitelist = Optional.ofNullable(listResponseData).map(ResponseData::getData).map(list -> {
-                redisTemplate.opsForValue().set("rest_whitelist:" + Objects.requireNonNull(request.getMethod()).toString(), list, 1, TimeUnit.DAYS);
-                return list;
-            }).orElse(Collections.emptyList());
-        } else {
-            whitelist = (List<String>) whitelistObject;
+            if (listResponseData.getData() != null) {
+                whitelist = listResponseData.getData();
+                redisTemplate.opsForValue().set(WHITELIST_KEY, whitelist, 1, TimeUnit.DAYS);
+            }
         }
-        // 白名单
         if (antPathMatcherExt.pathMatch(whitelist, path)) {
             return chain.filter(exchange);
         }
-        HttpHeaders headers = request.getHeaders();
-        String token = headers.getFirst(HttpHeaders.AUTHORIZATION);
+        String token = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (StringUtils.isEmpty(token)) {
             return MonoResponse.responseError(exchange);
         }
         AuthUser authUser = TokenUtils.parserMember(token.replace("Bearer ", ""));
-        //将数据返回给下级服务器
+        //httpHeaders处理
         Consumer<HttpHeaders> httpHeaders = httpHeader -> {
             httpHeader.set(RequestHeader.PRINCIPAL_ID.name(), String.valueOf(authUser.getId()));
             httpHeader.set(RequestHeader.PRINCIPAL_NAME.name(), authUser.getUsername());
         };
-        //将现在的request，添加当前身份
         ServerHttpRequest mutableReq = exchange.getRequest().mutate().headers(httpHeaders).build();
         ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
-        //将数据返回给下级服务器
         return chain.filter(mutableExchange);
     }
 

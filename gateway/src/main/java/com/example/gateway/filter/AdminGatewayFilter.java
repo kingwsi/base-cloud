@@ -32,7 +32,7 @@ public class AdminGatewayFilter implements GatewayFilter, Ordered {
 
     AntPathMatcherExt antPathMatcherExt = new AntPathMatcherExt();
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, List<String>> redisTemplate;
 
     private final AdminAuthFeignClient adminAuthFeignClient;
 
@@ -43,7 +43,7 @@ public class AdminGatewayFilter implements GatewayFilter, Ordered {
             "/api/customer/login",
     };
 
-    public AdminGatewayFilter(RedisTemplate<String, Object> redisTemplate, AdminAuthFeignClient adminAuthFeignClient) {
+    public AdminGatewayFilter(RedisTemplate<String, List<String>> redisTemplate, AdminAuthFeignClient adminAuthFeignClient) {
         this.redisTemplate = redisTemplate;
         this.adminAuthFeignClient = adminAuthFeignClient;
     }
@@ -71,20 +71,18 @@ public class AdminGatewayFilter implements GatewayFilter, Ordered {
 
         String method = Objects.requireNonNull(request.getMethod()).toString();
         // 权限验证
-        redisTemplate.delete("rest_whitelist:" + Objects.requireNonNull(request.getMethod()).toString());
-        Object whitelistObject = redisTemplate.opsForValue().get("sys_admin_permission:" + Objects.requireNonNull(request.getMethod()).toString());
-        List<String> apis = Collections.emptyList();
-        Object apisObject = redisTemplate.opsForValue().get("sys_admin_permission:" + Objects.requireNonNull(request.getMethod()).name() + ":" + authUser.getId());
+        String PERMISSIONS_KEY = "sys_admin_permission:" + Objects.requireNonNull(request.getMethod()).toString()+ ":" + authUser.getId();
+        List<String> apis;
+        Object apisObject = redisTemplate.opsForValue().get(PERMISSIONS_KEY);
         if (apisObject == null) {
             ResponseData<List<String>> listResponseData = adminAuthFeignClient.listCurrentUserApis(method, authUser.getId());
             apis = Optional.ofNullable(listResponseData).map(ResponseData::getData).map(list -> {
-                redisTemplate.opsForValue().set("rest_whitelist:" + method, list, 1, TimeUnit.DAYS);
+                redisTemplate.opsForValue().set(PERMISSIONS_KEY, list, 1, TimeUnit.MINUTES);
                 return list;
             }).orElse(Collections.emptyList());
         } else {
-            apis = (List<String>) whitelistObject;
+            apis = (List<String>) apisObject;
         }
-        assert apis != null;
         if (!antPathMatcherExt.pathMatch(apis, path)) {
             return MonoResponse.responseError(exchange);
         }

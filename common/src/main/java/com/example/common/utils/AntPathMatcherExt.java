@@ -22,6 +22,9 @@ public class AntPathMatcherExt extends AntPathMatcher {
     }
 
     public boolean pathMatch(List<String> paths, String pattern) {
+        if (paths == null || paths.isEmpty()) {
+            return false;
+        }
         for (String path : paths) {
             if (super.match(path, pattern)) {
                 return true;

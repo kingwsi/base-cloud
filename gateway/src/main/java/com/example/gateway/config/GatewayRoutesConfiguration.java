@@ -18,6 +18,8 @@ import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.springframework.web.util.pattern.PathPatternParser;
 
+import java.util.List;
+
 /**
  * description: GatewayRoutesConfiguration <br>
  * date: 2020/10/21 14:17 <br>
@@ -29,7 +31,7 @@ import org.springframework.web.util.pattern.PathPatternParser;
 public class GatewayRoutesConfiguration {
 
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisTemplate<String, List<String>> redisTemplate;
 
     @Lazy
     @Autowired
