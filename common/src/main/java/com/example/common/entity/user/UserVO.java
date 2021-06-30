@@ -35,6 +35,7 @@ public class UserVO {
     @Size(groups = {Update.class, Insert.class}, min = 2, max = 15, message = "全称长度需在2-15之间")
     private String fullName;
     private String avatar;
+    @Size(min = 2, max = 15, message = "个人介绍长度需在50个子符以内")
     private String introduction;
     private String nickname;
     @NotEmpty

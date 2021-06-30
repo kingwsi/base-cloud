@@ -103,11 +103,22 @@ public class AccessControlService {
                 .map(resourceMapper::selectRouteByUserId).map(resourceConvertMapper::toResourceVOs).get();
     }
 
-    public boolean updatePassword(UserPwdVO vo) {
+    public boolean updateCurrentUserInfo(UserPwdVO vo) {
         String id = request.getHeader(RequestHeader.PRINCIPAL_ID.toString());
         User user = userMapper.selectById(id);
         if (user != null && bCryptPasswordEncoder.matches(vo.getOldPassword(), user.getPassword())) {
-            user.setPassword(bCryptPasswordEncoder.encode(vo.getPassword()));
+            if (!StringUtils.isEmpty(vo.getAvatar())) {
+                user.setAvatar(vo.getAvatar());
+            }
+            if (!StringUtils.isEmpty(vo.getFullName())) {
+                user.setFullName(vo.getFullName());
+            }
+            if (!StringUtils.isEmpty(vo.getNickname())) {
+                user.setNickname(vo.getNickname());
+            }
+            if (!StringUtils.isEmpty(vo.getPassword())) {
+                user.setPassword(bCryptPasswordEncoder.encode(vo.getPassword()));
+            }
             return userMapper.updateById(user) > 0;
         } else {
             throw new CustomException("原密码错误！");

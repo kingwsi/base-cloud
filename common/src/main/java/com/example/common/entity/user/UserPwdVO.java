@@ -3,6 +3,8 @@ package com.example.common.entity.user;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Update;
 
 import javax.validation.constraints.*;
 
@@ -25,4 +27,10 @@ public class UserPwdVO {
 
     @NotNull(message = "oldPassword为空")
     private String oldPassword;
+
+    @Size(min = 2, max = 15, message = "全称长度需在2-15之间")
+    private String fullName;
+    private String avatar;
+    private String introduction;
+    private String nickname;
 }

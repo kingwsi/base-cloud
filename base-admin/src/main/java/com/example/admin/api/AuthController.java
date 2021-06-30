@@ -50,8 +50,8 @@ public class AuthController {
         return ResponseData.OK();
     }
 
-    @PutMapping("/password")
-    public ResponseData<?> updatePassword(@RequestBody @Validated UserPwdVO vo){
-        return ResponseData.OK(accessControlService.updatePassword(vo));
+    @PutMapping("/user-info")
+    public ResponseData<?> updateCurrentUserInfo(@RequestBody @Validated UserPwdVO vo){
+        return ResponseData.OK(accessControlService.updateCurrentUserInfo(vo));
     }
 }
