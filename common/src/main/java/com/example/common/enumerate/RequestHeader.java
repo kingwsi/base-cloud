@@ -8,6 +8,11 @@ package com.example.common.enumerate;
  */
 public enum RequestHeader {
     PRINCIPAL_ID,
-    PRINCIPAL_NAME
+    PRINCIPAL_NAME;
 
+
+    @Override
+    public String toString() {
+        return this.name();
+    }
 }

@@ -5,6 +5,7 @@ import com.example.common.bean.RespCodeEnum;
 import com.example.common.bean.AuthUser;
 import com.example.common.entity.resource.ResourceConvertMapper;
 import com.example.common.entity.resource.ResourceVO;
+import com.example.common.entity.user.UserPwdVO;
 import com.example.common.entity.user.UserVO;
 import com.example.common.enumerate.RequestHeader;
 import com.example.common.exception.CustomException;
@@ -84,7 +85,7 @@ public class AccessControlService {
     public UserVO getUserInfo() {
         String activeProfile = env.getActiveProfiles()[0];
         String id = request.getHeader(RequestHeader.PRINCIPAL_ID.name());
-        if (StringUtils.isEmpty(id) && "dev".equals(activeProfile)){
+        if (StringUtils.isEmpty(id) && "dev".equals(activeProfile)) {
             id = "2";
         }
         return Optional.of(Integer.valueOf(id))
@@ -100,5 +101,16 @@ public class AccessControlService {
     public List<ResourceVO> getCurrentUserRouters() {
         return Optional.of(Integer.valueOf(request.getHeader("x-id")))
                 .map(resourceMapper::selectRouteByUserId).map(resourceConvertMapper::toResourceVOs).get();
+    }
+
+    public boolean updatePassword(UserPwdVO vo) {
+        String id = request.getHeader(RequestHeader.PRINCIPAL_ID.toString());
+        User user = userMapper.selectById(id);
+        if (user != null && bCryptPasswordEncoder.matches(vo.getOldPassword(), user.getPassword())) {
+            user.setPassword(bCryptPasswordEncoder.encode(vo.getPassword()));
+            return userMapper.updateById(user) > 0;
+        } else {
+            throw new CustomException("原密码错误！");
+        }
     }
 }

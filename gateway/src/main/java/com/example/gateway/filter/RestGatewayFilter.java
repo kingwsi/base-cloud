@@ -66,15 +66,19 @@ public class RestGatewayFilter implements GatewayFilter, Ordered {
         if (StringUtils.isEmpty(token)) {
             return MonoResponse.responseError(exchange);
         }
-        AuthUser authUser = TokenUtils.parserMember(token.replace("Bearer ", ""));
-        //httpHeaders处理
-        Consumer<HttpHeaders> httpHeaders = httpHeader -> {
-            httpHeader.set(RequestHeader.PRINCIPAL_ID.name(), String.valueOf(authUser.getId()));
-            httpHeader.set(RequestHeader.PRINCIPAL_NAME.name(), authUser.getUsername());
-        };
-        ServerHttpRequest mutableReq = exchange.getRequest().mutate().headers(httpHeaders).build();
-        ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
-        return chain.filter(mutableExchange);
+        try {
+            AuthUser authUser = TokenUtils.parserMember(token.replace("Bearer ", ""));
+            //httpHeaders处理
+            Consumer<HttpHeaders> httpHeaders = httpHeader -> {
+                httpHeader.set(RequestHeader.PRINCIPAL_ID.name(), String.valueOf(authUser.getId()));
+                httpHeader.set(RequestHeader.PRINCIPAL_NAME.name(), authUser.getUsername());
+            };
+            ServerHttpRequest mutableReq = exchange.getRequest().mutate().headers(httpHeaders).build();
+            ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
+            return chain.filter(mutableExchange);
+        } catch (Exception e) {
+            return MonoResponse.responseError(exchange);
+        }
     }
 
     @Override

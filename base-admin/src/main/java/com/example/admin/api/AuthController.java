@@ -2,12 +2,14 @@ package com.example.admin.api;
 
 import com.example.common.bean.AuthUser;
 import com.example.common.bean.ResponseData;
+import com.example.common.entity.user.UserPwdVO;
 import com.example.common.enumerate.RedisConstKey;
 import com.example.service.AccessControlService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -46,5 +48,10 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseData<?> logout() {
         return ResponseData.OK();
+    }
+
+    @PutMapping("/password")
+    public ResponseData<?> updatePassword(@RequestBody @Validated UserPwdVO vo){
+        return ResponseData.OK(accessControlService.updatePassword(vo));
     }
 }
