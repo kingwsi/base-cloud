@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Update;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.List;
@@ -28,14 +29,15 @@ public class UserVO {
     @Size(groups = {Update.class, Insert.class}, min = 4, max = 15, message = "用户名长度需在5-15之间")
     private String username;
 
-    @Size(groups = {Insert.class},min = 6, max = 20, message = "密码长度需在6-20之间")
+    @Size(min = 8, max = 15, message = "密码长度需在8-15之间")
+    @Pattern(regexp = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$", message = "密码需要包含字母和数字")
     private String password;
     private Boolean remember;
 
     @Size(groups = {Update.class, Insert.class}, min = 2, max = 15, message = "全称长度需在2-15之间")
     private String fullName;
     private String avatar;
-    @Size(min = 2, max = 15, message = "个人介绍长度需在50个子符以内")
+    @Size(min = 2, max = 15, message = "个人介绍长度需在50个字符以内")
     private String introduction;
     private String nickname;
     @NotEmpty

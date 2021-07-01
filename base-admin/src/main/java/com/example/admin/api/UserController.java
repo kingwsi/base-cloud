@@ -91,6 +91,13 @@ public class UserController {
         return ResponseData.OK();
     }
 
+    @ApiOperation("更新用户")
+    @PostMapping("/password/{id}")
+    public ResponseData<?> resetPassword(@PathVariable Integer id) {
+        String tmpPassword = userService.resetPasswordById(id);
+        return ResponseData.OK(tmpPassword);
+    }
+
     @GetMapping("/apis")
     public ResponseEntity<List> getAllApi() {
         List<HashMap<String, String>> urlList = new ArrayList<>();

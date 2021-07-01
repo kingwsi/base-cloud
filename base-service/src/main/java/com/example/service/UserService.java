@@ -34,14 +34,11 @@ public class UserService {
 
     private final UsersAndRolesMapper usersAndRolesMapper;
 
-    private final RoleMapper roleMapper;
-
-    public UserService(UserMapper userMapper, BCryptPasswordEncoder bCryptPasswordEncoder, UserConvertMapper userConvertMapper, UsersAndRolesMapper usersAndRolesMapper, RoleMapper roleMapper) {
+    public UserService(UserMapper userMapper, BCryptPasswordEncoder bCryptPasswordEncoder, UserConvertMapper userConvertMapper, UsersAndRolesMapper usersAndRolesMapper) {
         this.userMapper = userMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userConvertMapper = userConvertMapper;
         this.usersAndRolesMapper = usersAndRolesMapper;
-        this.roleMapper = roleMapper;
     }
 
     public void createUser(UserVO vo) {
@@ -61,6 +58,7 @@ public class UserService {
     /**
      * 更新用户
      * 用户名称不可修改
+     *
      * @param userVO
      */
     public void updateUser(UserVO userVO) {
@@ -77,5 +75,16 @@ public class UserService {
 
     public UserVO getUserWithRolesByUserId(Integer id) {
         return userMapper.selectUsersWithRoles(id);
+    }
+
+    public String resetPasswordById(Integer id) {
+        String tmpPassword = String.valueOf(System.currentTimeMillis());
+        User user = new User();
+        user.setId(id);
+        user.setPassword(bCryptPasswordEncoder.encode(tmpPassword));
+        if (userMapper.updateById(user) == 0) {
+            throw new CustomException("重置失败");
+        }
+        return tmpPassword;
     }
 }

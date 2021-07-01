@@ -50,7 +50,7 @@ public class AuthController {
         return ResponseData.OK();
     }
 
-    @PutMapping("/user-info")
+    @PutMapping("/user")
     public ResponseData<?> updateCurrentUserInfo(@RequestBody @Validated UserPwdVO vo){
         return ResponseData.OK(accessControlService.updateCurrentUserInfo(vo));
     }

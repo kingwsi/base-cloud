@@ -21,11 +21,9 @@ public class UserPwdVO {
 
     private Integer id;
 
-    @Size(min = 8, max = 15, message = "用户名长度需在5-15之间")
-    @Pattern(regexp = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$")
     private String password;
 
-    @NotNull(message = "oldPassword为空")
+    @NotNull(message = "请输入旧密码")
     private String oldPassword;
 
     @Size(min = 2, max = 15, message = "全称长度需在2-15之间")
