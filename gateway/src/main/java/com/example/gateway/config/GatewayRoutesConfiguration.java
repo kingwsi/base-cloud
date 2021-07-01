@@ -77,9 +77,4 @@ public class GatewayRoutesConfiguration {
 
         return new CorsWebFilter(source);
     }
-
-    @Bean
-    public HttpMessageConverters httpMessageConverters(){
-        return new HttpMessageConverters();
-    }
 }

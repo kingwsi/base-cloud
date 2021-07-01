@@ -5,8 +5,6 @@ spring:
     consul:
       host: 192.168.123.232
       port: 8600
-      discovery:
-        hostname: 192.168.123.19
     gateway:
       discovery:
         locator:
