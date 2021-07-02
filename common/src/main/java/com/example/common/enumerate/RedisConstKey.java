@@ -5,7 +5,8 @@ import java.util.concurrent.TimeUnit;
 public enum RedisConstKey {
     GATEWAY_LOG_FILTER("网关日志订阅", "sub:log:gateway_log" , -1),
     LOGIN_VERIFY_CODE("登录请求验证码", "verify:login", 10),
-    USER_AUTH_INFO("授权用户信息", "user:auth",10)
+    USER_AUTH_INFO("授权用户信息", "user:auth",10),
+    WECHAT_TEMP_AUTH("微信授权临时信息", "wechat_auth:tmp_code", 60)
 
     ;
 

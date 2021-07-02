@@ -148,6 +148,7 @@
             <column name="password" type="varchar(255)" remarks="密码"/>
             <column name="last_login_ip" type="varchar(255)" remarks="最后登录ip"/>
             <column name="account_status" type="int(1)" remarks="账户状态 1 正常 0 停用"/>
+            <column name="openid" type="varchar(100)" remarks="openid"/>
             <column name="creator" type="varchar(100)" remarks="创建者"/>
             <column name="created_date" type="timestamp" remarks="创建日期"/>
             <column name="last_updater" type="varchar(100)" remarks="最后更新人"/>

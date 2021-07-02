@@ -7,5 +7,5 @@ package com.example.common.enumerate;
  * version: 1.0 <br>
  */
 public enum AuthType {
-    MOBILE, PASSWORD, EMAIL
+    MOBILE, PASSWORD, EMAIL, WECHAT
 }

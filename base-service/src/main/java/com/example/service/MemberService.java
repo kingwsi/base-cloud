@@ -22,10 +22,10 @@ import java.time.Instant;
 import java.util.Optional;
 
 /**
-* description: 会员 Service <br>
-* date: 2021-04-13 <br>
-* author: ws <br>
-*/
+ * description: 会员 Service <br>
+ * date: 2021-04-13 <br>
+ * author: ws <br>
+ */
 @Service
 public class MemberService {
 
@@ -74,6 +74,7 @@ public class MemberService {
 
     /**
      * 更新数据 id不能为空
+     *
      * @param memberVO
      * @return
      */
@@ -125,5 +126,10 @@ public class MemberService {
 
     public String authByMobile(AuthUser authUser) {
         return null;
+    }
+
+    public Member getMemberByOpenid(String openid) {
+        return memberMapper.selectOne(Wrappers.lambdaQuery(Member.class)
+                .eq(Member::getOpenid, openid));
     }
 }

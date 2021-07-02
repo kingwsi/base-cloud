@@ -27,7 +27,11 @@ public class AuthController {
 
     @GetMapping("/wechat")
     public ResponseData<?> wechatAuth(String code){
-        authService.wechatOauth(code);
-        return ResponseData.OK();
+        return ResponseData.OK(authService.wechatOauth(code));
+    }
+
+    @PostMapping("/info")
+    public ResponseData<?> bindInfo(String code){
+        return ResponseData.OK(authService.wechatOauth(code));
     }
 }

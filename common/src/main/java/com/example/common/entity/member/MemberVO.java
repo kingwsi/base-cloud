@@ -56,5 +56,6 @@ public class MemberVO extends BaseEntityVO {
     @ApiModelProperty(value = "账户状态 1 正常 0 停用")
     private Integer accountStatus;
 
-
+    @ApiModelProperty(value = "openid")
+    private String openid;
 }

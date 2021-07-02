@@ -12,8 +12,8 @@ import lombok.Getter;
 public enum RespCodeEnum {
 
     USER_DISABLE("当前用户已禁用"),
-    AUTH_FAILED("无效的账号或密码")
-    ;
+    AUTH_FAILED("无效的账号或密码"),
+    MEMBER_UNBIND("510", "用户未绑定");
 
     private String code;
 
@@ -27,7 +27,12 @@ public enum RespCodeEnum {
         this.description = description;
     }
 
-    RespCodeEnum(String code,int httpStatus, String description) {
+    RespCodeEnum(String code, String description) {
+        this.code = code;
+        this.description = description;
+    }
+
+    RespCodeEnum(String code, int httpStatus, String description) {
         this.code = code;
         this.description = description;
         this.httpStatus = httpStatus;
