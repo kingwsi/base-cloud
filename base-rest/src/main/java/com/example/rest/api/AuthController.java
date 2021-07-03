@@ -1,12 +1,10 @@
 package com.example.rest.api;
 
 import com.example.common.bean.ResponseData;
+import com.example.common.pojo.wechat.WechatAuth;
 import com.example.service.auth.AuthService;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * description: 授权登陆 <br>
@@ -26,12 +24,17 @@ public class AuthController {
     }
 
     @GetMapping("/wechat")
-    public ResponseData<?> wechatAuth(String code){
+    public ResponseData<?> wechatAuth(String code) throws Exception {
         return ResponseData.OK(authService.wechatOauth(code));
     }
 
-    @PostMapping("/info")
-    public ResponseData<?> bindInfo(String code){
-        return ResponseData.OK(authService.wechatOauth(code));
+    @PostMapping("/wechat/info")
+    public ResponseData<?> bindInfo(@RequestBody WechatAuth wechatAuth){
+        return ResponseData.OK(authService.bindWechatInfo(wechatAuth));
+    }
+
+    @GetMapping("/info")
+    public ResponseData<?> getMemberInfo(){
+        return ResponseData.OK(authService.getCurrentMemberInfo());
     }
 }

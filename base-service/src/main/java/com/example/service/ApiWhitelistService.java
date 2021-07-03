@@ -2,12 +2,10 @@ package com.example.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.common.entity.apiwhitelist.ApiWhitelist;
 import com.example.common.entity.apiwhitelist.ApiWhitelistConvertMapper;
 import com.example.common.entity.apiwhitelist.ApiWhitelistVO;
-import com.example.common.entity.member.Member;
 import com.example.mapper.ApiWhitelistMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -81,7 +79,7 @@ public class ApiWhitelistService {
         return apiwhitelistMapper.selectList(new QueryWrapper<ApiWhitelist>());
     }
 
-    public List<String> listAllPath() {
-        return apiwhitelistMapper.selectListPath();
+    public List<String> listAllPath(String method) {
+        return apiwhitelistMapper.selectListPathByMethod(method);
     }
 }

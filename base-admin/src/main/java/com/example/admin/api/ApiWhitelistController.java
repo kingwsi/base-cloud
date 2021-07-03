@@ -69,7 +69,7 @@ public class ApiWhitelistController {
 
     @GetMapping("/all")
     @ApiOperation("获取所有")
-    public ResponseData<List<String>> listAll(Page<ApiWhitelistVO> page, ApiWhitelistVO apiWhitelistVO) {
-        return ResponseData.OK(apiWhitelistService.listAllPath());
+    public ResponseData<List<String>> listAll(String method) {
+        return ResponseData.OK(apiWhitelistService.listAllPath(method));
     }
 }

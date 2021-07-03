@@ -2,6 +2,7 @@ package com.example.common.pojo.wechat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * description: TODO <br>
@@ -11,7 +12,15 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class WechatAuthResult {
+@NoArgsConstructor
+public class WechatAuth {
     private String token;
     private int code;
+    private String encryptedData;
+    private String iv;
+
+    public WechatAuth(String token, int code) {
+        this.token = token;
+        this.code = code;
+    }
 }

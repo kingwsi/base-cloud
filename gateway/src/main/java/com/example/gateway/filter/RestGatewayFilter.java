@@ -7,6 +7,7 @@ import com.example.common.utils.AntPathMatcherExt;
 import com.example.common.utils.TokenUtils;
 import com.example.gateway.feign.AdminAuthFeignClient;
 import com.example.gateway.utils.MonoResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.core.Ordered;
@@ -31,6 +32,7 @@ import java.util.function.Consumer;
  * author: ws <br>
  * version: 1.0 <br>
  */
+@Slf4j
 @Component
 public class RestGatewayFilter implements GatewayFilter, Ordered {
 
@@ -49,11 +51,13 @@ public class RestGatewayFilter implements GatewayFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getPath().toString().replace("/base-rest", "");
+        String method = Objects.requireNonNull(request.getMethod()).toString();
         // 白名单
-        String WHITELIST_KEY = "rest_api_whitelist:" + Objects.requireNonNull(request.getMethod()).toString();
+        String WHITELIST_KEY = "rest_api_whitelist:" + method;
+        redisTemplate.delete(WHITELIST_KEY);
         List<String> whitelist = redisTemplate.opsForValue().get(WHITELIST_KEY);
         if (whitelist == null) {
-            ResponseData<List<String>> listResponseData = adminAuthFeignClient.listApiWhitelist();
+            ResponseData<List<String>> listResponseData = adminAuthFeignClient.listApiWhitelist(method);
             if (listResponseData.getData() != null) {
                 whitelist = listResponseData.getData();
                 redisTemplate.opsForValue().set(WHITELIST_KEY, whitelist, 1, TimeUnit.DAYS);
@@ -77,6 +81,7 @@ public class RestGatewayFilter implements GatewayFilter, Ordered {
             ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
             return chain.filter(mutableExchange);
         } catch (Exception e) {
+            log.warn("Token解析失败！->{}", e.getMessage());
             return MonoResponse.responseError(exchange);
         }
     }

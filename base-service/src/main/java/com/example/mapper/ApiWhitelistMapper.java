@@ -19,5 +19,5 @@ import java.util.List;
 public interface ApiWhitelistMapper extends BaseMapper<ApiWhitelist> {
     IPage<ApiWhitelistVO> selectPage(Page<ApiWhitelistVO> page, @Param("vo") ApiWhitelistVO vo);
 
-    List<String> selectListPath();
+    List<String> selectListPathByMethod(@Param("method") String method);
 }

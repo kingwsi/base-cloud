@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 /**
  * Description: 实体超类<br>
@@ -30,11 +30,11 @@ public abstract class BaseEntity implements Serializable {
 
     Integer creator;
 
-    Instant createdDate;
+    LocalDateTime createdDate;
 
     Integer lastUpdater;
 
-    Instant lastUpdateDate;
+    LocalDateTime lastUpdateDate;
 
     @TableLogic
     Boolean deleted;

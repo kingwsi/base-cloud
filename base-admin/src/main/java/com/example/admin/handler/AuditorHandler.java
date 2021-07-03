@@ -9,7 +9,7 @@ import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.plugin.*;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Properties;
 
 /**
@@ -32,13 +32,13 @@ public class AuditorHandler implements Interceptor {
         if (parameter instanceof BaseEntity) {
             BaseEntity entity = (BaseEntity) parameter;
             if (SqlCommandType.INSERT == sqlCommandType) {
-                entity.setCreatedDate(Instant.now());
-                entity.setCreator(TokenUtils.getCurrentUserId());
+                entity.setCreatedDate(LocalDateTime.now());
+                entity.setCreator(TokenUtils.getCurrentPrincipalId());
             } else if (SqlCommandType.UPDATE == sqlCommandType) {
                 entity.setCreatedDate(null);
                 entity.setCreator(null);
-                entity.setLastUpdater(TokenUtils.getCurrentUserId());
-                entity.setLastUpdateDate(Instant.now());
+                entity.setLastUpdater(TokenUtils.getCurrentPrincipalId());
+                entity.setLastUpdateDate(LocalDateTime.now());
             }
         }
         return invocation.proceed();

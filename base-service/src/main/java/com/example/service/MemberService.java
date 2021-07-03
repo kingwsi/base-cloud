@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
@@ -49,6 +49,16 @@ public class MemberService {
      */
     public boolean create(MemberVO memberVO) {
         return memberMapper.insert(memberConvertMapper.toMember(memberVO)) > 0;
+    }
+
+    /**
+     * 插入数据
+     *
+     * @param member
+     * @return
+     */
+    public boolean create(Member member) {
+        return memberMapper.insert(member) > 0;
     }
 
     /**
@@ -120,7 +130,7 @@ public class MemberService {
         member.setMobile(authUser.getMobile());
         member.setNickName(authUser.getUsername());
         member.setPassword(bCryptPasswordEncoder.encode(authUser.getPassword()));
-        member.setCreatedDate(Instant.now());
+        member.setCreatedDate(LocalDateTime.now());
         memberMapper.insert(member);
     }
 

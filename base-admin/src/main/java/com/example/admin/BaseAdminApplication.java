@@ -8,7 +8,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication(scanBasePackages = {"com.example"})
 @MapperScan(basePackages = "com.example.mapper")
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"com.example"})
 @Slf4j
 public class BaseAdminApplication {
     public static void main(String[] args) {

@@ -34,5 +34,9 @@ public class ApiWhitelist extends BaseEntity {
     @TableField("PATH")
     private String path;
 
+    @ApiModelProperty(value = "地址")
+    @TableField("methods")
+    private String methods;
+
 
 }

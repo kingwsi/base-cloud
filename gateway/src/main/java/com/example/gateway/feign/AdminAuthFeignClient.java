@@ -23,6 +23,6 @@ public interface AdminAuthFeignClient {
     @RequestMapping(value = "/api/auth", method = RequestMethod.POST)
     ResponseData<String> createToken(@RequestBody AuthUser authUser);
 
-    @RequestMapping(value = "/api/api-whitelist/all", method = RequestMethod.GET)
-    ResponseData<List<String>> listApiWhitelist();
+    @GetMapping("/api/api-whitelist/all")
+    ResponseData<List<String>> listApiWhitelist(@RequestParam("method") String method);
 }

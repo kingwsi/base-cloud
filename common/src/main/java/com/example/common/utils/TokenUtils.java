@@ -38,7 +38,7 @@ public class TokenUtils {
                 .claim("name", authUser.getUsername())
                 .claim("type", "member")
                 .setExpiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
-                .signWith(SignatureAlgorithm.HS512, KEY)
+                .signWith(SignatureAlgorithm.HS512, MEMBER_KEY)
                 .compact();
     }
 
@@ -66,12 +66,12 @@ public class TokenUtils {
         return new AuthUser();
     }
 
-    public static Integer getCurrentUserId() {
+    public static Integer getCurrentPrincipalId() {
         // 获取当前用户
         String uid = Optional.ofNullable((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
                 .map(ServletRequestAttributes::getRequest)
                 .map(httpServletRequest -> httpServletRequest.getHeader(RequestHeader.PRINCIPAL_ID.name()))
-                .orElse("-1");
+                .orElse("1");
         return Integer.parseInt(uid);
     }
 }

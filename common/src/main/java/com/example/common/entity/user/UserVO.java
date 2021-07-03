@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -44,9 +44,9 @@ public class UserVO {
     private List<Integer> roleIds;
     private List<Role> roles;
     private String creator;
-    private Instant createdDate;
+    private LocalDateTime createdDate;
     private String lastUpdater;
-    private Instant lastUpdateDate;
+    private LocalDateTime lastUpdateDate;
 
     // 状态 0 禁用 1 启用
     private String status;
