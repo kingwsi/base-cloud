@@ -1,5 +1,5 @@
 spring:
   application:
-    name: admin
+    name: base-admin
   profiles:
     active: dev

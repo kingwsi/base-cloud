@@ -40,7 +40,7 @@ public class AdminGatewayFilter implements GatewayFilter, Ordered {
             "/api/debug/**",
             "/api/auth",
             "/api/verification/captcha",
-            "/api/customer/login",
+            "/v3/api-docs",
     };
 
     public AdminGatewayFilter(RedisTemplate<String, List<String>> redisTemplate, AdminAuthFeignClient adminAuthFeignClient) {

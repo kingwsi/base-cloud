@@ -33,7 +33,7 @@ public class WebServerInitializedListener implements ApplicationListener<WebServ
         int port = server.getPort();
         log.info("\n---------------------------------------------------------" +
                 "\n\t启动成功: {}" +
-                "\n\t本地地址: http://localhost:{}" +
+                "\n\t本地地址: http://localhost:{}/swagger-ui/index.html" +
                 "\n\t外部地址: http://{}:{}" +
                 "\n---------------------------------------------------------\n", activeProfiles, port, ip, port);
     }
