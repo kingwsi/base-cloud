@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import io.swagger.models.auth.In;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.servers.Server;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -37,6 +38,9 @@ public class SwaggerServerUrlFilter implements WebMvcOpenApiTransformationFilter
 
     public static final String X_FORWARDED_PREFIX_HEADER = "X-Forwarded-Prefix";
 
+    @Value("${spring.profiles.active}")
+    private String active;
+
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.OAS_30)
@@ -56,6 +60,7 @@ public class SwaggerServerUrlFilter implements WebMvcOpenApiTransformationFilter
                 .version("0.1")
                 .build();
     }
+
     /**
      * 设置授权信息
      */
@@ -77,14 +82,18 @@ public class SwaggerServerUrlFilter implements WebMvcOpenApiTransformationFilter
 
     @Override
     public OpenAPI transform(OpenApiTransformationContext<HttpServletRequest> context) {
-
         OpenAPI openApi = context.getSpecification();
         HttpServletRequest request = context.request().orElse(null);
         if (request != null && CollectionUtils.isNotEmpty(openApi.getServers())) {
             String prefix = request.getHeader(X_FORWARDED_PREFIX_HEADER);
-            if (!StringUtils.isEmpty(prefix)){
+            if (!StringUtils.isEmpty(prefix)) {
                 for (Server server : openApi.getServers()) {
-                    server.setUrl(server.getUrl()+prefix);
+                    if ("test".equalsIgnoreCase(active)) {
+                        server.setUrl("https://homec.club:8880/base-api" + prefix);
+                    } else {
+                        server.setUrl(server.getUrl() + prefix);
+                    }
+
                 }
             }
         }
