@@ -9,12 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 
+/**
+ * description: swagger-ui文档 对子服务的分组展示 <br>
+ * date: 2021/07/05 18:16 <br>
+ * author: ws <br>
+ * version: 1.0 <br>
+ */
 @Component
 @Primary
+@Profile({"dev", "test"})
 public class MySwaggerResourcesProvider implements SwaggerResourcesProvider {
 
     /**

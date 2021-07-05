@@ -1,30 +1,41 @@
 package com.example.common.configuration;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import io.swagger.models.auth.In;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.util.StringUtils;
 import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.schema.ModelRef;
+import springfox.documentation.oas.web.OpenApiTransformationContext;
+import springfox.documentation.oas.web.WebMvcOpenApiTransformationFilter;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * Description: swagger文档配置
- * Name: Swagger2Config
- * Author: wangshu
- * Date: 2019/6/29 15:32
+ * description: 对swagger base url处理，网关转发后保证其url正确 <br>
+ * date: 2021/07/05 14:01 <br>
+ * author: ws <br>
+ * version: 1.0 <br>
  */
 @Configuration
-public class SwaggerConfig {
+@Order(Ordered.HIGHEST_PRECEDENCE + 5)
+@Profile({"dev", "test"})
+public class SwaggerServerUrlFilter implements WebMvcOpenApiTransformationFilter {
+
+    public static final String X_FORWARDED_PREFIX_HEADER = "X-Forwarded-Prefix";
 
     @Bean
     public Docket createRestApi() {
@@ -62,5 +73,26 @@ public class SwaggerConfig {
                         .securityReferences(Collections.singletonList(new SecurityReference("Authorization", new AuthorizationScope[]{new AuthorizationScope("global", "")})))
                         .build()
         );
+    }
+
+    @Override
+    public OpenAPI transform(OpenApiTransformationContext<HttpServletRequest> context) {
+
+        OpenAPI openApi = context.getSpecification();
+        HttpServletRequest request = context.request().orElse(null);
+        if (request != null && CollectionUtils.isNotEmpty(openApi.getServers())) {
+            String prefix = request.getHeader(X_FORWARDED_PREFIX_HEADER);
+            if (!StringUtils.isEmpty(prefix)){
+                for (Server server : openApi.getServers()) {
+                    server.setUrl(server.getUrl()+prefix);
+                }
+            }
+        }
+        return openApi;
+    }
+
+    @Override
+    public boolean supports(DocumentationType delimiter) {
+        return delimiter == DocumentationType.OAS_30;
     }
 }
