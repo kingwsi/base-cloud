@@ -19,7 +19,7 @@ public interface WechatFeignClient {
      * @param code
      * @return
      */
-    @GetMapping(value = "/sns/jscode2session?appid=wx8427384fdc26ae12&secret={secret}&js_code={code}&grant_type=authorization_code")
+    @GetMapping(value = "/sns/jscode2session?appid=wxa3f1edf7ef0ff8a1&secret={secret}&js_code={code}&grant_type=authorization_code")
     String code2Session(@PathVariable("secret") String secret, @PathVariable("code") String code);
 
 

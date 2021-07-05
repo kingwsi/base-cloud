@@ -44,7 +44,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class AuthService {
 
-    private final String secret = "903c0054ccf6b60b9fe906b550e557d2";
+    private final static String secret = "0b1c54bd30c2d8abec700830f9b321e8";
 
     @Autowired
     private WechatFeignClient wechatFeignClient;
