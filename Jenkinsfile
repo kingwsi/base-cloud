@@ -13,7 +13,7 @@ pipeline {
         }
       }
       steps {
-        echo 'test ${BUILD_NUMBER} ${WORKSPACE}''
+        echo 'test ${BUILD_NUMBER} ${WORKSPACE}'
         checkout scm
         sh 'mvn -B -Dmaven.test.skip=true -Dmaven.repo.local=/var/jenkins_home/maven/.m2/repository clean package'
         echo 'Maven Build Success!'
