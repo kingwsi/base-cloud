@@ -10,9 +10,18 @@ pipeline {
 
       }
       steps {
+        when{
+          beforeAgent true
+          branch 'main'
+          echo 'main-分支'
+        }
         checkout scm
         sh 'mvn -B -Dmaven.test.skip=true -Dmaven.repo.local=/var/jenkins_home/maven/.m2/repository clean package'
         echo 'Maven Build Success!'
+      }
+
+      steps {
+        echo '$WORKSPACE'
       }
     }
 
