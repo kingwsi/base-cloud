@@ -4,7 +4,7 @@ pipeline {
     stage('Build') {
       when {
         beforeAgent true
-        branch 'test'
+        branch 'main'
       }
       agent {
         docker {
