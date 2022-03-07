@@ -1,3 +1,4 @@
+id,name,uri,methods,description,sort,icon,type,component,remark,parent_id,creator,created_date,last_updater,last_update_date,deleted
 1,debug接口,/**,GET;POST;PUT;DELETE;OPTIONS,debug接口,0,,API,,,-1,NULL,NULL,NULL,NULL,0
 2,系统配置,/system,,,2,control,MENU,RouteView,,-1,NULL,NULL,NULL,NULL,0
 3,用户管理,/system/user,,,2,user,MENU,user/List,,2,NULL,NULL,NULL,NULL,0
