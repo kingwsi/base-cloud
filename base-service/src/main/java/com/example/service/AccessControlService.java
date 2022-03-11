@@ -86,7 +86,7 @@ public class AccessControlService {
         String activeProfile = env.getActiveProfiles()[0];
         String id = request.getHeader(RequestHeader.PRINCIPAL_ID.name());
         if (StringUtils.isEmpty(id) && "dev".equals(activeProfile)) {
-            id = "2";
+            id = "1";
         }
         return Optional.of(Integer.valueOf(id))
                 .map(userMapper::selectUsersWithRoles).get();

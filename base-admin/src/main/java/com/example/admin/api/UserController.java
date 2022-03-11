@@ -81,17 +81,7 @@ public class UserController {
         return ResponseData.OK(TokenUtils.getCurrentUser());
     }
 
-    @ApiOperation("获取当前用户信息")
-    @GetMapping("/current")
-    public ResponseData<?> updateUserCurrentInfo(@Validated(Update.class) UserVO userVO) {
-        AuthUser currentUser = TokenUtils.getCurrentUser();
-        userVO.setId(currentUser.getId());
-        userVO.setUsername(currentUser.getUsername());
-        userService.updateUser(userVO);
-        return ResponseData.OK();
-    }
-
-    @ApiOperation("更新用户")
+    @ApiOperation("更新用户密码")
     @PostMapping("/password/{id}")
     public ResponseData<?> resetPassword(@PathVariable Integer id) {
         String tmpPassword = userService.resetPasswordById(id);

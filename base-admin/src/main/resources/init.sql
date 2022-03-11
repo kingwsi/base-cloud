@@ -1,4 +1,4 @@
--- base.`member` definition
+-- `member` definition
 
 CREATE TABLE `member` (
                           `id` int NOT NULL AUTO_INCREMENT,
@@ -23,7 +23,7 @@ CREATE TABLE `member` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='会员';
 
 
--- base.sys_api_whitelist definition
+-- sys_api_whitelist definition
 
 CREATE TABLE `sys_api_whitelist` (
                                      `id` int NOT NULL AUTO_INCREMENT,
@@ -38,7 +38,7 @@ CREATE TABLE `sys_api_whitelist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='api白名单';
 
 
--- base.sys_dictionaries definition
+-- sys_dictionaries definition
 
 CREATE TABLE `sys_dictionaries` (
                                     `id` int NOT NULL AUTO_INCREMENT,
@@ -56,7 +56,7 @@ CREATE TABLE `sys_dictionaries` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='字典数据';
 
 
--- base.sys_organizations definition
+-- sys_organizations definition
 
 CREATE TABLE `sys_organizations` (
                                      `id` int NOT NULL AUTO_INCREMENT,
@@ -75,7 +75,7 @@ CREATE TABLE `sys_organizations` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='组织';
 
 
--- base.sys_resources definition
+-- sys_resources definition
 
 CREATE TABLE `sys_resources` (
                                  `id` int NOT NULL AUTO_INCREMENT,
@@ -98,7 +98,7 @@ CREATE TABLE `sys_resources` (
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='资源';
 
 
--- base.sys_roles definition
+-- sys_roles definition
 
 CREATE TABLE `sys_roles` (
                              `id` int NOT NULL AUTO_INCREMENT,
@@ -114,7 +114,7 @@ CREATE TABLE `sys_roles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色';
 
 
--- base.sys_roles_and_resources definition
+-- sys_roles_and_resources definition
 
 CREATE TABLE `sys_roles_and_resources` (
                                            `role_id` varchar(32) NOT NULL COMMENT '角色id',
@@ -122,7 +122,7 @@ CREATE TABLE `sys_roles_and_resources` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色资源关联';
 
 
--- base.sys_users definition
+-- sys_users definition
 
 CREATE TABLE `sys_users` (
                              `id` int NOT NULL AUTO_INCREMENT,
@@ -142,7 +142,7 @@ CREATE TABLE `sys_users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户';
 
 
--- base.sys_users_and_organizations definition
+-- sys_users_and_organizations definition
 
 CREATE TABLE `sys_users_and_organizations` (
                                                `user_id` varchar(32) NOT NULL COMMENT '用户id',
@@ -150,9 +150,9 @@ CREATE TABLE `sys_users_and_organizations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户组织关联';
 
 
--- base.sys_users_and_roles definition
+-- sys_users_and_roles definition
 
-INSERT INTO base.`member` (real_name,nick_name,gender,mobile,email,avatar,introduce,last_login_time,password,last_login_ip,account_status,openid,creator,created_date,last_updater,last_update_date,deleted) VALUES
+INSERT INTO `member` (real_name,nick_name,gender,mobile,email,avatar,introduce,last_login_time,password,last_login_ip,account_status,openid,creator,created_date,last_updater,last_update_date,deleted) VALUES
     ('FF','TIEZHU','1','15555555555','15555555555@163.com','https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',NULL,NULL,'$2a$10$sQqwErGT/hFQNA/qFXiTX./0FSDgMMJMjC5oakh54GfKry75CghZK',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0);
 
 CREATE TABLE `sys_users_and_roles` (
@@ -160,11 +160,11 @@ CREATE TABLE `sys_users_and_roles` (
                                        `role_id` varchar(32) NOT NULL COMMENT '角色id'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户角色关联';
 
-INSERT INTO base.sys_users_and_roles (user_id,role_id) VALUES
+INSERT INTO sys_users_and_roles (user_id,role_id) VALUES
                                                            ('1','1'),
                                                            ('2','2');
 
-INSERT INTO base.sys_roles_and_resources (role_id,resource_id) VALUES
+INSERT INTO sys_roles_and_resources (role_id,resource_id) VALUES
                                                                    ('1','1'),
                                                                    ('1','2'),
                                                                    ('1','3'),
@@ -175,23 +175,23 @@ INSERT INTO base.sys_roles_and_resources (role_id,resource_id) VALUES
                                                                    ('1','8'),
                                                                    ('1','9'),
                                                                    ('1','10');
-INSERT INTO base.sys_roles_and_resources (role_id,resource_id) VALUES
+INSERT INTO sys_roles_and_resources (role_id,resource_id) VALUES
                                                                    ('1','11'),
                                                                    ('1','12'),
                                                                    ('1','13'),
-                                                                   ('2','1'),
-                                                                   ('2','2'),
-                                                                   ('2','3');
+                                                                   ('2','8'),
+                                                                   ('2','9'),
+                                                                   ('2','10');
 
-INSERT INTO base.sys_users (username,nickname,password,full_name,status,avatar,introduction,creator,created_date,last_updater,last_update_date,deleted) VALUES
-                                                                                                                                                            ('admin','admin','$2a$10$vswPCKaH2RJ.hzBPOHsrVO2k72nqkVt3VigmJUvboHYiOAjN4XlX.','管理员','1','https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',NULL,NULL,NULL,NULL,NULL,0),
-                                                                                                                                                            ('test','test','$2a$10$f71x3715SbPYlqA8QbmIyeR5JnJKhvBFYdX/xV/hHknAV42prD5SW','测试','1','',NULL,NULL,NULL,NULL,NULL,0);
+INSERT INTO sys_users (id,username,nickname,password,full_name,status,avatar,introduction,creator,created_date,last_updater,last_update_date,deleted) VALUES
+                                                                                                                                                            (1, 'admin','admin','$2a$10$vswPCKaH2RJ.hzBPOHsrVO2k72nqkVt3VigmJUvboHYiOAjN4XlX.','管理员','1','https://dummyimage.com/200x200/cccaca/000000.png',NULL,NULL,NULL,NULL,NULL,0),
+                                                                                                                                                            (2, 'test','test','$2a$10$f71x3715SbPYlqA8QbmIyeR5JnJKhvBFYdX/xV/hHknAV42prD5SW','测试','1','https://dummyimage.com/200x200/cccaca/000000.png',NULL,NULL,NULL,NULL,NULL,0);
 
-INSERT INTO base.sys_roles (name,description,status,creator,created_date,last_updater,last_update_date,deleted) VALUES
-                                                                                                                    ('admin','超级管理员','1',NULL,NULL,NULL,NULL,0),
-                                                                                                                    ('general user','普通用户','1',NULL,NULL,NULL,NULL,0);
+INSERT INTO sys_roles (id,name,description,status,creator,created_date,last_updater,last_update_date,deleted) VALUES
+                                                                                                                    (1,'admin','超级管理员','1',NULL,NULL,NULL,NULL,0),
+                                                                                                                    (2,'general user','普通用户','1',NULL,NULL,NULL,NULL,0);
 
-INSERT INTO base.sys_organizations (name,description,parent_id,remark,organization_id,role_ids,creator,created_date,last_updater,last_update_date,deleted) VALUES
+INSERT INTO sys_organizations (name,description,parent_id,remark,organization_id,role_ids,creator,created_date,last_updater,last_update_date,deleted) VALUES
                                                                                                                                                                ('1','1','-1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),
                                                                                                                                                                ('2','2','-1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),
                                                                                                                                                                ('3','3','1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),
@@ -199,18 +199,18 @@ INSERT INTO base.sys_organizations (name,description,parent_id,remark,organizati
                                                                                                                                                                ('5','5','2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),
                                                                                                                                                                ('6','6','4',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0);
 
-INSERT INTO base.sys_resources (name,uri,methods,description,sort,icon,`type`,component,remark,parent_id,creator,created_date,last_updater,last_update_date,deleted) VALUES
-                                                                                                                                                                         ('debug接口','/**','GET;POST;PUT;DELETE;OPTIONS','debug接口','0','','API','','','-1',NULL,NULL,NULL,NULL,0),
-                                                                                                                                                                         ('系统配置','/system','','','2','control','MENU','RouteView','','-1',NULL,NULL,NULL,NULL,0),
-                                                                                                                                                                         ('用户管理','/system/user','','','2','user','MENU','user/List','','2',NULL,NULL,NULL,NULL,0),
-                                                                                                                                                                         ('角色管理','/system/role','','','3','user','MENU','role/List','','2',NULL,NULL,NULL,NULL,0),
-                                                                                                                                                                         ('字典管理','/system/dictionary','','','3','user','MENU','dictionary/List','','2',NULL,NULL,NULL,NULL,0),
-                                                                                                                                                                         ('资源管理','/system/resource','','','4','user','MENU','resource/List','','2',NULL,NULL,NULL,NULL,0),
-                                                                                                                                                                         ('角色权限配置','/system/role/permission/:id','','','4','user','MENU','role/Permission','hidden','2',NULL,NULL,NULL,NULL,0),
-                                                                                                                                                                         ('仪表盘','/dashboard','','','1','dashboard','MENU','RouteView','','-1',NULL,NULL,NULL,NULL,0),
-                                                                                                                                                                         ('个人中心','/system/account/info','','','3','user','MENU','user/Info','','8',NULL,NULL,NULL,NULL,0),
-                                                                                                                                                                         ('工作台','/dashboard/workplace','','','2','dashboard','MENU','dashboard/Workplace','','8',NULL,NULL,NULL,NULL,0);
-INSERT INTO base.sys_resources (name,uri,methods,description,sort,icon,`type`,component,remark,parent_id,creator,created_date,last_updater,last_update_date,deleted) VALUES
-                                                                                                                                                                         ('会员中心','/member','','','3','user','MENU','RouteView','','-1',NULL,NULL,NULL,NULL,0),
-                                                                                                                                                                         ('会员管理','/member/list','','','1','user','MENU','member/List','','11',NULL,NULL,NULL,NULL,0),
-                                                                                                                                                                         ('接口白名单','/system/api-whitelist','',NULL,'5','user','MENU',NULL,NULL,'2',NULL,NULL,NULL,NULL,0);
+INSERT INTO sys_resources (id,name,uri,methods,description,sort,icon,`type`,component,remark,parent_id,creator,created_date,last_updater,last_update_date,deleted) VALUES
+                                                                                                                                                                         (1,'debug接口','/**','GET;POST;PUT;DELETE;OPTIONS','debug接口','0','','API','','','-1',NULL,NULL,NULL,NULL,0),
+                                                                                                                                                                         (2,'系统配置','/system','','','2','control','MENU','','','-1',NULL,NULL,NULL,NULL,0),
+                                                                                                                                                                         (3,'用户管理','/system/user','','','2','user','MENU','','','2',NULL,NULL,NULL,NULL,0),
+                                                                                                                                                                         (4,'角色管理','/system/role','','','3','user','MENU','','','2',NULL,NULL,NULL,NULL,0),
+                                                                                                                                                                         (5,'字典管理','/system/dictionary','','','3','user','MENU','','','2',NULL,NULL,NULL,NULL,0),
+                                                                                                                                                                         (6,'资源管理','/system/resource','','','4','user','MENU','','','2',NULL,NULL,NULL,NULL,0),
+                                                                                                                                                                         (7,'角色权限配置','/system/role/permission/:id','','','4','user','MENU','','hidden','2',NULL,NULL,NULL,NULL,0),
+                                                                                                                                                                         (8,'仪表盘','/dashboard','','','1','dashboard','MENU','','','-1',NULL,NULL,NULL,NULL,0),
+                                                                                                                                                                         (9,'个人中心','/dashboard/user','','','3','user','MENU','','','8',NULL,NULL,NULL,NULL,0),
+                                                                                                                                                                         (10,'工作台','/dashboard/workplace','','','2','dashboard','MENU','','','8',NULL,NULL,NULL,NULL,0);
+INSERT INTO sys_resources (id,name,uri,methods,description,sort,icon,`type`,component,remark,parent_id,creator,created_date,last_updater,last_update_date,deleted) VALUES
+                                                                                                                                                                         (11,'会员中心','/member','','','3','user','MENU','RouteView','','-1',NULL,NULL,NULL,NULL,0),
+                                                                                                                                                                         (12,'会员管理','/member/list','','','1','user','MENU','member/List','','11',NULL,NULL,NULL,NULL,0),
+                                                                                                                                                                         (13,'接口白名单','/system/api-whitelist','',NULL,'5','user','MENU',NULL,NULL,'2',NULL,NULL,NULL,NULL,0);

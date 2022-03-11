@@ -30,7 +30,13 @@
     <select id="selectUsersOfPage" resultType="com.example.common.entity.user.UserVO" resultMap="UserWithRoleIdsMap">
         SELECT u.*, uar.role_id
         FROM sys_users u
-                 LEFT JOIN sys_users_and_roles uar ON u.id = uar.user_id
+        LEFT JOIN sys_users_and_roles uar ON u.id = uar.user_id
+        <where>
+            u.id != -1
+            <if test="userVO.username != null and userVO.username == ''">
+                u.username LIKE CONCAT('%', #{userVO.username}, '%')
+            </if>
+        </where>
     </select>
     <select id="selectUsersWithRoles" resultType="com.example.common.entity.user.UserVO" resultMap="UserWithRolesMap">
         SELECT su.id, su.username, su.nickname, su.full_name, su.status, su.avatar, su.introduction, su.creator, su.created_date, su.last_updater, su.last_update_date, sr.id roleId, sr.description, sr.name roleName
