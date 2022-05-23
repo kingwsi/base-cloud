@@ -89,7 +89,6 @@ public class MemberService {
      * @return
      */
     public boolean updateById(MemberVO memberVO) {
-        Assert.isNull(memberVO.getId(), "ID不可为空");
         return memberMapper.updateById(memberConvertMapper.toMember(memberVO)) > 0;
     }
 

@@ -66,7 +66,6 @@ public class ApiWhitelistService {
      * @return
      */
     public boolean updateById(ApiWhitelistVO apiwhitelistVO) {
-        Assert.isNull(apiwhitelistVO.getId(), "ID不可为空");
         return apiwhitelistMapper.updateById(apiwhitelistConvertMapper.toApiWhitelist(apiwhitelistVO)) > 0;
     }
 

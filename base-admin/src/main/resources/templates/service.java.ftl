@@ -63,7 +63,6 @@ public class ${entity}Service {
      * @return
      */
     public boolean updateById(${entity}VO ${entity?lower_case}VO) {
-        Assert.isNull(${entity?lower_case}VO.getId(), "ID不可为空");
         return ${entity?lower_case}Mapper.updateById(${entity?lower_case}ConvertMapper.to${entity}(${entity?lower_case}VO)) > 0;
     }
 

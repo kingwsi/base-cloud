@@ -63,7 +63,6 @@ public class DictionaryService {
      * @return
      */
     public boolean updateById(DictionaryVO dictionaryVO) {
-        Assert.isNull(dictionaryVO.getId(), "ID不可为空");
         return dictionaryMapper.updateById(dictionaryConvertMapper.toDictionary(dictionaryVO)) > 0;
     }
 
