@@ -4,17 +4,17 @@ import java.util.concurrent.TimeUnit;
 
 public enum RedisConstKey {
     GATEWAY_LOG_FILTER("网关日志订阅", "sub:log:gateway_log" , -1),
-    LOGIN_VERIFY_CODE("登录请求验证码", "verify:login", 10),
+    LOGIN_VERIFY_CODE("登录请求验证码", "verify:login", 3),
     USER_AUTH_INFO("授权用户信息", "user:auth",10),
     WECHAT_TEMP_AUTH("微信授权临时信息", "wechat_auth:tmp_code", 60)
 
     ;
 
 
-    String description;
-    String key;
-    Long expire;
-    TimeUnit timeUnit;
+    private final String description;
+    private final String key;
+    private final Long expire;
+    private final TimeUnit timeUnit;
 
     RedisConstKey(String description, String key, long expire) {
         this.description = description;

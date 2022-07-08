@@ -12,6 +12,7 @@ spring:
           lower-case-service-id: true # 服务名称小写
       routes:
   redis:
-    host: 39.98.170.255
-    password: cZmx8
+    host: localhost
+logging:
+  config: classpath:logback-test.xml
 

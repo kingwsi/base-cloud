@@ -20,7 +20,7 @@ import java.util.UUID;
  * Author: wangshu
  * Date: 2021/03/23 15:15
  */
-@Api(tags = "授权相关接口")
+@Api(tags = "验证接口")
 @RestController
 @RequestMapping("/api/verification")
 public class VerificationController {

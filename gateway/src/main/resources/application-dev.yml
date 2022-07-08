@@ -3,10 +3,10 @@ spring:
     name: base-gateway
   cloud:
     consul:
-      host: 192.168.123.232
-      port: 8600
+      host: localhost
+      port: 8500
       discovery:
-        hostname: 192.168.123.19
+        hostname: localhost
     gateway:
       discovery:
         locator:
@@ -14,6 +14,6 @@ spring:
           lower-case-service-id: true # 服务名称小写
       routes:
   redis:
-    host: 39.98.170.255
-    password: cZmx8
-
+    host: localhost
+logging:
+  config: classpath:logback.xml

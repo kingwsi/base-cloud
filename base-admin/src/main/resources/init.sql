@@ -29,6 +29,7 @@ CREATE TABLE `sys_api_whitelist` (
                                      `id` int NOT NULL AUTO_INCREMENT,
                                      `description` varchar(100) DEFAULT NULL COMMENT '描述',
                                      `path` varchar(255) DEFAULT NULL COMMENT '地址',
+                                     `methods` varchar(255) DEFAULT NULL COMMENT '请求方式',
                                      `creator` varchar(100) DEFAULT NULL COMMENT '创建者',
                                      `created_date` timestamp NULL DEFAULT NULL COMMENT '创建日期',
                                      `last_updater` varchar(100) DEFAULT NULL COMMENT '最后更新人',
@@ -127,7 +128,7 @@ CREATE TABLE `sys_roles_and_resources` (
 CREATE TABLE `sys_users` (
                              `id` int NOT NULL AUTO_INCREMENT,
                              `username` varchar(100) DEFAULT NULL COMMENT '用户名',
-                             `nickname` varchar(255) DEFAULT NULL COMMENT 'nickname',
+                             `nickname` varchar(255) DEFAULT NULL COMMENT '昵称',
                              `password` varchar(255) DEFAULT NULL COMMENT '密码',
                              `full_name` varchar(50) DEFAULT NULL COMMENT '全名',
                              `status` varchar(2) DEFAULT '1' COMMENT '状态 1启用， 0 禁用',
