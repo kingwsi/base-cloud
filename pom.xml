@@ -38,22 +38,21 @@
         <jjwt.version>0.7.0</jjwt.version>
         <swagger2.version>2.9.2</swagger2.version>
         <mybatis-starter.version>2.0.1</mybatis-starter.version>
-        <liquibase.version>4.4.0</liquibase.version>
         <pagehelper.version>1.2.12</pagehelper.version>
         <org.projectlombok.version>1.18.4</org.projectlombok.version>
         <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
         <org.hibernate.version>5.3.0.Final</org.hibernate.version>
         <com.baomidou.version>3.3.1</com.baomidou.version>
-        <h2database.version>1.4.200</h2database.version>
+        <h2database.version>2.1.210</h2database.version>
         <fastjson.version>1.2.68</fastjson.version>
         <aliyun-sdk-oss.version>3.8.0</aliyun-sdk-oss.version>
         <io.springfox-boot.version>3.0.0</io.springfox-boot.version>
         <com.alibaba.druid.version>1.2.2</com.alibaba.druid.version>
-        <org.liquibase.version>4.3.1</org.liquibase.version>
         <org.apache.maven.plugins.version>3.8.1</org.apache.maven.plugins.version>
         <com.github.whvcse.version>1.6.2</com.github.whvcse.version>
         <org.bouncycastle.version>1.57</org.bouncycastle.version>
         <io.swagger.version>1.5.21</io.swagger.version>
+        <spring-admin.version>2.7.2</spring-admin.version>
     </properties>
 
     <!--版本管理-->
@@ -126,12 +125,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-core</artifactId>
-                <version>${liquibase.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${com.baomidou.version}</version>
@@ -188,12 +181,6 @@
                 <version>${com.alibaba.druid.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-core</artifactId>
-                <version>${org.liquibase.version}</version>
-            </dependency>
-
             <!-- lombok 开发小插件 -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -219,6 +206,12 @@
                 <artifactId>swagger-annotations</artifactId>
                 <version>${io.swagger.version}</version>
                 <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>${spring-admin.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

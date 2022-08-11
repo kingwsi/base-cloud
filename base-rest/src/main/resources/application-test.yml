@@ -20,8 +20,6 @@ spring:
   redis:
     host: 39.98.170.255
     password: cZmx8
-  liquibase:
-    enabled: false
 server:
   port: 8093
 #mybatis配置

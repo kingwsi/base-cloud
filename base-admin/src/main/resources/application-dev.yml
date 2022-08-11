@@ -9,18 +9,20 @@ spring:
         hostname: localhost
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://localhost:3306/base2?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:h2:file:~/h2db/db/test;AUTO_SERVER=TRUE
     username: root
     password: root
+    platform: H2
     druid:
       stat-view-servlet:
         url-pattern: /druid/*
         enabled: true
-## DEV liquibase & H2
-  liquibase:
-    change-log: classpath:liquibase/master.yml
-    enabled: false
-    drop-first: false
+  h2:
+    console:
+      path: /h2-console
+      settings:
+        web-allow-others: true
+      enabled: true
   redis:
     host: localhost
 server:
