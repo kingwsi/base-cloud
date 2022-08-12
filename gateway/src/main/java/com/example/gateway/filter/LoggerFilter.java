@@ -41,7 +41,7 @@ import java.util.concurrent.ExecutionException;
  * author: ws <br>
  * version: 1.0 <br>
  */
-@Component
+//@Component
 @Slf4j
 public class LoggerFilter implements GlobalFilter, Ordered {
 

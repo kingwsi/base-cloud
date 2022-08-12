@@ -47,13 +47,11 @@ public class GatewayRoutesConfiguration {
     public RouteLocator routeLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(r -> r.path("/base-admin/**")
-                        .and().readBody(String.class, requestBody -> true)
                         .filters(f -> f.stripPrefix(1)
                                 .filters(new AdminGatewayFilter(redisTemplate, adminAuthFeignClient))
                         ).uri("lb://base-admin"))
                 .route(r -> r.path("/base-rest/**")
                         // 读取Request Body
-                        .and().readBody(String.class, requestBody -> true)
                         .filters(f -> f.stripPrefix(1)
                                 .filters(new RestGatewayFilter(redisTemplate, adminAuthFeignClient))
                         ).uri("lb://base-rest"))
