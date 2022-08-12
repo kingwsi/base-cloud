@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.FavoritesMapper">
+    <delete id="realDeleteById">
+        DELETE FROM favorites WHERE id = #{id}
+    </delete>
+
+    <select id="selectPage" resultType="com.example.common.entity.favorites.FavoritesVO">
+        SELECT f.id,
+        f.goods_id,
+        f.created_date,
+        g.name goodsName,
+        g.title goodsTitle,
+        g.status,
+        g.cover_image,
+        g.min_price
+        FROM favorites f
+        INNER JOIN goods g ON f.goods_id = g.id
+        <where>
+            <if test="vo.goodsName != null and vo.goodsName != ''">
+                AND g.name LIKE CONCAT('%',#{vo.goodsName},'%')
+            </if>
+            <if test="vo.goodsId != null and vo.goodsId != ''">
+                AND f.goods_id = #{vo.goodsId}
+            </if>
+            <if test="vo.memberId != null and vo.memberId != ''">
+                AND f.member_id = #{vo.memberId}
+            </if>
+            AND g.status = 'ON_SELL'
+        </where>
+    </select>
+</mapper>

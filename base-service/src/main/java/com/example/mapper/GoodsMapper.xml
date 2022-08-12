@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.GoodsMapper">
+
+    <select id="selectPage" resultType="com.example.common.entity.goods.GoodsVO">
+        SELECT
+        g.id,
+        g.category_id,
+        g.brand_id,
+        g.name,
+        g.title,
+        g.tags,
+        g.min_price,
+        g.max_price,
+        g.cover_image,
+        g.status,
+        g.keyword,
+        g.sort,
+        g.creator,
+        g.created_date,
+        g.last_updater,
+        g.last_update_date,
+        b.name AS brandName,
+        c.name As categoryName
+        FROM goods
+        g LEFT JOIN category c ON g.category_id = c.id LEFT JOIN brand b ON g.brand_id = b.id
+        <where>
+            <if test="vo.categoryName != null and vo.categoryName != ''">
+                AND c.name LIKE CONCAT('%',#{vo.categoryName},'%')
+            </if>
+            <if test="vo.brandName != null and vo.brandName != ''">
+                AND b.name LIKE CONCAT('%',#{vo.brandName},'%')
+            </if>
+            <if test="vo.name != null and vo.name != ''">
+                AND g.name LIKE CONCAT('%',#{vo.name},'%')
+            </if>
+            <if test="vo.title != null and vo.title != ''">
+                AND g.title LIKE CONCAT('%',#{vo.title},'%')
+            </if>
+            <if test="vo.tags != null and vo.tags != ''">
+                AND g.tags LIKE CONCAT('%',#{vo.tags},'%')
+            </if>
+            <if test="vo.status != null and vo.status != ''">
+                AND status = #{vo.status}
+            </if>
+            <if test="vo.keyword != null and vo.keyword != ''">
+                AND g.keyword LIKE CONCAT('%',#{vo.keyword},'%')
+            </if>
+            AND g.deleted = 0
+        </where>
+    </select>
+    <select id="selectGoodsList" resultType="com.example.common.entity.goods.GoodsListVO">
+        SELECT g.id,
+        c.name categoryName,
+        b.name brandName,
+        g.name,
+        g.title,
+        g.tags,
+        g.min_price,
+        g.max_price,
+        g.cover_image
+        FROM goods g
+        LEFT JOIN brand b ON g.brand_id = b.id
+        LEFT JOIN category c ON c.id = g.category_id
+        <where>
+            g.status = 'ON_SELL'
+            <if test="vo.keyword != null and vo.keyword != ''">
+                AND g.keyword LIKE CONCAT('%', #{vo.keyword}, '%')
+            </if>
+            <if test="vo.categoryId != null and vo.categoryId != ''">
+                AND g.category_id = #{vo.categoryId}
+            </if>
+            <if test="vo.brandId != null and vo.brandId != ''">
+                AND g.brand_id = #{vo.brandId}
+            </if>
+        </where>
+        ORDER BY g.sort
+    </select>
+    <select id="selectGoodsWithDetail" resultType="com.example.common.entity.goods.GoodsInfoVO">
+        SELECT g.id,
+               c.name categoryName,
+               b.name brandName,
+               b.id   brandId,
+               c.id   categoryId,
+               g.name,
+               g.title,
+               g.tags,
+               g.min_price,
+               g.max_price,
+               g.cover_image,
+               gd.rich_text,
+               gd.slideshow
+        FROM goods g
+                 LEFT JOIN brand b ON g.brand_id = b.id
+                 LEFT JOIN category c ON c.id = g.category_id
+                 LEFT JOIN goods_detail gd ON g.id = gd.id
+        WHERE g.deleted = false
+          AND b.enable = true
+          AND g.id = #{id}
+    </select>
+</mapper>

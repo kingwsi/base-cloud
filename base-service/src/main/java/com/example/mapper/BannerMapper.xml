@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.BannerMapper">
+
+    <select id="selectPage" resultType="com.example.common.entity.banner.BannerVO">
+        SELECT b.id, b.image, b.link, b.title, b.group_code, b.creator, b.created_date, b.last_updater, b.last_update_date, b.deleted, bg.name groupName FROM banner b LEFT JOIN banner_group bg ON b.group_code = bg.code
+        <where>
+            <if test="vo.image != null and vo.image != ''">
+                AND b.image LIKE CONCAT('%',#{vo.image},'%')
+            </if>
+            <if test="vo.link != null and vo.link != ''">
+                AND b.link LIKE CONCAT('%',#{vo.link},'%')
+            </if>
+            <if test="vo.title != null and vo.title != ''">
+                AND b.title LIKE CONCAT('%',#{vo.title},'%')
+            </if>
+            <if test="vo.groupCode != null and vo.groupCode != ''">
+                AND b.group_code LIKE CONCAT('%',#{vo.groupCode},'%')
+            </if>
+            AND b.deleted = 0
+        </where>
+    </select>
+</mapper>

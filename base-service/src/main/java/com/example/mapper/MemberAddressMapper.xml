@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.MemberAddressMapper">
+
+    <select id="selectPage" resultType="com.example.common.entity.memberaddress.MemberAddressVO">
+        SELECT * FROM member_address
+        <where>
+            <if test="vo.memberId != null and vo.memberId != ''">
+                AND memberId LIKE CONCAT('%',#{vo.memberId},'%')
+            </if>
+            <if test="vo.province != null and vo.province != ''">
+                AND province LIKE CONCAT('%',#{vo.province},'%')
+            </if>
+            <if test="vo.city != null and vo.city != ''">
+                AND city LIKE CONCAT('%',#{vo.city},'%')
+            </if>
+            <if test="vo.town != null and vo.town != ''">
+                AND town LIKE CONCAT('%',#{vo.town},'%')
+            </if>
+            <if test="vo.detail != null and vo.detail != ''">
+                AND detail LIKE CONCAT('%',#{vo.detail},'%')
+            </if>
+            <if test="vo.addresseeMobile != null and vo.addresseeMobile != ''">
+                AND addressee_mobile LIKE CONCAT('%',#{vo.addresseeMobile},'%')
+            </if>
+            <if test="vo.fullAddress != null and vo.fullAddress != ''">
+                AND full_address LIKE CONCAT('%',#{vo.fullAddress},'%')
+            </if>
+            <if test="vo.isDefault != null and vo.isDefault != ''">
+                AND is_default LIKE CONCAT('%',#{vo.isDefault},'%')
+            </if>
+            <if test="vo.tag != null and vo.tag != ''">
+                AND tag LIKE CONCAT('%',#{vo.tag},'%')
+            </if>
+            AND deleted = 0
+        </where>
+    </select>
+</mapper>

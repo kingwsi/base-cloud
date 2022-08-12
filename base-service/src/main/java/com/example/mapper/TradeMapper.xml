@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.TradeMapper">
+
+    <select id="selectPage" resultType="com.example.common.entity.trade.TradeVO">
+        SELECT * FROM trade
+        <where>
+            <if test="vo.memberId != null and vo.memberId != ''">
+                AND member_id LIKE CONCAT('%',#{vo.memberId},'%')
+            </if>
+            <if test="vo.totalAmount != null and vo.totalAmount != ''">
+                AND total_amount LIKE CONCAT('%',#{vo.totalAmount},'%')
+            </if>
+            <if test="vo.payAmount != null and vo.payAmount != ''">
+                AND pay_amount LIKE CONCAT('%',#{vo.payAmount},'%')
+            </if>
+            <if test="vo.payDatetime != null and vo.payDatetime != ''">
+                AND pay_datetime LIKE CONCAT('%',#{vo.payDatetime},'%')
+            </if>
+            <if test="vo.payChannel != null and vo.payChannel != ''">
+                AND pay_channel LIKE CONCAT('%',#{vo.payChannel},'%')
+            </if>
+            <if test="vo.memberMessage != null and vo.memberMessage != ''">
+                AND member_message LIKE CONCAT('%',#{vo.memberMessage},'%')
+            </if>
+            <if test="vo.receiptDatetime != null and vo.receiptDatetime != ''">
+                AND receipt_datetime LIKE CONCAT('%',#{vo.receiptDatetime},'%')
+            </if>
+            <if test="vo.tradeNo != null and vo.tradeNo != ''">
+                AND trade_no LIKE CONCAT('%',#{vo.tradeNo},'%')
+            </if>
+            <if test="vo.outTradeNo != null and vo.outTradeNo != ''">
+                AND out_trade_no LIKE CONCAT('%',#{vo.outTradeNo},'%')
+            </if>
+            <if test="vo.status != null and vo.status != ''">
+                AND status LIKE CONCAT('%',#{vo.status},'%')
+            </if>
+            <if test="vo.remark != null and vo.remark != ''">
+                AND remark LIKE CONCAT('%',#{vo.remark},'%')
+            </if>
+            AND deleted = 0
+        </where>
+    </select>
+</mapper>

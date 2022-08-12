@@ -9,20 +9,13 @@ spring:
         hostname: localhost
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:h2:file:~/h2db/db/test;AUTO_SERVER=TRUE
+    url: jdbc:mysql://localhost:3306/base_cloud?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: root
-    platform: H2
     druid:
       stat-view-servlet:
         url-pattern: /druid/*
         enabled: true
-  h2:
-    console:
-      path: /h2-console
-      settings:
-        web-allow-others: true
-      enabled: true
   redis:
     host: localhost
 server:

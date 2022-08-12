@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.GoodsAttributeMapper">
+
+    <select id="selectPage" resultType="com.example.common.entity.goodsattribute.GoodsAttributeVO">
+        SELECT * FROM goods_attribute
+        <where>
+            <if test="vo.attributeName != null and vo.attributeName != ''">
+                AND attribute_name LIKE CONCAT('%',#{vo.attributeName},'%')
+            </if>
+            <if test="vo.attributeValue != null and vo.attributeValue != ''">
+                AND attribute_value LIKE CONCAT('%',#{vo.attributeValue},'%')
+            </if>
+            <if test="vo.skuId != null and vo.skuId != ''">
+                AND sku_id LIKE CONCAT('%',#{vo.skuId},'%')
+            </if>
+            AND deleted = 0
+        </where>
+    </select>
+</mapper>
