@@ -12,16 +12,15 @@ spring:
         enabled: false
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://39.98.170.255:3381/base?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://localhost:3306/base_cloud?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
-    password: AnTG2G
+    password: root
     druid:
       stat-view-servlet:
         url-pattern: /druid/*
         enabled: true
   redis:
-    host: 39.98.170.255
-    password: cZmx8
+    host: localhost
 server:
   port: 8093
 #mybatis配置
@@ -39,6 +38,4 @@ mybatis-plus:
     # 开启sql日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 logging:
-  file:
-    path: /logs
-    name: ${spring.application.name}_info.log
+  config: classpath:logback.xml

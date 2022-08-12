@@ -65,3 +65,5 @@ pipeline {
     skipDefaultCheckout(true)
   }
 }
+
+docker run --rm -v "$(pwd)":/opt/maven -v /root/.m2:/root/.m2 -w /opt/maven maven:3-alpine sh -c  "mvn -Dmaven.test.skip=true clean package
