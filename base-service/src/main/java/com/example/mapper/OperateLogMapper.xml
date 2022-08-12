@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.OperateLogMapper">
+
+    <select id="selectPage" resultType="com.example.common.entity.operatelog.OperateLogVO">
+        SELECT * FROM operate_log
+        <where>
+            <if test="vo.code != null and vo.code != ''">
+                AND code LIKE CONCAT('%',#{vo.code},'%')
+            </if>
+            <if test="vo.beforeValue != null and vo.beforeValue != ''">
+                AND before_value LIKE CONCAT('%',#{vo.beforeValue},'%')
+            </if>
+            <if test="vo.afterValue != null and vo.afterValue != ''">
+                AND after_value LIKE CONCAT('%',#{vo.afterValue},'%')
+            </if>
+            <if test="vo.remark != null and vo.remark != ''">
+                AND remark LIKE CONCAT('%',#{vo.remark},'%')
+            </if>
+            <if test="vo.outId != null and vo.outId != ''">
+                AND out_id LIKE CONCAT('%',#{vo.outId},'%')
+            </if>
+            <if test="vo.operator != null and vo.operator != ''">
+                AND operator LIKE CONCAT('%',#{vo.operator},'%')
+            </if>
+            <if test="vo.operateDate != null and vo.operateDate != ''">
+                AND operate_date LIKE CONCAT('%',#{vo.operateDate},'%')
+            </if>
+            <if test="vo.targetTableName != null and vo.targetTableName != ''">
+                AND target_table_name LIKE CONCAT('%',#{vo.targetTableName},'%')
+            </if>
+            AND deleted = 0
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ShoppingBagMapper">
+    <delete id="realDeleteById">
+        DELETE FROM shopping_bag WHERE id = #{id}
+    </delete>
+
+    <select id="selectPage" resultType="com.example.common.entity.shoppingbag.ShoppingBagVO">
+        SELECT sb.id,
+               sb.goods_id,
+               sb.sku_id,
+               sb.num,
+               g.name AS goodsName,
+               g.title AS goodsTitle,
+               g.status,
+               g.cover_image,
+               gs.price,
+               gs.stock,
+               gs.thumbnail AS skuThumbnail,
+               gs.property_description,
+               sb.last_update_date
+        FROM shopping_bag sb
+                 LEFT JOIN goods g on sb.goods_id = g.id
+                 LEFT JOIN goods_sku gs ON gs.id = sb.sku_id
+        WHERE sb.member_id = #{vo.memberId}
+        ORDER BY sb.created_date, sb.last_update_date DESC
+    </select>
+</mapper>

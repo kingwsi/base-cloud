@@ -11,9 +11,18 @@ import lombok.Getter;
 @Getter
 public enum RespCodeEnum {
 
+    NOT_FOUND("404",404, "找不到页面"),
+    // 参数不符合预期，可能是非法调用
+    FORBIDDEN("403", "Forbidden"),
+
+
+
+
     USER_DISABLE("当前用户已禁用"),
     AUTH_FAILED("无效的账号或密码"),
-    MEMBER_UNBIND("510", "微信授权信息过期");
+    MEMBER_UNBIND("510", "临时token失效"),
+    NOT_FOUND_RECORD("未找到该条记录"),
+    ;
 
     private String code;
 

@@ -179,3 +179,224 @@ INSERT INTO sys_resources (id,name,uri,methods,description,sort,icon,`type`,comp
                                                                                                                                                                          (11,'会员中心','/member','','','3','user','MENU','RouteView','','-1',NULL,NULL,NULL,NULL,0),
                                                                                                                                                                          (12,'会员管理','/member/list','','','1','user','MENU','member/List','','11',NULL,NULL,NULL,NULL,0),
                                                                                                                                                                          (13,'接口白名单','/system/api-whitelist','',NULL,'5','user','MENU',NULL,NULL,'2',NULL,NULL,NULL,NULL,0);
+
+
+create table banner
+(
+    id               int primary key auto_increment,
+    image            varchar(500) comment '图片',
+    link             varchar(500) comment '链接',
+    title            varchar(255) comment '标题',
+    groupCode        varchar(50) comment '分组',
+    creator          varchar(100)  null comment '创建者',
+    created_date     timestamp     null comment '创建日期',
+    last_updater     varchar(100)  null comment '最后更新人',
+    last_update_date timestamp     null comment '最后更新时间',
+    deleted          int default 0 null comment '删除标记'
+) comment 'banner';
+
+create table banner_group
+(
+    id               int primary key auto_increment,
+    code             varchar(50) comment 'code',
+    name             varchar(255) comment '组名',
+    remark           varchar(255) comment '备注',
+    creator          varchar(100)  null comment '创建者',
+    created_date     timestamp     null comment '创建日期',
+    last_updater     varchar(100)  null comment '最后更新人',
+    last_update_date timestamp     null comment '最后更新时间',
+    deleted          int default 0 null comment '删除标记'
+) comment 'banner';
+
+create table brand
+(
+    `id`               int primary key auto_increment,
+    `name`             varchar(255) comment '名称',
+    `logo`             varchar(255) comment 'LOGO',
+    `enable`           bit(1) comment '启用',
+    `introduction`     varchar(255) comment '介绍',
+    `sort`             int comment '排序',
+    `creator`          varchar(100)  null comment '创建者',
+    `created_date`     timestamp     null comment '创建日期',
+    `last_updater`     varchar(100)  null comment '最后更新人',
+    `last_update_date` timestamp     null comment '最后更新时间',
+    `deleted`          int default 0 null comment '删除标记'
+) comment 'banner分组';
+
+create table category
+(
+    `id`             int primary key auto_increment,
+    `name`           varchar(255) comment '分类名称',
+    `description`    varchar(255) comment '描述',
+    `parent_id`      int comment '上级id -1为根',
+    `image`          varchar(255) comment '图片',
+    `sort`           int comment '排序',
+    creator          varchar(100)  null comment '创建者',
+    created_date     timestamp     null comment '创建日期',
+    last_updater     varchar(100)  null comment '最后更新人',
+    last_update_date timestamp     null comment '最后更新时间',
+    deleted          int default 0 null comment '删除标记'
+) comment '分类';
+
+create table favorites
+(
+    id               int primary key auto_increment,
+    goods_id         int comment '商品id',
+    member_id        int comment '会员id',
+    creator          varchar(100)  null comment '创建者',
+    created_date     timestamp     null comment '创建日期',
+    last_updater     varchar(100)  null comment '最后更新人',
+    last_update_date timestamp     null comment '最后更新时间',
+    deleted          int default 0 null comment '删除标记'
+) comment '收藏';
+
+create table goods
+(
+    `id`             int primary key auto_increment,
+    `category_id`    int comment '分类Id',
+    `brand_id`       int comment '品牌id',
+    `name`           varchar(255) comment '名称',
+    `title`          varchar(255) comment '标题',
+    `tags`           varchar(255) comment '标签',
+    `min_price`      int comment '最高价',
+    `max_price`      int comment '最低价',
+    `cover_image`    varchar(255) comment '封面图',
+    `status`         varchar(255) comment '状态',
+    `keyword`        varchar(255) comment '关键字',
+    `sort`           int comment '排序',
+    creator          varchar(100)  null comment '创建者',
+    created_date     timestamp     null comment '创建日期',
+    last_updater     varchar(100)  null comment '最后更新人',
+    last_update_date timestamp     null comment '最后更新时间',
+    deleted          int default 0 null comment '删除标记'
+) comment '商品';
+
+create table goods_attribute
+(
+    `id`              int primary key auto_increment,
+    `attribute_name`  varchar(100) comment '属性名称',
+    `attribute_value` varchar(100) comment '属性值',
+    `sku_id`          int comment '规格id',
+    `goods_id`        int comment '商品id',
+
+    creator           varchar(100)  null comment '创建者',
+    created_date      timestamp     null comment '创建日期',
+    last_updater      varchar(100)  null comment '最后更新人',
+    last_update_date  timestamp     null comment '最后更新时间',
+    deleted           int default 0 null comment '删除标记'
+) comment '商品属性';
+
+create table goods_detail
+(
+    `id`             int primary key auto_increment,
+    `rich_text`      longtext comment '富文本',
+    `share_image`    varchar(255) comment '分享图片',
+    `slideshow`      varchar(255) comment '轮播图',
+    `ship`           boolean comment '是否包邮',
+    `tags`           varchar(255) comment '标签',
+    `services`       varchar(255) comment '服务',
+    `sales_return`   boolean comment '是否可退货',
+    `auto_on_sale`   boolean comment '自动上架',
+    `on_sale_time`   timestamp comment '上架时间',
+    `off_sale_time`  timestamp comment '下架时间',
+    creator          varchar(100)  null comment '创建者',
+    created_date     timestamp     null comment '创建日期',
+    last_updater     varchar(100)  null comment '最后更新人',
+    last_update_date timestamp     null comment '最后更新时间',
+    deleted          int default 0 null comment '删除标记'
+) comment '商品明细';
+
+create table goods_sku
+(
+    `id`                   int primary key auto_increment,
+    `thumbnail`            varchar(500) comment '缩略图',
+    `goods_id`             int comment '商品id',
+    `price`                int comment '价格',
+    `stock`                int comment '库存',
+    `purchase_limit`       int comment '购买限制',
+    `enable`               boolean comment '生效',
+    `sort`                 int comment '排序',
+    `property_description` varchar(500) comment '属性描述',
+    creator                varchar(100)  null comment '创建者',
+    created_date           timestamp     null comment '创建日期',
+    last_updater           varchar(100)  null comment '最后更新人',
+    last_update_date       timestamp     null comment '最后更新时间',
+    deleted                int default 0 null comment '删除标记'
+) comment '商品规格';
+
+create table member_address
+(
+    `id`               int primary key auto_increment,
+    `member_id`        int comment '会员唯一标识',
+    `province`         varchar(50) comment '省',
+    `city`             varchar(100) comment '市',
+    `town`             varchar(100) comment '镇',
+    `detail`           varchar(255) comment '详细地址',
+    `addressee_mobile` varchar(30) comment '收件人电话',
+    `full_address`     varchar(500) comment '完整地址',
+    `isDefault`        varchar(255) comment '是否默认',
+    `tag`              varchar(255) comment '标签',
+    `addressee_name`   varchar(255) comment '收件人名字',
+    creator            varchar(100)  null comment '创建者',
+    created_date       timestamp     null comment '创建日期',
+    last_updater       varchar(100)  null comment '最后更新人',
+    last_update_date   timestamp     null comment '最后更新时间',
+    deleted            int default 0 null comment '删除标记'
+) comment '会员地址';
+
+create table shopping_bag
+(
+    `id`             int primary key auto_increment,
+    `goods_id`       int comment '商品id',
+    `sku_id`         int comment '规格id',
+    `member_id`      int comment '会员id',
+    `sku_name`       varchar(255) comment '规格名称',
+    `num`            int comment '数量',
+    creator          varchar(100)  null comment '创建者',
+    created_date     timestamp     null comment '创建日期',
+    last_updater     varchar(100)  null comment '最后更新人',
+    last_update_date timestamp     null comment '最后更新时间',
+    deleted          int default 0 null comment '删除标记'
+) comment '购物袋';
+
+create table trade
+(
+    `id`                int primary key auto_increment,
+    `member_id`         int comment '会员id',
+    `total_amount`      int comment '总金额',
+    `pay_amount`        int comment '实际支付金额',
+    `pay_datetime`      timestamp comment '支付时间',
+    `pay_channel`       varchar(255) comment '支付渠道',
+    `member_message`    varchar(255) comment '客户留言',
+    `receipt_datetime`  timestamp comment '确认收货时间',
+    `trade_no`          varchar(255) comment '单号',
+    `out_trade_no`      varchar(255) comment '外部订单号',
+    `status`            varchar(50) comment '状态',
+    `remark`            varchar(255) comment '备注',
+    `consignee`         varchar(255) comment '收货人',
+    `consignee_address` varchar(255) comment '收货人地址',
+    `consignee_mobile`  varchar(30) comment '收货人手机号',
+    creator             varchar(100)  null comment '创建者',
+    created_date        timestamp     null comment '创建日期',
+    last_updater        varchar(100)  null comment '最后更新人',
+    last_update_date    timestamp     null comment '最后更新时间',
+    deleted             int default 0 null comment '删除标记'
+) comment '订单';
+
+create table trade_detail
+(
+    `id`             int primary key auto_increment,
+    `goods_id`       int comment '商品id',
+    `trade_id`       int comment '订单id',
+    `sku_id`         int comment '规格id',
+    `sku_properties` timestamp comment 'sku属性规格',
+    `sku_image`      varchar(255) comment 'sku图片',
+    `num`            varchar(255) comment '数量',
+    `price`          timestamp comment '标价',
+    `pay_amount`     varchar(255) comment '支付金额',
+    creator          varchar(100)  null comment '创建者',
+    created_date     timestamp     null comment '创建日期',
+    last_updater     varchar(100)  null comment '最后更新人',
+    last_update_date timestamp     null comment '最后更新时间',
+    deleted          int default 0 null comment '删除标记'
+) comment '订单明细';
